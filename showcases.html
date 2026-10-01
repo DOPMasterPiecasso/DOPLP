@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#75dab4" />
+  <title>Portfolio Kami | dopagency</title>
+  <meta name="author" content="dopagency">
+  <meta name="description"
+    content="Portofolio dopagency: 23 proyek unggulan web development, mobile app, e-commerce, branding, enterprise system, dan lainnya.">
+  <meta name="keywords"
+    content="dopagency, digital agency, digital marketing, web development, mobile apps, branding, tangerang selatan">
+
+  <!-- SOCIAL MEDIA META -->
+  <meta property="og:description"
+    content="Portofolio dopagency: 23 proyek unggulan web development, mobile app, e-commerce, branding, enterprise system, dan lainnya.">
+  <meta property="og:site_name" content="dopagency">
+  <meta property="og:title" content="Portfolio Kami | dopagency">
+  <meta property="og:type" content="website">
+
+  <!-- FAVICON FILES -->
+  <link href="ico/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon" sizes="144x144">
+  <link href="ico/apple-touch-icon-114-precomposed.png" rel="apple-touch-icon" sizes="114x114">
+  <link href="ico/apple-touch-icon-72-precomposed.png" rel="apple-touch-icon" sizes="72x72">
+  <link href="ico/apple-touch-icon-57-precomposed.png" rel="apple-touch-icon">
+  <link href="ico/favicon.png" rel="shortcut icon">
+
+  <!-- CSS FILES -->
+  <link rel="stylesheet" href="css/fontawesome.min.css">
+  <link rel="stylesheet" href="css/fancybox.min.css">
+  <link rel="stylesheet" href="css/hamburger.min.css">
+  <link rel="stylesheet" href="css/odometer.min.css">
+  <link rel="stylesheet" href="css/swiper.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .portfolio-filter {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 60px 0 0;
+      background: #222327;
+      position: relative;
+      z-/: 3;
+    }
+
+    .portfolio-filter .container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .portfolio-filter button {
+      margin: 0 10px 10px 0;
+      padding: 11px 24px;
+      background: none;
+      border: 1px solid rgba(255, 255, 255, .25);
+      color: #fff;
+      font-family: "Fjalla One", sans-serif;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: .25s ease-in-out;
+    }
+
+    .portfolio-filter button:hover {
+      border-color: #75dab4;
+      color: #75dab4;
+    }
+
+    .portfolio-filter button.active {
+      background: #75dab4;
+      border-color: #75dab4;
+      color: #222327;
+    }
+
+    .portfolio-works .cat-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      margin-bottom: 14px;
+      background: rgba(117, 218, 180, .12);
+      border: 1px solid #75dab4;
+      color: #75dab4;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .portfolio-works .caption p {
+      margin-top: 12px;
+      opacity: .7;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    @media only screen and (max-width: 767px) {
+      .portfolio-filter {
+        padding-top: 40px;
+      }
+
+      .portfolio-filter button {
+        margin: 0 8px 8px 0;
+        padding: 9px 16px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="preloader">
+    <div class="layer"></div>
+    <!-- end layer -->
+    <div class="inner">
+      <figure> <img src="images/preloader.gif" alt="dopagency"> </figure>
+      <span>dopagency | Digital Agency</span>
+    </div>
+    <!-- end inner -->
+  </div>
+  <!-- end preloader -->
+  <div class="page-transition">
+    <div class="layer"></div>
+    <!-- end layer -->
+  </div>
+  <!-- end page-transition -->
+  <nav class="site-navigation">
+    <div class="layer"></div>
+    <!-- end layer -->
+    <div class="inner">
+      <ul data-splitting>
+        <li><a href="/">HOME</a><i class="fas fa-caret-down"></i> <small>Halaman utama</small>
+          <ul>
+            <li><a href="/">HOME SLIDER</a></li>
+            <li><a href="/-video">HOME VIDEO</a></li>
+            <li><a href="/-carousel">HOME CAROUSEL</a></li>
+          </ul>
+        </li>
+        <li><a href="about">TENTANG KAMI</a><i class="fas fa-caret-down"></i> <small>Profil perusahaan</small>
+          <ul>
+            <li><a href="about">PROFIL</a></li>
+            <li><a href="about#visi-misi">VISI &amp; MISI</a></li>
+            <li><a href="about#nilai-inti">NILAI INTI</a></li>
+          </ul>
+        </li>
+        <li><a href="services">LAYANAN</a> <small>6 pilar layanan</small> </li>
+        <li><a href="portfolio">PORTFOLIO</a> <small>23 proyek lengkap</small> </li>
+        <li><a href="produk">PRODUK</a> <small>Solusi digital bisnis</small> </li>
+        <li><a href="organisasi">ORGANISASI</a> <small>Struktur tim &amp; kultur</small> </li>
+        <li><a href="contact">KONTAK</a> <small>Form &amp; info kontak</small> </li>
+      </ul>
+    </div>
+    <!-- end inner -->
+  </nav>
+  <!-- end site-navigation -->
+  <div class="social-media">
+    <div class="layer"> </div>
+    <!-- end layer -->
+    <div class="inner">
+      <h5>Ikuti Kami </h5>
+      <ul>
+        <li><a href="https://www.instagram.com/dopagencydigital/" target="_blank" rel="noopener"><i
+              class="fab fa-instagram"></i></a></li>
+        <li><a href="https://wa.me/6289504596920" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+        </li>
+        <li><a href="mailto:info@dopagency.com"><i class="fas fa-envelope"></i></a></li>
+      </ul>
+    </div>
+    <!-- end inner -->
+  </div>
+  <!-- end social-media -->
+  <div class="all-cases">
+    <div class="layer"> </div>
+    <!-- end layer -->
+    <div class="inner">
+      <ul>
+        <li><a href="portfolio#erp-construction">ERP Construction</a></li>
+        <li><a href="portfolio#barbershop-app">Barbershop App</a></li>
+        <li><a href="portfolio#binary-tech">Binary Tech</a></li>
+        <li><a href="portfolio#cielo-cura">Cielo Cura</a></li>
+        <li><a href="portfolio#dandanoma">Dandanoma</a></li>
+        <li><a href="portfolio#inviguard">InviGuard</a></li>
+        <li><a href="portfolio#jam-sembilan">Jam Sembilan</a></li>
+        <li><a href="portfolio#pos-system">POS System</a></li>
+      </ul>
+    </div>
+    <!-- end inner -->
+  </div>
+  <!-- end all-cases -->
+  <main>
+    <aside class="left-side">
+      <div class="logo"> <a href="/"><img src="asset/logo/logodopputih.webp" alt="dopagency"
+            style="max-height: 48px; width: auto;"></a> </div>
+      <!-- end logo -->
+      <div class="hamburger" id="hamburger">
+        <div class="hamburger__line hamburger__line--01">
+          <div class="hamburger__line-in hamburger__line-in--01"></div>
+        </div>
+        <div class="hamburger__line hamburger__line--02">
+          <div class="hamburger__line-in hamburger__line-in--02"></div>
+        </div>
+        <div class="hamburger__line hamburger__line--03">
+          <div class="hamburger__line-in hamburger__line-in--03"></div>
+        </div>
+        <div class="hamburger__line hamburger__line--cross01">
+          <div class="hamburger__line-in hamburger__line-in--cross01"></div>
+        </div>
+        <div class="hamburger__line hamburger__line--cross02">
+          <div class="hamburger__line-in hamburger__line-in--cross02"></div>
+        </div>
+      </div>
+      <!-- end hamburger -->
+      <div class="follow-us"> FOLLOW US </div>
+      <!-- end follow-us -->
+      <div class="equalizer"> <span></span> <span></span> <span></span> <span></span> </div>
+      <!-- end equalizer -->
+    </aside>
+    <!-- end left-side -->
+    <div class="all-cases-link"> <span>ALL CASES</span> <b>+</b> </div>
+    <!-- end all-cases-link -->
+    <header class="page-header">
+      <div class="video-bg">
+        <video src="videos/video02.mp4" muted loop autoplay></video>
+      </div>
+      <!-- end video-bg -->
+      <div class="inner">
+        <div class="container">
+          <h1>PORTFOLIO KAMI</h1>
+          <p>Karya &amp; Proyek Unggulan</p>
+        </div>
+        <!-- end container -->
+      </div>
+      <!-- end inner -->
+    </header>
+    <!-- end page-header -->
+    <section class="portfolio-filter">
+      <div class="container">
+        <button type="button" class="active" data-filter="Semua">Semua</button>
+        <button type="button" data-filter="Web Development">Web Development</button>
+        <button type="button" data-filter="Mobile App">Mobile App</button>
+        <button type="button" data-filter="E-Commerce">E-Commerce</button>
+        <button type="button" data-filter="Branding">Branding</button>
+        <button type="button" data-filter="Enterprise System">Enterprise System</button>
+        <button type="button" data-filter="Lifestyle">Lifestyle</button>
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- end portfolio-filter -->
+    <section class="works portfolio-works">
+      <ul>
+        <li id="erp-construction" data-category="Web Development">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/ERPConstruction.png"
+              data-fancybox="portfolio"><img src="asset/projek/ERPConstruction.png" alt="ERP Construction"></a>
+          </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Web Development</span>
+            <h3>ERP Construction</h3>
+            <small>PHP, Laravel, MySQL</small>
+            <p>Sistem ERP komprehensif untuk manajemen proyek konstruksi, mencakup modul inventaris, SDM, dan keuangan.
+            </p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="barbershop-app" data-category="Mobile App">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/barbershop.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/barbershop.jpg" alt="Barbershop App"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Mobile App</span>
+            <h3>Barbershop App</h3>
+            <small>Flutter, Firebase</small>
+            <p>Aplikasi booking barbershop dengan fitur real-time schedule dan sistem loyalty point.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="binary-tech" data-category="Web Design">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/binary.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/binary.jpg" alt="Binary Tech"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Web Design</span>
+            <h3>Binary Tech</h3>
+            <small>HTML5, CSS3, GSAP</small>
+            <p>Redesign website korporat untuk perusahaan teknologi dengan pendekatan modern dan futuristik.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="cielo-cura" data-category="E-Commerce">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/cielocura.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/cielocura.jpg" alt="Cielo Cura"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">E-Commerce</span>
+            <h3>Cielo Cura</h3>
+            <small>WooCommerce, WordPress</small>
+            <p>Platform e-commerce untuk produk kesehatan dan kecantikan dengan integrasi payment gateway.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="dandanoma" data-category="Branding">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/dandanoma.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/dandanoma.jpg" alt="Dandanoma"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Branding</span>
+            <h3>Dandanoma</h3>
+            <small>Adobe Illustrator, Photoshop</small>
+            <p>Identitas visual lengkap untuk brand fashion lokal, mulai dari logo hingga panduan media sosial.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="edgemat" data-category="Web App">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/edgemat.png" data-fancybox="portfolio"><img
+                src="asset/projek/edgemat.png" alt="Edgemat"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Web App</span>
+            <h3>Edgemat</h3>
+            <small>React, Node.js</small>
+            <p>Platform edukasi matematika interaktif untuk siswa sekolah dasar.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="erp-agency" data-category="Enterprise System">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/erpagency.png" data-fancybox="portfolio"><img
+                src="asset/projek/erpagency.png" alt="ERP Agency"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Enterprise System</span>
+            <h3>ERP Agency</h3>
+            <small>Laravel, Vue.js</small>
+            <p>Sistem manajemen terintegrasi untuk agensi digital, mengelola proyek, klien, dan tim.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="erp-system" data-category="Software">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/erpsystem.png" data-fancybox="portfolio"><img
+                src="asset/projek/erpsystem.png" alt="ERP System"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Software</span>
+            <h3>ERP System</h3>
+            <small>.NET Core, SQL Server</small>
+            <p>Core ERP framework yang dapat disesuaikan untuk berbagai kebutuhan bisnis skala besar.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="eyearbook" data-category="Social Media">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/eyearbook.png" data-fancybox="portfolio"><img
+                src="asset/projek/eyearbook.png" alt="Eyearbook"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Social Media</span>
+            <h3>Eyearbook</h3>
+            <small>React Native, Node.js</small>
+            <p>Platform buku tahunan digital interaktif dengan fitur sosial dan galeri multimedia.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="fluxury" data-category="E-Commerce">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/fluxury.png" data-fancybox="portfolio"><img
+                src="asset/projek/fluxury.png" alt="Fluxury"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">E-Commerce</span>
+            <h3>Fluxury</h3>
+            <small>Magento, PHP</small>
+            <p>Marketplace barang mewah dengan fitur autentikasi produk dan lelang online.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="frontier" data-category="Corporate">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/frontier.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/frontier.jpg" alt="Frontier"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Corporate</span>
+            <h3>Frontier</h3>
+            <small>WordPress, Bootstrap</small>
+            <p>Website profil perusahaan energi terbarukan dengan desain bersih dan informatif.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="garansi" data-category="Platform">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/garansi.png" data-fancybox="portfolio"><img
+                src="asset/projek/garansi.png" alt="Garansi"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Platform</span>
+            <h3>Garansi</h3>
+            <small>Laravel, Livewire</small>
+            <p>Sistem klaim garansi elektronik untuk produk elektronik konsumen.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="indo-rekor" data-category="Platform">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/indorekor.png" data-fancybox="portfolio"><img
+                src="asset/projek/indorekor.png" alt="Indo Rekor"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Platform</span>
+            <h3>Indo Rekor</h3>
+            <small>WordPress, SEO</small>
+            <p>Platform distribusi musik digital untuk musisi independen Indonesia.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="inviguard" data-category="Security">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/inviguard.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/inviguard.jpg" alt="InviGuard"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Security</span>
+            <h3>InviGuard</h3>
+            <small>Vue.js, D3.js</small>
+            <p>Dashboard monitoring keamanan siber real-time dengan visualisasi data ancaman.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="jam-sembilan" data-category="Lifestyle">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/jamsembilan.jpg"
+              data-fancybox="portfolio"><img src="asset/projek/jamsembilan.jpg" alt="Jam Sembilan"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Lifestyle</span>
+            <h3>Jam Sembilan</h3>
+            <small>Flutter, Laravel API</small>
+            <p>Aplikasi reservasi dan menu digital untuk chain coffee shop modern.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="kita-basodara" data-category="Community">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/kitabasodara.png"
+              data-fancybox="portfolio"><img src="asset/projek/kitabasodara.png" alt="Kita Basodara"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Community</span>
+            <h3>Kita Basodara</h3>
+            <small>WordPress, BuddyPress</small>
+            <p>Portal komunitas sosial untuk menghubungkan diaspora daerah perantauan.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="lemisamu" data-category="Fashion">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/lemisamu.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/lemisamu.jpg" alt="Lemisamu"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Fashion</span>
+            <h3>Lemisamu</h3>
+            <small>WordPress, WooCommerce</small>
+            <p>Online store untuk brand fashion etnik kontemporer dengan katalog interaktif.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="parama" data-category="Corporate">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/parama.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/parama.jpg" alt="Parama"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Corporate</span>
+            <h3>Parama</h3>
+            <small>WordPress, SEO</small>
+            <p>Website konsultan manajemen strategis dengan portofolio case study mendalam.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="pos-system" data-category="SaaS">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/pos1.png" data-fancybox="portfolio"><img
+                src="asset/projek/pos1.png" alt="POS System"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">SaaS</span>
+            <h3>POS System</h3>
+            <small>React, Firebase</small>
+            <p>Aplikasi Point of Sales berbasis cloud untuk UMKM ritel dan F&B.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="renee-homewear" data-category="E-Commerce">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/reneehomewear.JPG"
+              data-fancybox="portfolio"><img src="asset/projek/reneehomewear.JPG" alt="Renee Homewear"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">E-Commerce</span>
+            <h3>Renee Homewear</h3>
+            <small>WooCommerce, Elementor</small>
+            <p>Butik online pakaian rumah premium dengan pengalaman belanja yang seamless.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="tds-paint" data-category="Manufacturing">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/tdspaint.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/tdspaint.jpg" alt="TDS Paint"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Manufacturing</span>
+            <h3>TDS Paint</h3>
+            <small>WordPress, SEO</small>
+            <p>Katalog produk digital dan visualizer warna untuk produsen cat industri.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="zen-cave" data-category="Hospitality">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/zencave.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/zencave.jpg" alt="Zen Cave"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Hospitality</span>
+            <h3>Zen Cave</h3>
+            <small>WordPress, A-Frame</small>
+            <p>Booking engine dan virtual tour untuk resort wellness eksklusif.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+        <li id="zen-goods" data-category="Retail">
+          <figure class="reveal-effect masker wow"> <a href="asset/projek/zengoods.jpg" data-fancybox="portfolio"><img
+                src="asset/projek/zengoods.jpg" alt="Zen Goods"></a> </figure>
+          <div class="caption wow" data-splitting>
+            <span class="cat-badge">Retail</span>
+            <h3>Zen Goods</h3>
+            <small>WordPress, SEO</small>
+            <p>Aplikasi belanja barang-barang kebutuhan rumah tangga minimalis.</p>
+          </div>
+          <!-- end caption -->
+        </li>
+      </ul>
+    </section>
+    <!-- end portfolio -->
+  </main>
+  <!-- end main -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <ul>
+            <li><a href="https://www.instagram.com/dopagencydigital/" target="_blank" rel="noopener"><i
+                  class="fab fa-instagram"></i></a></li>
+            <li><a href="https://wa.me/6289504596920" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+            </li>
+            <li><a href="mailto:info@dopagency.com"><i class="fas fa-envelope"></i></a></li>
+          </ul>
+          <h6>LET&rsquo;S TALK ABOUT YOUR PROJECT</h6>
+          <h2>Siap Membawa Bisnis Anda ke Level Berikutnya?</h2>
+          <p>Mari berdiskusi bagaimana kami dapat membantu Anda dengan solusi digital terbaik.</p>
+          <a href="https://wa.me/6289504596920" class="link" target="_blank" rel="noopener">Hubungi Kami via
+            WhatsApp</a>
+        </div>
+        <!-- end col-12 -->
+        <div class="col-12">
+          <div class="footer-bar"> <span class="copyright">Rawa Buntu Utara Blok H2 No.7 Tangerang Selatan | +62 8950
+              4596 920 | info@dopagency.com</span> <span class="creation">&copy; 2026 dopagency. All Rights
+              Reserved.</span> </div>
+          <!-- end footer-bar -->
+        </div>
+        <!-- end col-12 -->
+      </div>
+      <!-- end row -->
+    </div>
+    <!-- end container -->
+  </footer>
+  <!-- end footer -->
+
+  <!-- JS FILES -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/swiper.min.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src='js/splitting.min.js'></script>
+  <script src='js/odometer.min.js'></script>
+  <script src='js/fancybox.min.js'></script>
+  <script src="js/scripts.js"></script>
+  <script>
+    (function () {
+      var btns = document.querySelectorAll('.portfolio-filter button');
+      var items = document.querySelectorAll('.portfolio-works > ul > li');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener('click', function () {
+          for (var j = 0; j < btns.length; j++) { btns[j].classList.remove('active'); }
+          this.classList.add('active');
+          var f = this.getAttribute('data-filter');
+          for (var k = 0; k < items.length; k++) {
+            var li = items[k];
+            var show = (f === 'Semua') || (li.getAttribute('data-category') === f);
+            li.style.display = show ? '' : 'none';
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+
+</html>
