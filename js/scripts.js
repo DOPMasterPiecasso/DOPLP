@@ -377,6 +377,9 @@
 
     // Background Videos Autoplay Helper
     initBackgroundVideos();
+
+    // Portfolio filter sticky
+    initPortfolioFilterSticky();
   }
 
   // --- AUTOPLAY HELPER FOR BACKGROUND VIDEOS ---
@@ -407,6 +410,46 @@
         video.addEventListener('loadeddata', playVideo, { once: true });
         video.addEventListener('canplay', playVideo, { once: true });
         playVideo();
+      }
+    });
+  }
+
+  // Portfolio filter sticky header
+  function initPortfolioFilterSticky() {
+    var $filter = $('.portfolio-filter');
+    if (!$filter.length) return;
+
+    var filterOffset = $filter.offset().top;
+    
+    $(window).off('scroll.portfolioSticky').on('scroll.portfolioSticky', function() {
+      if ($(window).scrollTop() > filterOffset) {
+        $filter.addClass('sticky');
+      } else {
+        $filter.removeClass('sticky');
+      }
+    });
+
+    // Filter button functionality
+    $filter.find('button').off('click.portfolioFilter').on('click.portfolioFilter', function() {
+      var filterValue = $(this).data('filter');
+      
+      // Update active button
+      $filter.find('button').removeClass('active');
+      $(this).addClass('active');
+      
+      // Filter items
+      var $items = $('.portfolio-works ul li');
+      if (filterValue === 'Semua') {
+        $items.fadeIn(300);
+      } else {
+        $items.each(function() {
+          var category = $(this).data('category');
+          if (category === filterValue) {
+            $(this).fadeIn(300);
+          } else {
+            $(this).fadeOut(300);
+          }
+        });
       }
     });
   }
