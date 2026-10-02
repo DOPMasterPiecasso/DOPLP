@@ -91,6 +91,7 @@
     if ($('.gallery-top').length && $('.gallery-thumbs').length) {
       window.dopSwipers.galleryThumbs = new Swiper('.gallery-thumbs', {
         spaceBetween: 10,
+        speed: 1000,
         centeredSlides: true,
         slidesPerView: 3,
         touchRatio: 0,
@@ -108,8 +109,9 @@
 
       window.dopSwipers.galleryTop = new Swiper('.gallery-top', {
         spaceBetween: 0,
+        speed: 1000,
         autoplay: {
-          delay: 9500,
+          delay: 3500,
           disableOnInteraction: false,
         },
         navigation: {
@@ -340,6 +342,41 @@
 
     // Swipers
     initSwipers();
+
+    // Background Videos Autoplay Helper
+    initBackgroundVideos();
+  }
+
+  // --- AUTOPLAY HELPER FOR BACKGROUND VIDEOS ---
+  function initBackgroundVideos() {
+    $('video').each(function () {
+      var video = this;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+
+      var playVideo = function () {
+        var promise = video.play();
+        if (promise !== undefined) {
+          promise.catch(function () {
+            // Fallback: start playback on first user gesture
+            var resumeOnInteraction = function () {
+              video.play().catch(function () {});
+              $(document).off('click.videoPlay touchstart.videoPlay scroll.videoPlay keydown.videoPlay', resumeOnInteraction);
+            };
+            $(document).on('click.videoPlay touchstart.videoPlay scroll.videoPlay keydown.videoPlay', resumeOnInteraction);
+          });
+        }
+      };
+
+      if (video.readyState >= 2) {
+        playVideo();
+      } else {
+        video.addEventListener('loadeddata', playVideo, { once: true });
+        video.addEventListener('canplay', playVideo, { once: true });
+        playVideo();
+      }
+    });
   }
 
   // Equalizer animation helper plugin
