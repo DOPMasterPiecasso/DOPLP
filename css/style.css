@@ -3012,3 +3012,25 @@ html[dir=rtl] .footer .footer-bar .creation {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+/* DOPAGENCY ADJUSTMENT: TECH STACK LOGOS */
+.clients ul li img {
+  display: block;
+  height: 44px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  opacity: .85;
+  transition: 0.25s ease-in-out;
+}
+
+.clients ul li:hover img {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+@media only screen and (max-width: 767px), only screen and (max-device-width: 767px) {
+  .clients ul li img {
+    height: 35px;
+  }
+}
