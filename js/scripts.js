@@ -283,6 +283,51 @@
     };
   }
 
+  // --- COMPONENT-AWARE HELPERS ---
+  // Only split elements that have not been split yet, so re-running the
+  // initialization after an htmx fragment swap never double-splits text.
+  function initSplitting() {
+    if (typeof Splitting === 'undefined') {
+      return;
+    }
+    var $pending = $('[data-splitting]').not('.splitting-done');
+    if (!$pending.length) {
+      return;
+    }
+    Splitting({ target: $pending.get() });
+    $pending.addClass('splitting-done');
+  }
+
+  // Footer height is reserved on <body> because .footer is position:fixed.
+  function updateFooterHeight() {
+    $('body').css({
+      'margin-bottom': $('.footer').innerHeight() || 0
+    });
+  }
+
+  // The equalizer lives in the sidebar component, which may arrive after the
+  // first initPage() run; initialize each instance exactly once.
+  function initEqualizer() {
+    if (!$('.equalizer').length || typeof $.fn.equalizerAnimation !== 'function') {
+      return;
+    }
+    var barsHeight = [
+      [2, 13],
+      [5, 22],
+      [17, 8],
+      [4, 18],
+      [11, 3]
+    ];
+    $('.equalizer').each(function () {
+      var $eq = $(this);
+      if ($eq.data('dop-equalizer-initialized')) {
+        return;
+      }
+      $eq.data('dop-equalizer-initialized', true);
+      $eq.equalizerAnimation(180, barsHeight);
+    });
+  }
+
   // --- PAGE RE-INITIALIZATION (RUNS ON INITIAL LOAD & TURBO:LOAD) ---
   function initPage() {
     // Reset any open overlays and remove overflow
@@ -293,10 +338,8 @@
     // Mark body as page-loaded to hide preloader
     $("body").addClass("page-loaded");
 
-    // Splitting
-    if (typeof Splitting !== 'undefined') {
-      Splitting();
-    }
+    // Splitting (only elements that have not been split yet)
+    initSplitting();
 
     // Data background image
     $(".swiper-slide").each(function () {
@@ -324,21 +367,10 @@
     }
 
     // Footer height calculation
-    $('body').css({
-      'margin-bottom': $('.footer').innerHeight() || 0
-    });
+    updateFooterHeight();
 
     // Equalizer if present
-    if ($('.equalizer').length && typeof $.fn.equalizerAnimation === 'function') {
-      var barsHeight = [
-        [2, 13],
-        [5, 22],
-        [17, 8],
-        [4, 18],
-        [11, 3]
-      ];
-      $('.equalizer').equalizerAnimation(180, barsHeight);
-    }
+    initEqualizer();
 
     // Swipers
     initSwipers();
@@ -429,6 +461,23 @@
       return;
     }
     initPage();
+  });
+
+  // htmx: component fragments (navigation, sidebar, footer, ...) are fetched
+  // asynchronously with hx-trigger="load", i.e. after the first initPage()
+  // run, so re-run the layout-sensitive initializations once they arrive.
+  var componentInitTimer = null;
+  document.addEventListener('htmx:afterSwap', function (e) {
+    var detail = e.detail;
+    if (!detail || detail.target === document.body) {
+      return; // full page swaps are handled by htmx:afterSettle above
+    }
+    clearTimeout(componentInitTimer);
+    componentInitTimer = setTimeout(function () {
+      initSplitting();
+      initEqualizer();
+      updateFooterHeight();
+    }, 60);
   });
 
   // Initial load (first page render, no htmx swap involved)
