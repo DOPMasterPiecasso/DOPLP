@@ -40,10 +40,19 @@
       width: 100%;
       display: flex;
       flex-wrap: wrap;
-      padding: 60px 0 0;
+      padding: 20px 0;
       background: #222327;
       position: relative;
-      z-/: 3;
+      z-index: 10;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .portfolio-filter.sticky {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
     .portfolio-filter .container {
@@ -568,6 +577,21 @@
           }
         });
       }
+
+      // Sticky filter on scroll
+      var filter = document.querySelector('.portfolio-filter');
+      var pageHeader = document.querySelector('.page-header');
+      var filterOffset = filter.offsetTop;
+      
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > filterOffset) {
+          filter.classList.add('sticky');
+          document.querySelector('.portfolio-works').style.paddingTop = filter.offsetHeight + 'px';
+        } else {
+          filter.classList.remove('sticky');
+          document.querySelector('.portfolio-works').style.paddingTop = '0';
+        }
+      });
     })();
   </script>
 </body>
