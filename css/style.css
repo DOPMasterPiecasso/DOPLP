@@ -976,8 +976,9 @@ textarea {
   padding-bottom: 30px;
   z-index: 9;
   position: absolute;
-  bottom: 30%;
+  bottom: 50%;
   right: 0;
+  transform: translateY(50%);
   height: auto;
   color: #fff;
 }
