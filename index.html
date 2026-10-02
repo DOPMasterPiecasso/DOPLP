@@ -36,10 +36,17 @@
   <link rel="stylesheet" href="css/swiper.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
-  
-  <!-- Turbo SPA -->
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@latest/dist/turbo.es2017-esm.min.js"></script>
-  
+
+  <!-- htmx: SPA page navigation (hx-boost) -->
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.min.js"
+    integrity="sha384-2OatzQy1H+Zd/IIrjr1TcuDGqLXeHhbooAyJY1KdQMKnr4LZ22k31GBLdYKHmVjg"
+    crossorigin="anonymous"></script>
+  <script>
+    // Swapped fragments already reuse the globally loaded libraries,
+    // so htmx must not re-execute <script> tags found in them.
+    if (window.htmx) { htmx.config.allowScriptTags = false; }
+  </script>
+
   <style>
     .slider {
       position: relative;
@@ -191,9 +198,11 @@
         width: calc(100% - 100px) !important;
         margin: 0 50px !important;
       }
+
       .slider .gallery-thumbs .swiper-slide span {
         font-size: 4vw;
       }
+
       .slider .gallery-thumbs .swiper-slide-active span {
         font-size: 6vw;
       }
@@ -205,9 +214,11 @@
         margin: 0 !important;
         padding: 0 20px !important;
       }
+
       .slider .gallery-thumbs .swiper-slide span {
         font-size: 28px !important;
       }
+
       .slider .gallery-thumbs .swiper-slide-active span {
         font-size: 42px !important;
       }
@@ -274,7 +285,7 @@
   </style>
 </head>
 
-<body>
+<body hx-boost="true">
   <div class="preloader">
     <div class="layer"></div>
     <div class="inner">
@@ -285,33 +296,36 @@
   <div class="page-transition">
     <div class="layer"></div>
   </div>
-  
+
   <nav class="site-navigation">
     <div class="layer"></div>
     <div class="inner">
       <ul data-splitting>
         <li><a href="/">HOME</a> <small>Halaman utama</small></li>
-        <li><a href="/about.html">TENTANG KAMI</a> <small>Profil perusahaan</small></li>
-        <li><a href="/services.html">LAYANAN</a> <small>6 pilar layanan</small></li>
-        <li><a href="/portfolio.html">PORTFOLIO</a> <small>23 proyek lengkap</small></li>
-        <li><a href="/produk.html">PRODUK</a> <small>Solusi digital bisnis</small></li>
-        <li><a href="/contact.html">KONTAK</a> <small>Form &amp; info kontak</small></li>
+        <li><a href="/about">TENTANG KAMI</a> <small>Profil perusahaan</small></li>
+        <li><a href="/services">LAYANAN</a> <small>6 pilar layanan</small></li>
+        <li><a href="/portfolio">PORTFOLIO</a> <small>23 proyek lengkap</small></li>
+        <li><a href="/produk">PRODUK</a> <small>Solusi digital bisnis</small></li>
+        <li><a href="/contact">KONTAK</a> <small>Form &amp; info kontak</small></li>
       </ul>
     </div>
+    <!-- end inner -->
   </nav>
-  
+
   <div class="social-media">
     <div class="layer"> </div>
     <div class="inner">
       <h5>Ikuti Kami </h5>
       <ul>
-        <li><a href="https://www.instagram.com/dopagencydigital/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a></li>
-        <li><a href="https://wa.me/6282125189383" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a></li>
+        <li><a href="https://www.instagram.com/dopagencydigital/" target="_blank" rel="noopener"><i
+              class="fab fa-instagram"></i></a></li>
+        <li><a href="https://wa.me/6282125189383" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+        </li>
         <li><a href="mailto:info@dopagency.com"><i class="fas fa-envelope"></i></a></li>
       </ul>
     </div>
   </div>
-  
+
   <div class="all-cases">
     <div class="layer"> </div>
     <div class="inner">
@@ -327,10 +341,11 @@
       </ul>
     </div>
   </div>
-  
+
   <main>
     <aside class="left-side">
-      <div class="logo"> <a href="/"><img src="asset/logo/logodopputih.webp" alt="dopagency" style="max-height: 48px; width: auto;"></a> </div>
+      <div class="logo"> <a href="/"><img src="asset/logo/logodopputih.webp" alt="dopagency"
+            style="max-height: 48px; width: auto;"></a> </div>
       <div class="hamburger" id="hamburger">
         <div class="hamburger__line hamburger__line--01">
           <div class="hamburger__line-in hamburger__line-in--01"></div>
@@ -354,7 +369,8 @@
     <div class="all-cases-link"> <span>ALL CASES</span> <b>+</b> </div>
     <header class="slider">
       <div class="video-bg">
-        <video src="asset/video/video.mp4" autoplay loop muted="muted" playsinline webkit-playsinline preload="auto"></video>
+        <video src="asset/video/video.mp4" autoplay loop muted="muted" playsinline webkit-playsinline
+          preload="auto"></video>
       </div>
       <!-- end video-bg -->
       <div class="swiper-container gallery-top">
@@ -570,38 +586,43 @@
     </section>
     <!-- end clients -->
   </main>
-  
+
   <footer class="footer">
     <div class="container">
       <div class="row">
         <div class="col-12">
           <ul>
-            <li><a href="https://www.instagram.com/dopagencydigital/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a></li>
-            <li><a href="https://wa.me/6282125189383" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a></li>
+            <li><a href="https://www.instagram.com/dopagencydigital/" target="_blank" rel="noopener"><i
+                  class="fab fa-instagram"></i></a></li>
+            <li><a href="https://wa.me/6282125189383" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+            </li>
             <li><a href="mailto:info@dopagency.com"><i class="fas fa-envelope"></i></a></li>
           </ul>
           <h6>LET&rsquo;S TALK ABOUT YOUR PROJECT</h6>
           <h2>Siap Membawa Bisnis Anda ke Level Berikutnya?</h2>
           <p>Mari berdiskusi bagaimana kami dapat membantu Anda dengan solusi digital terbaik.</p>
-          <a href="https://wa.me/6282125189383" class="link" target="_blank" rel="noopener">Hubungi Kami via WhatsApp</a>
+          <a href="https://wa.me/6282125189383" class="link" target="_blank" rel="noopener">Hubungi Kami via
+            WhatsApp</a>
         </div>
         <div class="col-12">
-          <div class="footer-bar"> <span class="copyright">BSD Tangerang | +62 821 2518 9383 | info@dopagency.com</span> <span class="creation">&copy; 2026 dopagency. All Rights Reserved.</span> </div>
+          <div class="footer-bar"> <span class="copyright">BSD Tangerang | +62 821 2518 9383 | info@dopagency.com</span>
+            <span class="creation">&copy; 2026 dopagency. All Rights Reserved.</span>
+          </div>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- JS FILES -->
-  <script src="js/jquery.min.js" data-turbo-eval="false"></script>
-  <script src="js/bootstrap.min.js" data-turbo-eval="false"></script>
-  <script src="js/swiper.min.js" data-turbo-eval="false"></script>
-  <script src="js/wow.min.js" data-turbo-eval="false"></script>
-  <script src='js/splitting.min.js' data-turbo-eval="false"></script>
-  <script src='js/odometer.min.js' data-turbo-eval="false"></script>
-  <script src='js/fancybox.min.js' data-turbo-eval="false"></script>
-  <script src="js/scripts.js" data-turbo-eval="false"></script>
-  
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/swiper.min.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src='js/splitting.min.js'></script>
+  <script src='js/odometer.min.js'></script>
+  <script src='js/fancybox.min.js'></script>
+  <script src="js/scripts.js"></script>
+
 </body>
 
 </html>

@@ -36,9 +36,16 @@
   <link rel="stylesheet" href="css/swiper.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
-  
-  <!-- Turbo SPA -->
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@latest/dist/turbo.es2017-esm.min.js"></script>
+
+  <!-- htmx: SPA page navigation (hx-boost) -->
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.min.js"
+    integrity="sha384-2OatzQy1H+Zd/IIrjr1TcuDGqLXeHhbooAyJY1KdQMKnr4LZ22k31GBLdYKHmVjg"
+    crossorigin="anonymous"></script>
+  <script>
+    // Swapped fragments already reuse the globally loaded libraries,
+    // so htmx must not re-execute <script> tags found in them.
+    if (window.htmx) { htmx.config.allowScriptTags = false; }
+  </script>
   <style>
     .portfolio-filter {
       width: 100%;
@@ -56,7 +63,7 @@
       top: 0;
       left: 0;
       z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     }
 
     .portfolio-filter .container {
@@ -124,7 +131,7 @@
   </style>
 </head>
 
-<body>
+<body hx-boost="true">
   <div class="preloader">
     <div class="layer"></div>
     <!-- end layer -->
@@ -142,27 +149,14 @@
   <!-- end page-transition -->
   <nav class="site-navigation">
     <div class="layer"></div>
-    <!-- end layer -->
     <div class="inner">
       <ul data-splitting>
         <li><a href="/">HOME</a> <small>Halaman utama</small></li>
-        <li><a href="/about.html">TENTANG KAMI</a> <small>Profil perusahaan</small></li>
-        <li><a href="/services.html">LAYANAN</a> <small>6 pilar layanan</small></li>
-        <li><a href="/portfolio.html">PORTFOLIO</a> <small>23 proyek lengkap</small></li>
-        <li><a href="/produk.html">PRODUK</a> <small>Solusi digital bisnis</small></li>
-        <li><a href="/contact.html">KONTAK</a> <small>Form &amp; info kontak</small></li>
-          </ul>
-        </li>
-        <li><a href="/about.html">TENTANG KAMI</a> <small>Profil perusahaan</small></li>
-            <li><a href="/about#visi-misi">VISI &amp; MISI</a></li>
-            <li><a href="/about#nilai-inti">NILAI INTI</a></li>
-          </ul>
-        </li>
-        <li><a href="/services.html">LAYANAN</a> <small>6 pilar layanan</small> </li>
-        <li><a href="/portfolio.html">PORTFOLIO</a> <small>23 proyek lengkap</small> </li>
-        <li><a href="/produk.html">PRODUK</a> <small>Solusi digital bisnis</small> </li>
-
-        <li><a href="/contact.html">KONTAK</a> <small>Form &amp; info kontak</small> </li>
+        <li><a href="/about">TENTANG KAMI</a> <small>Profil perusahaan</small></li>
+        <li><a href="/services">LAYANAN</a> <small>6 pilar layanan</small></li>
+        <li><a href="/portfolio">PORTFOLIO</a> <small>23 proyek lengkap</small></li>
+        <li><a href="/produk">PRODUK</a> <small>Solusi digital bisnis</small></li>
+        <li><a href="/contact">KONTAK</a> <small>Form &amp; info kontak</small></li>
       </ul>
     </div>
     <!-- end inner -->
@@ -189,14 +183,14 @@
     <!-- end layer -->
     <div class="inner">
       <ul>
-        <li><a href=\"/portfolio#erp-construction\">ERP Construction</a></li>
-        <li><a href=\"/portfolio#barbershop-app\">Barbershop App</a></li>
-        <li><a href=\"/portfolio#binary-tech\">Binary Tech</a></li>
-        <li><a href=\"/portfolio#cielo-cura\">Cielo Cura</a></li>
-        <li><a href=\"/portfolio#dandanoma\">Dandanoma</a></li>
-        <li><a href=\"/portfolio#inviguard\">InviGuard</a></li>
-        <li><a href=\"/portfolio#jam-sembilan\">Jam Sembilan</a></li>
-        <li><a href=\"/portfolio#pos-system\">POS System</a></li>
+        <li><a href="/portfolio#erp-construction">ERP Construction</a></li>
+        <li><a href="/portfolio#barbershop-app">Barbershop App</a></li>
+        <li><a href="/portfolio#binary-tech">Binary Tech</a></li>
+        <li><a href="/portfolio#cielo-cura">Cielo Cura</a></li>
+        <li><a href="/portfolio#dandanoma">Dandanoma</a></li>
+        <li><a href="/portfolio#inviguard">InviGuard</a></li>
+        <li><a href="/portfolio#jam-sembilan">Jam Sembilan</a></li>
+        <li><a href="/portfolio#pos-system">POS System</a></li>
       </ul>
     </div>
     <!-- end inner -->
@@ -556,15 +550,15 @@
   <!-- end footer -->
 
   <!-- JS FILES -->
-  <script src="js/jquery.min.js" data-turbo-eval="false"></script>
-  <script src="js/bootstrap.min.js" data-turbo-eval="false"></script>
-  <script src="js/swiper.min.js" data-turbo-eval="false"></script>
-  <script src="js/wow.min.js" data-turbo-eval="false"></script>
-  <script src="js/splitting.min.js" data-turbo-eval="false"></script>
-  <script src="js/odometer.min.js" data-turbo-eval="false"></script>
-  <script src="js/fancybox.min.js" data-turbo-eval="false"></script>
-  <script src="js/scripts.js" data-turbo-eval="false"></script>
-  
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/swiper.min.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="js/splitting.min.js"></script>
+  <script src="js/odometer.min.js"></script>
+  <script src="js/fancybox.min.js"></script>
+  <script src="js/scripts.js"></script>
+
 </body>
 
 </html>

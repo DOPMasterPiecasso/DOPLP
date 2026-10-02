@@ -1,6 +1,6 @@
 /**
  * dopagency - scripts.js
- * Full Hotwired Turbo Drive Support & Interactive Handlers
+ * Full htmx Support (hx-boost page navigation) & Interactive Handlers
  */
 
 (function ($) {
@@ -404,20 +404,34 @@
     });
   };
 
-  // Turbo before-cache: clean up state before snapshot
-  document.addEventListener('turbo:before-cache', function () {
+  // A boosted page navigation always swaps into <body>.
+  // History back/forward restores carry no target detail, so treat them as body swaps.
+  function isBodySwap(detail) {
+    var target = detail && detail.target;
+    return !target || target === document.body;
+  }
+
+  // htmx: clean up state right before a boosted page fragment is swapped in
+  document.addEventListener('htmx:beforeSwap', function (e) {
+    if (!isBodySwap(e.detail)) {
+      return;
+    }
     closeSiteNavigation();
     closeSocialMedia();
     closeAllCases();
     destroyAllSwipers();
   });
 
-  // Turbo load
-  document.addEventListener('turbo:load', function () {
+  // htmx: re-initialize everything once the new page fragment has settled
+  // (also fires on history back/forward restores)
+  document.addEventListener('htmx:afterSettle', function (e) {
+    if (!isBodySwap(e.detail)) {
+      return;
+    }
     initPage();
   });
 
-  // Fallback for initial non-Turbo load if turbo:load didn't fire
+  // Initial load (first page render, no htmx swap involved)
   $(document).ready(function () {
     initPage();
   });
