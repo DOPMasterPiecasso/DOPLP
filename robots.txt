@@ -1,0 +1,27 @@
+# robots.txt - dopagency
+# Allow Google bot meng crawled halaman publik, larang area admin.
+
+User-agent: *
+Allow: /
+
+# Area administration (tidak boleh diindeks)
+Disallow: /backend/
+Disallow: /login
+Disallow: /logout
+Disallow: /admin
+Disallow: /dashboard
+
+# Fragment htmx, bukan halaman utuh (hindari duplikat konten)
+Disallow: /components/
+
+# File pendukung yang tidak perlu diindeks
+Disallow: /css/
+Disallow: /js/
+Disallow: /fonts/
+
+# Gambar portfolio & blog tetap boleh diindeks (Google Images)
+Allow: /uploads/
+Allow: /images/
+Allow: /asset/
+
+Sitemap: https://dopagency.my.id/sitemap.xml

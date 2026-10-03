@@ -21,11 +21,22 @@ $routes = [
     'logout' => '/backend/admin/logout.php',
     'admin' => '/backend/admin/dashboard.php',
     'dashboard' => '/backend/admin/dashboard.php',
+    'sitemap.xml' => '/sitemap.php',
+    'sitemap' => '/sitemap.php',
+    'blog' => '/blog.php',
 ];
 
 if (isset($routes[$path])) {
     error_log('Route match: ' . $path . ' -> ' . $routes[$path]);
     require __DIR__ . $routes[$path];
+    exit;
+}
+
+// /blog/<slug> -> blog-detail.php
+if (preg_match('#^blog/([A-Za-z0-9\-_]+)$#', $path, $matches)) {
+    error_log('Route match: blog detail -> ' . $matches[1]);
+    $_GET['slug'] = $matches[1];
+    require __DIR__ . '/blog-detail.php';
     exit;
 }
 
@@ -55,4 +66,4 @@ if (is_file(__DIR__ . '/' . $path)) {
 // 404
 error_log('404 Not Found');
 http_response_code(404);
-echo '<!DOCTYPE html><html><head><title>404</title></head><body><h1>404 Not Found</h1></body></html>';
+require __DIR__ . '/404.php';

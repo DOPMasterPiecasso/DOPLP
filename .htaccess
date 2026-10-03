@@ -6,6 +6,13 @@ RewriteRule ^logout/?$ backend/admin/logout.php [L]
 RewriteRule ^admin/?$ backend/admin/dashboard.php [L]
 RewriteRule ^dashboard/?$ backend/admin/dashboard.php [L]
 
+# /sitemap.xml -> /sitemap.xml.php
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# /blog -> /blog.php  dan  /blog/<slug> -> /blog-detail.php
+RewriteRule ^blog/?$ blog.php [L]
+RewriteRule ^blog/([A-Za-z0-9\-_]+)/?$ blog-detail.php?slug=$1 [L]
+
 # /about -> /about.html
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f

@@ -573,6 +573,10 @@ textarea {
   position: relative;
   z-index: 2;
   padding-left: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0 90px;
   -webkit-transition: 0.25s ease-in-out;
   -moz-transition: 0.25s ease-in-out;
   -ms-transition: 0.25s ease-in-out;
@@ -648,6 +652,13 @@ textarea {
 }
 .site-navigation.active .inner {
   opacity: 1;
+}
+
+/* SITE NAVIGATION: two columns collapse back to one on tablet & below */
+@media only screen and (max-width: 991px), only screen and (max-device-width: 991px) {
+  .site-navigation .inner {
+    display: block;
+  }
 }
 
 /* SECTION TITLES */
@@ -1907,11 +1918,13 @@ textarea {
   padding-right: 60px;
 }
 .blog .sidebar {
-  width: 100%;
-  float: left;
   display: flex;
   flex-wrap: wrap;
-  padding: 50px 0;
+  align-self: flex-start;
+  padding: 50px 0 0 0;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 30px;
 }
 .blog .sidebar .widget {
   width: 100%;
@@ -2503,6 +2516,108 @@ html[dir=rtl] .blog .sidebar .widget .title:before {
   left: auto;
   right: -31px;
 }
+
+/* BLOG: dua widget sidebar langsung menempel, tanpa celah kosong di antaranya */
+.blog .sidebar .widget {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* BLOG: daftar artikel tersusun berurutan (thumbnail atas, deskripsi bawah).
+   Hanya untuk layar >= 768px, karena tema sudah menumpuk otomatis di mobile. */
+@media (min-width: 768px) {
+  .blog .post:not(.single) {
+    display: block;
+    margin: 0 0 50px 0;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .blog .post:not(.single) .post-image {
+    width: 100%;
+    margin: 0 0 30px 0;
+    box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .blog .post:not(.single) .post-image:before {
+    display: none;
+  }
+
+  .blog .post:not(.single) .post-image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .blog .post:not(.single) .post-content {
+    width: 100%;
+    padding: 0;
+    text-align: left;
+  }
+
+  .blog .post:not(.single):nth-child(even) .post-image {
+    order: 0;
+  }
+
+  .blog .post:not(.single):nth-child(even) .post-image:before {
+    display: none;
+  }
+
+  .blog .post:not(.single):nth-child(even) .post-content {
+    order: 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  .blog .post:not(.single) .post-content .post-title {
+    font-size: clamp(20px, 2.2vw, 34px);
+    margin-bottom: 15px;
+  }
+
+  .blog .post:not(.single) .post-content .post-author {
+    margin-bottom: 15px;
+  }
+}
+
+/* BLOG: dua kolom 50/50.
+   .row milik Bootstrap 4 memakai flexbox, jadi float diabaikan dan
+   flex-basis bawaan .col-lg-9 (75%) mengalahkan width. Keduanya harus
+   ditimpa lewat flex + max-width. */
+@media (min-width: 992px) {
+  .blog .col-lg-9 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    width: 50%;
+    padding-right: 40px;
+  }
+
+  .blog .sidebar {
+    flex: 0 0 50%;
+    max-width: 50%;
+    width: 50%;
+    padding-left: 40px;
+  }
+
+  .blog .sidebar .widget {
+    padding-left: 35px;
+  }
+
+  .blog .sidebar .widget .title {
+    font-size: 22px;
+  }
+
+  .blog .sidebar .widget .title:before {
+    left: -36px;
+  }
+
+  .blog .sidebar .widget p {
+    font-size: 16px;
+  }
+
+  .blog .sidebar .widget .categories li {
+    padding: 12px 0;
+  }
+}
+
 html[dir=rtl] .text-content-block h5 {
   padding-right: 0;
   padding-left: 20%;
@@ -2687,7 +2802,17 @@ html[dir=rtl] .footer .footer-bar .creation {
   }
 
   .blog .col-lg-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
     padding-right: 15px;
+  }
+
+  .blog .sidebar {
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+    position: static;
   }
 
   .contact {
