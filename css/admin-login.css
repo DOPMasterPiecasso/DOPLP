@@ -1,0 +1,332 @@
+@import url("https://fonts.googleapis.com/css?family=Fjalla+One|Poppins:300,400,600,800&display=swap");
+
+:root {
+  --dop-bg: #222327;
+  --dop-bg-deep: #1c1c1c;
+  --dop-accent: #75dab4;
+  --dop-text: #ffffff;
+  --dop-muted: #9a9ca3;
+  --dop-border: rgba(255, 255, 255, 0.09);
+  --dop-danger: #ff6b6b;
+}
+
+* {
+  outline: none !important;
+  box-sizing: border-box;
+}
+
+body.login-body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  background: var(--dop-bg);
+  color: var(--dop-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.login-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.login-aside {
+  flex: 1 1 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 60px;
+  background: var(--dop-bg-deep);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-aside::after {
+  content: "";
+  position: absolute;
+  right: -180px;
+  bottom: -180px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(117, 218, 180, 0.22) 0%, rgba(117, 218, 180, 0) 70%);
+}
+
+.login-aside > * {
+  position: relative;
+  z-index: 1;
+}
+
+.login-brand {
+  font-family: "Fjalla One", sans-serif;
+  font-size: 34px;
+  color: var(--dop-text);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.login-brand:hover {
+  text-decoration: none;
+  color: var(--dop-accent);
+}
+
+.login-brand span {
+  color: var(--dop-accent);
+}
+
+.login-pitch h1 {
+  font-family: "Fjalla One", sans-serif;
+  font-size: 52px;
+  line-height: 1.15;
+  font-weight: 400;
+  margin: 0 0 20px;
+  color: var(--dop-text);
+}
+
+.login-pitch p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--dop-muted);
+  max-width: 420px;
+  margin: 0;
+}
+
+.login-metrics {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.login-metrics b {
+  display: block;
+  font-family: "Fjalla One", sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--dop-accent);
+}
+
+.login-metrics small {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--dop-muted);
+}
+
+.login-main {
+  flex: 1 1 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-card h2 {
+  font-family: "Fjalla One", sans-serif;
+  font-size: 34px;
+  font-weight: 400;
+  margin: 0 0 6px;
+}
+
+.login-card .login-lead {
+  font-size: 14px;
+  color: var(--dop-muted);
+  margin: 0 0 34px;
+}
+
+.login-field {
+  margin-bottom: 22px;
+}
+
+.login-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--dop-muted);
+  margin-bottom: 8px;
+}
+
+.login-input-wrap {
+  position: relative;
+}
+
+.login-input-wrap .fa {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--dop-muted);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.login-input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px 0 42px;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--dop-text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--dop-border);
+  border-radius: 4px;
+  transition: 0.25s ease-in-out;
+}
+
+.login-input::placeholder {
+  color: #6d6f77;
+}
+
+.login-input:focus {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--dop-accent);
+}
+
+.login-toggle {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  color: var(--dop-muted);
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+
+.login-toggle:hover {
+  color: var(--dop-accent);
+}
+
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: var(--dop-muted);
+}
+
+.login-check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.login-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--dop-accent);
+  cursor: pointer;
+}
+
+.login-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 14px 16px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  border: 1px solid transparent;
+}
+
+.login-alert .fa {
+  margin-top: 2px;
+}
+
+.login-alert.is-error {
+  color: var(--dop-danger);
+  background: rgba(255, 107, 107, 0.08);
+  border-color: rgba(255, 107, 107, 0.3);
+}
+
+.login-alert.is-info {
+  color: var(--dop-accent);
+  background: rgba(117, 218, 180, 0.08);
+  border-color: rgba(117, 218, 180, 0.3);
+}
+
+.login-submit {
+  width: 100%;
+  height: 54px;
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dop-bg-deep);
+  background: var(--dop-accent);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+
+.login-submit:hover:not(:disabled) {
+  background: #8ce6c4;
+  box-shadow: 0 12px 30px rgba(117, 218, 180, 0.22);
+}
+
+.login-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.login-foot {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #6d6f77;
+}
+
+.login-foot a {
+  color: var(--dop-muted);
+  text-decoration: none;
+  transition: 0.25s ease-in-out;
+}
+
+.login-foot a:hover {
+  color: var(--dop-accent);
+  text-decoration: none;
+}
+
+@media (max-width: 991px) {
+  .login-aside {
+    display: none;
+  }
+
+  .login-main {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .login-main {
+    padding: 40px 22px;
+  }
+
+  .login-card h2 {
+    font-size: 28px;
+  }
+}
