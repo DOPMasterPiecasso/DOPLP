@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($result['ok']) {
             if ($remember) {
-                $_SESSION['remember_until'] = time() + 2592000;
+                authIssueRememberCookie((int)($result['user_id'] ?? 0));
             }
             header('Location: ' . takeIntendedUrl());
             exit();

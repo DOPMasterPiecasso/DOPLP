@@ -211,7 +211,7 @@ function login($email, $password) {
     authThrottleClear();
     authEstablishSession($row);
 
-    return ['ok' => true, 'message' => ''];
+    return ['ok' => true, 'message' => '', 'user_id' => (int)$row['id']];
 }
 
 function authEstablishSession(array $row) {

@@ -94,13 +94,16 @@
       text-transform: uppercase;
     }
 
-    /* VISI & MISI: angka 01-05 */
-    #visi-misi small {
+    /* VISI & MISI + PROSES KERJA: angka 01-05 */
+    #visi-misi small,
+    #proses-kerja small {
       margin-bottom: 4px;
     }
 
     #visi-misi .row > div:last-child,
-    #visi-misi .row > div:nth-last-child(2) {
+    #visi-misi .row > div:nth-last-child(2),
+    #proses-kerja .row > div:last-child,
+    #proses-kerja .row > div:nth-last-child(2) {
       margin-bottom: 45px;
     }
   </style>
@@ -243,7 +246,7 @@
       <!-- end container -->
     </section>
     <!-- end icon-content-block -->
-    <section class="text-content-block">
+    <section class="text-content-block" id="proses-kerja">
       <div class="container">
         <div class="row">
           <div class="col-12 wow" data-splitting>
