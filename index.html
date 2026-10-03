@@ -61,7 +61,7 @@
       height: 100%;
       z-index: 0;
       overflow: hidden;
-      background: #222327;
+      background: #fff;
     }
 
     .slider .video-bg video {
@@ -358,58 +358,36 @@
             <h3 class="section-title">LAYANAN UNGGULAN<br>YANG KAMI TAWARKAN</h3>
           </div>
           <!-- end col-12 -->
-          <div class="col-lg-3 col-md-4 wow" data-splitting>
-            <div class="content-block">
+          <div class="col-lg-6 col-md-6 wow" data-splitting>
+            <div class="content-block content-block-inline">
               <figure> <img src="images/icon01.png" alt="PENGEMBANGAN WEBSITE"> </figure>
-              <h6>PENGEMBANGAN WEBSITE</h6>
-              <ul>
-                <li>Profil Perusahaan</li>
-                <li>Content Management System (CMS)</li>
-                <li>Portal E-Learning</li>
-                <li>Pengembangan Website Custom</li>
-              </ul>
+              <div class="block-body">
+                <h6>PENGEMBANGAN WEBSITE</h6>
+                <ul>
+                  <li>Profil Perusahaan</li>
+                  <li>Content Management System (CMS)</li>
+                  <li>Portal E-Learning</li>
+                  <li>Pengembangan Website Custom</li>
+                </ul>
+              </div>
+              <!-- end block-body -->
             </div>
             <!-- end content-block -->
           </div>
           <!-- end col -->
-          <div class="col-lg-3 col-md-4 wow" data-splitting>
-            <div class="content-block selected">
+          <div class="col-lg-6 col-md-6 wow" data-splitting>
+            <div class="content-block content-block-inline selected">
               <figure> <img src="images/icon02.png" alt="APLIKASI &amp; SISTEM"> </figure>
-              <h6>APLIKASI &amp; SISTEM</h6>
-              <ul>
-                <li>Mobile Apps Android / iOS</li>
-                <li>Sistem Manajemen</li>
-                <li>Dashboard &amp; Tracking KPI</li>
-                <li>Integrasi SAP / ERP</li>
-              </ul>
-            </div>
-            <!-- end content-block -->
-          </div>
-          <!-- end col -->
-          <div class="col-lg-3 col-md-4 wow" data-splitting>
-            <div class="content-block">
-              <figure> <img src="images/icon03.png" alt="DESAIN &amp; BRANDING"> </figure>
-              <h6>DESAIN &amp; BRANDING</h6>
-              <ul>
-                <li>Logo &amp; Branding Kit</li>
-                <li>UI/UX Design</li>
-                <li>Konten Media Sosial</li>
-                <li>Ilustrasi &amp; Kartun</li>
-              </ul>
-            </div>
-            <!-- end content-block -->
-          </div>
-          <!-- end col -->
-          <div class="col-lg-3 col-md-4 wow" data-splitting>
-            <div class="content-block">
-              <figure> <img src="images/icon01.png" alt="GAME &amp; INTERAKTIF"> </figure>
-              <h6>GAME &amp; INTERAKTIF</h6>
-              <ul>
-                <li>Game Developer</li>
-                <li>Roblox Experience</li>
-                <li>3D Modeler</li>
-                <li>Media Interaktif</li>
-              </ul>
+              <div class="block-body">
+                <h6>APLIKASI &amp; SISTEM</h6>
+                <ul>
+                  <li>Mobile Apps Android / iOS</li>
+                  <li>Sistem Manajemen</li>
+                  <li>Dashboard &amp; Tracking KPI</li>
+                  <li>Integrasi SAP / ERP</li>
+                </ul>
+              </div>
+              <!-- end block-body -->
             </div>
             <!-- end content-block -->
           </div>
@@ -420,6 +398,24 @@
       <!-- end container -->
     </section>
     <!-- end icon-content-block -->
+    <div class="work-divider-head">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center wow" data-splitting>
+            <h3 class="section-title">KATEGORI</h3>
+            <ul class="work-cats">
+              <li>Web System</li>
+              <li>Landing Page</li>
+              <li>Company Profile</li>
+            </ul>
+          </div>
+          <!-- end col-12 -->
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- end container -->
+    </div>
+    <!-- end work-divider-head -->
     <section class="works">
       <ul>
         <li>
@@ -493,20 +489,20 @@
           <!-- end col-5 -->
           <div class="col-lg-7">
             <ul>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/laravel.svg" alt="Laravel" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/wordpress.svg" alt="WordPress" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/flutter.svg" alt="Flutter" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/figma.svg" alt="Figma" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/postgresql.svg" alt="PostgreSQL" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/google-analytics.svg" alt="GA Analytic" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/vuejs.svg" alt="Vue JS" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/roblox.svg" alt="Roblox" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/godot.svg" alt="Godot" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/mysql.svg" alt="MySQL" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/nodejs.svg" alt="Node.js" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/react.svg" alt="React" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/php.svg" alt="PHP" loading="lazy"> </li>
-              <li class="reveal-effect masker wow"> <img src="asset/tech/python.svg" alt="Python" loading="lazy"> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/laravel.svg" alt="Laravel" loading="lazy"> </figure> <span class="tech-name">Laravel</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/wordpress.svg" alt="WordPress" loading="lazy"> </figure> <span class="tech-name">WordPress</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/flutter.svg" alt="Flutter" loading="lazy"> </figure> <span class="tech-name">Flutter</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/figma.svg" alt="Figma" loading="lazy"> </figure> <span class="tech-name">Figma</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/postgresql.svg" alt="PostgreSQL" loading="lazy"> </figure> <span class="tech-name">PostgreSQL</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/google-analytics.svg" alt="Google Analytics" loading="lazy"> </figure> <span class="tech-name">Google Analytics</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/vuejs.svg" alt="Vue.js" loading="lazy"> </figure> <span class="tech-name">Vue.js</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/roblox.svg" alt="Roblox" loading="lazy"> </figure> <span class="tech-name">Roblox</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/godot.svg" alt="Godot" loading="lazy"> </figure> <span class="tech-name">Godot</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/mysql.svg" alt="MySQL" loading="lazy"> </figure> <span class="tech-name">MySQL</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/nodejs.svg" alt="Node.js" loading="lazy"> </figure> <span class="tech-name">Node.js</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/react.svg" alt="React" loading="lazy"> </figure> <span class="tech-name">React</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/php.svg" alt="PHP" loading="lazy"> </figure> <span class="tech-name">PHP</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/python.svg" alt="Python" loading="lazy"> </figure> <span class="tech-name">Python</span> </li>
             </ul>
           </div>
           <!-- end col-7 -->
