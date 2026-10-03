@@ -2,114 +2,161 @@
 require_once __DIR__ . '/../../includes/auth.php';
 requireAuth();
 require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../includes/admin-layout.php';
 
 $db = getConnection();
 $message = '';
-$kategoris = $db->query("SELECT * FROM kategori ORDER BY nama ASC")->fetchAll();
+$messageType = 'success';
+$uploadDir = __DIR__ . '/../../../uploads/portfolio/';
+$maxSize = 2 * 1024 * 1024;
+$allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+if (!is_dir($uploadDir)) {
+    @mkdir($uploadDir, 0755, true);
+}
+
+function adminHandleUpload($file, $uploadDir, $maxSize, $allowed) {
+    if (!isset($file['error']) || $file['error'] !== UPLOAD_ERR_OK) {
+        return [null, null];
+    }
+
+    if ($file['size'] > $maxSize) {
+        return [null, 'Ukuran gambar maksimal 2MB.'];
+    }
+
+    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    if (!in_array($ext, $allowed, true)) {
+        return [null, 'Format gambar harus JPG, PNG, WEBP, atau GIF.'];
+    }
+
+    if (!is_dir($uploadDir)) {
+        @mkdir($uploadDir, 0755, true);
+    }
+
+    $filename = date('Ymd') . '_' . bin2hex(random_bytes(6)) . '.' . $ext;
+    $target = $uploadDir . $filename;
+
+    if (move_uploaded_file($file['tmp_name'], $target)) {
+        return [$filename, null];
+    }
+
+    return [null, 'Gagal menyimpan gambar.'];
+}
+
+$kategoris = $db->query('SELECT * FROM kategori ORDER BY nama ASC')->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    adminRequireCsrf();
+
     $judul = trim($_POST['judul'] ?? '');
-    $slug = strtolower(preg_replace('/[^a-zA-Z0-9\-]/', '-', $judul));
-    $kategori_id = intval($_POST['kategori_id'] ?? 0) ?: null;
+    $kategori_id = (int)($_POST['kategori_id'] ?? 0) ?: null;
     $deskripsi = $_POST['deskripsi'] ?? '';
     $client = trim($_POST['client'] ?? '');
     $tahun = trim($_POST['tahun'] ?? '');
-    $gambar = '';
-    
-    if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === 0) {
-        $uploadDir = __DIR__ . '/../../../uploads/portfolio/';
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
-        $filename = time() . '_' . basename($_FILES['gambar']['name']);
-        $targetPath = $uploadDir . $filename;
-        if (move_uploaded_file($_FILES['gambar']['tmp_name'], $targetPath)) {
-            $gambar = $filename;
+    $gambar = null;
+
+    if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
+        [$gambar, $uploadError] = adminHandleUpload($_FILES['gambar'], $uploadDir, $maxSize, $allowed);
+        if ($uploadError !== null) {
+            $message = $uploadError;
+            $messageType = 'error';
         }
     }
-    
-    if (!empty($judul)) {
+
+    if ($judul === '') {
+        $message = 'Judul tidak boleh kosong.';
+        $messageType = 'error';
+    } elseif ($messageType === 'error') {
+    } else {
         try {
-            $stmt = $db->prepare("INSERT INTO portfolio (judul, slug, kategori_id, deskripsi, gambar, client, tahun) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$judul, $slug, $kategori_id, $deskripsi, $gambar, $client, $tahun]);
-            header('Location: /backend/admin/portfolio/index.php');
+            $stmt = $db->prepare('INSERT INTO portfolio (judul, slug, kategori_id, deskripsi, gambar, client, tahun) VALUES (?, ?, ?, ?, ?, ?, ?)');
+            $stmt->execute([$judul, adminSlugify($judul), $kategori_id, $deskripsi, $gambar, $client, $tahun]);
+            header('Location: /backend/admin/portfolio/index.php?success=1');
             exit();
         } catch (Exception $e) {
-            $message = 'Gagal menambahkan: ' . $e->getMessage();
+            $message = 'Gagal menambahkan portfolio: ' . $e->getMessage();
+            $messageType = 'error';
         }
     }
 }
+
+if (isset($_GET['success'])) {
+    adminAlert('Portfolio berhasil ditambahkan.', 'success');
+}
+
+adminLayoutHeader(
+    'Tambah Portfolio',
+    'portfolio',
+    'Formulir proyek baru',
+    [['label' => 'Kembali', 'url' => '/backend/admin/portfolio/index.php', 'icon' => 'fa-arrow-left', 'class' => 'admin-btn--ghost']]
+);
+
+adminAlert($message, $messageType);
 ?>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/backend/admin/dashboard.php">Admin</a>
-            <div class="navbar-nav">
-                <a class="nav-link active" href="/backend/admin/portfolio/index.php">Portfolio</a>
-                <a class="nav-link" href="/backend/admin/kategori/index.php">Kategori</a>
-                <a class="nav-link" href="/backend/admin/blog/index.php">Blog</a>
-                <a class="nav-link" href="/backend/admin/logout.php">Logout</a>
-            </div>
-        </div>
-    </nav>
-    <div class="container mt-4">
-        <h2>Tambah Portfolio</h2>
-        <?php if ($message): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($message) ?></div>
-        <?php endif; ?>
-        <form method="POST" enctype="multipart/form-data" class="mt-3">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Judul</label>
-                    <input type="text" name="judul" class="form-control" required>
+
+<div class="panel">
+    <div class="panel__head">
+        <h3>Detail Portfolio</h3>
+    </div>
+    <div class="panel__body">
+        <form method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
+
+            <div class="form-grid">
+                <div class="field">
+                    <label for="judul">Judul</label>
+                    <input type="text" id="judul" name="judul" value="<?= htmlspecialchars($_POST['judul'] ?? '', ENT_QUOTES, 'UTF-8') ?>" placeholder="Contoh: Redesign Website Kopi" required>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Kategori</label>
-                    <select name="kategori_id" class="form-select">
-                        <option value="">-- Pilih Kategori --</option>
+
+                <div class="field">
+                    <label for="kategori_id">Kategori</label>
+                    <select id="kategori_id" name="kategori_id">
+                        <option value="">-- Tanpa kategori --</option>
                         <?php foreach ($kategoris as $k): ?>
-                            <option value="<?= $k['id'] ?>"><?= htmlspecialchars($k['nama']) ?></option>
+                            <option value="<?= (int)$k['id'] ?>" <?= (int)($_POST['kategori_id'] ?? 0) === (int)$k['id'] ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($k['nama'], ENT_QUOTES, 'UTF-8') ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Client</label>
-                    <input type="text" name="client" class="form-control">
+
+                <div class="field">
+                    <label for="client">Client</label>
+                    <input type="text" id="client" name="client" value="<?= htmlspecialchars($_POST['client'] ?? '', ENT_QUOTES, 'UTF-8') ?>" placeholder="Contoh: Kopi Nusantara">
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Tahun</label>
-                    <input type="text" name="tahun" class="form-control" placeholder="2025">
+
+                <div class="field">
+                    <label for="tahun">Tahun</label>
+                    <input type="text" id="tahun" name="tahun" value="<?= htmlspecialchars($_POST['tahun'] ?? date('Y'), ENT_QUOTES, 'UTF-8') ?>" placeholder="2026">
+                </div>
+
+                <div class="field field--full">
+                    <label for="gambar">Gambar</label>
+                    <input type="file" id="gambar" name="gambar" accept="image/*">
+                    <div class="field__hint">JPG, PNG, WEBP, atau GIF. Maksimal 2MB. Disarankan rasio 4:3.</div>
+                </div>
+
+                <div class="field field--full">
+                    <label for="editor">Deskripsi</label>
+                    <textarea id="editor" name="deskripsi" rows="10"><?= htmlspecialchars($_POST['deskripsi'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
                 </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Gambar</label>
-                <input type="file" name="gambar" class="form-control" accept="image/*">
+
+            <div class="form-actions">
+                <button type="submit" class="admin-btn"><i class="fa fa-check"></i> Simpan Portfolio</button>
+                <a class="admin-btn admin-btn--ghost" href="/backend/admin/portfolio/index.php">Batal</a>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Deskripsi</label>
-                <textarea name="deskripsi" id="editor" class="form-control" rows="8"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="/backend/admin/portfolio/index.php" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'))
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-</body>
-</html>
+</div>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+<script>
+    if (window.ClassicEditor && document.querySelector('#editor')) {
+        ClassicEditor.create(document.querySelector('#editor')).catch(function (error) {
+            console.error(error);
+        });
+    }
+</script>
+
+<?php adminLayoutFooter(); ?>

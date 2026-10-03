@@ -259,6 +259,48 @@
       checkForInput(this);
     });
 
+    // CONTACT FORM -> WHATSAPP
+    $(document).on('submit', '#contact', function (e) {
+      e.preventDefault();
+
+      var $form = $(this);
+      var name = $.trim($form.find('#name').val() || '');
+      var email = $.trim($form.find('#email').val() || '');
+      var phone = $.trim($form.find('#phone').val() || '');
+      var service = $.trim($form.find('#service').val() || '');
+      var message = $.trim($form.find('#message').val() || '');
+
+      if (!service || service === '-- Pilih Layanan --') {
+        $('#error').text('Silakan pilih layanan terlebih dahulu.').show();
+        $('#success').hide();
+        $form.find('#service').trigger('focus');
+        return;
+      }
+
+      var text = [
+        'Halo dopagency, saya ingin-request informasi layanan.',
+        '',
+        'Nama: ' + name,
+        'Email: ' + email,
+        'Telepon / WA: ' + phone,
+        'Layanan: ' + service,
+        '',
+        'Pesan:',
+        message
+      ].join('\n');
+
+      var url = 'https://wa.me/6282125189383?text=' + encodeURIComponent(text);
+      var popup = window.open(url, '_blank', 'noopener');
+
+      if (popup) {
+        $('#error').hide();
+        $('#success').show();
+      } else {
+        $('#success').hide();
+        $('#error').text('Popup diblokir browser, silakan izinkan popup lalu coba lagi.').show();
+      }
+    });
+
     // ODOMETER / SCROLL LISTENER
     $(document).on('scroll.dopScroll', function () {
       $('.odometer').each(function () {
