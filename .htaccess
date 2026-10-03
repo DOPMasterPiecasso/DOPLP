@@ -1,5 +1,11 @@
 RewriteEngine On
 
+# /login -> /backend/admin/login.php (harus sebelum aturan .html)
+RewriteRule ^login/?$ backend/admin/login.php [L]
+RewriteRule ^logout/?$ backend/admin/logout.php [L]
+RewriteRule ^admin/?$ backend/admin/dashboard.php [L]
+RewriteRule ^dashboard/?$ backend/admin/dashboard.php [L]
+
 # /about -> /about.html
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f

@@ -15,6 +15,20 @@ if (preg_match('/\.(css|js|jpg|jpeg|png|gif|svg|webp|ico|woff|woff2|ttf|mp4|webm
     return false; // Let PHP built-in server handle it
 }
 
+// Friendly aliases for backend pages
+$routes = [
+    'login' => '/backend/admin/login.php',
+    'logout' => '/backend/admin/logout.php',
+    'admin' => '/backend/admin/dashboard.php',
+    'dashboard' => '/backend/admin/dashboard.php',
+];
+
+if (isset($routes[$path])) {
+    error_log('Route match: ' . $path . ' -> ' . $routes[$path]);
+    require __DIR__ . $routes[$path];
+    exit;
+}
+
 // If empty, serve index.html
 if (empty($path)) {
     error_log('Empty path, serving index.html');
@@ -31,11 +45,11 @@ if (file_exists($htmlFile)) {
     exit;
 }
 
-// Try exact path
-if (file_exists(__DIR__ . '/' . $path)) {
-    error_log('Found exact path');
-    readfile(__DIR__ . '/' . $path);
-    exit;
+// Try exact path: let the server handle it so .php files are executed
+// (never readfile() here, or PHP source would be served as plain text)
+if (is_file(__DIR__ . '/' . $path)) {
+    error_log('Found exact path, deferring to server');
+    return false;
 }
 
 // 404
