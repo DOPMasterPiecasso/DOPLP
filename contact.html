@@ -49,16 +49,52 @@
       height: 58px;
       background: none;
       border: 1px solid #eee;
-      padding: 0 20px;
-      color: #212529;
+      padding: 0 50px 0 20px;
+      color: #222327;
       position: relative;
-      z-/: 2;
+      z-index: 2;
       border-radius: 0;
+      font-family: inherit;
+      font-size: 16px;
+      cursor: pointer;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    .contact-form select:hover {
+      border-color: #222327;
+    }
+
+    .contact-form .select-group::after {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-right: 1px solid #222327;
+      border-bottom: 1px solid #222327;
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      z-index: 3;
+      transform: rotate(45deg);
+      pointer-events: none;
+      -webkit-transition: .25s ease-in-out;
+      -moz-transition: .25s ease-in-out;
+      -ms-transition: .25s ease-in-out;
+      -o-transition: .25s ease-in-out;
+      transition: .25s ease-in-out;
+    }
+
+    .contact-form .select-group:hover::after {
+      border-color: #75dab4;
     }
 
     .contact-form select option {
-      color: #212529;
+      color: #222327;
       background: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      padding: 10px 0;
     }
 
     .contact-form button[type=submit] {
@@ -175,7 +211,7 @@
                   <span>Telepon / WhatsApp</span>
                 </div>
                 <!-- end form-group -->
-                <div class="form-group">
+                <div class="form-group select-group">
                   <select name="service" id="service" required>
                     <option value="-- Pilih Layanan --">-- Pilih Layanan --</option>
                     <option value="Web Design">Web Design</option>
@@ -185,6 +221,7 @@
                     <option value="Digital Marketing">Digital Marketing</option>
                     <option value="Lainnya">Lainnya</option>
                   </select>
+                  <span class="label-up">Layanan</span>
                 </div>
                 <!-- end form-group -->
                 <div class="form-group">
