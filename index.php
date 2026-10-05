@@ -150,7 +150,7 @@ if (file_exists($htmlFile)) {
   <meta property="og:site_name" content="dopagency">
   <meta property="og:title" content="dopagency | Solusi Digital Terpercaya untuk Bisnis Anda">
   <meta property="og:type" content="website">
-
+<meta name="google-site-verification" content="6_Lkooo6wxh5gLv082LvfbkP7xVN8ZqywlcwZGurxcU" />
   <!-- FAVICON FILES -->
   <link href="ico/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon" sizes="144x144">
   <link href="ico/apple-touch-icon-114-precomposed.png" rel="apple-touch-icon" sizes="114x114">
