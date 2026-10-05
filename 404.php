@@ -10,7 +10,7 @@ if (!headers_sent()) {
   <meta charset="utf-8">
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="theme-color" content="#75dab4" />
+  <meta name="theme-color" content="#00ff39" />
   <meta name="robots" content="noindex, follow">
   <title>Halaman Tidak Ditemukan | dopagency</title>
   <meta name="description" content="Halaman yang Anda cari tidak ditemukan. Kembali ke halaman utama dopagency.">
