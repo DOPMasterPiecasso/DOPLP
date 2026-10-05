@@ -1,4 +1,58 @@
 <?php
+// ---------------------------------------------------------------------------
+// SECURITY GUARD - blokir akses publik ke file/direktori sensitif
+// Berlaku untuk PHP built-in server (router ini) dan melengkapi .htaccess.
+// ---------------------------------------------------------------------------
+if (!function_exists('dop_deny')) {
+    function dop_deny()
+    {
+        http_response_code(403);
+        header('Content-Type: text/plain; charset=UTF-8');
+        exit("403 Forbidden\n");
+    }
+}
+
+if (PHP_SAPI !== 'cli') {
+    // Security headers
+    if (!headers_sent()) {
+        header('X-Content-Type-Options: nosniff');
+        header('X-Frame-Options: SAMEORIGIN');
+        header('Referrer-Policy: strict-origin-when-cross-origin');
+    }
+
+    // Jangan tampilkan error (path/kredensial) ke pengunjung
+    @ini_set('display_errors', '0');
+
+    $reqPath = (string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH);
+    $reqPath = rawurldecode($reqPath);
+    $reqPath = (string) preg_replace('#/{2,}#', '/', '/' . ltrim($reqPath, '/'));
+
+    // Cegah path traversal: /../../.env, %2e%2e%2f.env, dst.
+    if ($reqPath === '' || strpos($reqPath, '..') !== false) {
+        dop_deny();
+    }
+
+    // .env dan semua variannya (.env.local, .env.production, .env.example, ...)
+    if (preg_match('#(?:^|/)\.env(?:\.[^/]*)?$#i', $reqPath)) {
+        dop_deny();
+    }
+
+    // File tersembunyi lain: /.git/*, /.htpasswd, /.user.ini, /.gitignore, dst.
+    if (preg_match('#(?:^|/)\.(?!well-known(?:/|$))[^/]+$#i', $reqPath)) {
+        dop_deny();
+    }
+
+    // File backup/konfigurasi/dokumen: .ini .log .bak .sql .yml .md .sh, dst.
+    if (preg_match('#\.(ini|log|bak|old|orig|save|swp|sql|ya?ml|sh|md|lock|dist|patch|diff)$#i', $reqPath)) {
+        dop_deny();
+    }
+
+    // Direktori internal: /backend/config, /backend/includes, /backend/scripts, /docker, /app
+    if (preg_match('#^/(?:backend/(?:config|includes|scripts)|docker|app)(?:/|$)#i', $reqPath)) {
+        dop_deny();
+    }
+}
+
 // Simple router for clean URLs
 error_log('Router called for: ' . ($_SERVER['REQUEST_URI'] ?? 'NONE'));
 
