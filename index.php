@@ -80,7 +80,7 @@ if (file_exists($htmlFile)) {
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="format-detection" content="telephone=no">
-  <meta name="theme-color" content="#75dab4" />
+  <meta name="theme-color" content="#00ff39" />
   <title>dopagency | Solusi Digital Terpercaya untuk Bisnis Anda</title>
   <meta name="author" content="dopagency">
   <meta name="description"
@@ -226,7 +226,7 @@ if (file_exists($htmlFile)) {
       display: none;
       margin-top: 15px;
       font-size: 13px;
-      color: #75dab4;
+      color: #00ff39;
       letter-spacing: 2px;
       font-family: "Fjalla One", sans-serif;
       padding-bottom: 5px;
@@ -239,7 +239,7 @@ if (file_exists($htmlFile)) {
       content: "";
       width: 20px;
       height: 2px;
-      background: #75dab4;
+      background: #00ff39;
       position: absolute;
       left: 0;
       bottom: 0;
@@ -299,8 +299,8 @@ if (file_exists($htmlFile)) {
     .intro-badge {
       display: inline-block;
       padding: 12px 26px;
-      border: 1px solid #75dab4;
-      color: #75dab4;
+      border: 1px solid #00ff39;
+      color: #00ff39;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 2px;
@@ -318,8 +318,8 @@ if (file_exists($htmlFile)) {
     .works-more a {
       display: inline-block;
       padding: 16px 44px;
-      background: #75dab4;
-      border: 1px solid #75dab4;
+      background: #00ff39;
+      border: 1px solid #00ff39;
       color: #222327;
       font-family: "Fjalla One", sans-serif;
       font-size: 14px;
