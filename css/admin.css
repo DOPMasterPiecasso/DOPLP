@@ -776,3 +776,188 @@ a:hover {
     z-index: 35;
   }
 }
+/* ============================================================
+   RICH TEXT EDITOR (CKEditor 5) — DARK MODE
+   ------------------------------------------------------------
+   CKEditor mendeklarasikan variabel temanya di :root (berwarna
+   terang). Variabel di bawah dideklarasikan pada body.admin-body
+   dan .ck-editor supaya menimpa :root — deklarasi pada elemen
+   terdekat selalu menang, berapa pun urutan stylesheet-nya.
+   ============================================================ */
+body.admin-body,
+.ck-editor {
+  /* base */
+  --ck-color-base-background: #1c1c1c;
+  --ck-color-base-foreground: #2b2c31;
+  --ck-color-base-border: rgba(255, 255, 255, 0.16);
+  --ck-color-base-text: #ffffff;
+  --ck-color-base-focus: #00ff39;
+  --ck-color-base-active: rgba(0, 255, 57, 0.18);
+  --ck-color-base-active-focus: rgba(0, 255, 57, 0.3);
+  --ck-color-base-action: #00ff39;
+  --ck-color-base-error: #ff6b6b;
+
+  /* teks & fokus */
+  --ck-color-text: #ffffff;
+  --ck-color-focus-border: #00ff39;
+  --ck-color-focus-outer-shadow: rgba(0, 255, 57, 0.35);
+  --ck-color-focus-disabled-shadow: rgba(255, 255, 255, 0.1);
+  --ck-color-focus-error-shadow: rgba(255, 107, 107, 0.35);
+  --ck-color-focus-border-coordinates: #00ff39;
+
+  /* shadow */
+  --ck-color-shadow-drop: rgba(0, 0, 0, 0.55);
+  --ck-color-shadow-drop-active: rgba(0, 0, 0, 0.65);
+  --ck-color-shadow-inner: rgba(0, 0, 0, 0.5);
+
+  /* toolbar */
+  --ck-color-toolbar-background: #1c1c1c;
+  --ck-color-toolbar-border: rgba(255, 255, 255, 0.14);
+
+  /* panel / dropdown / list */
+  --ck-color-panel-background: #222327;
+  --ck-color-panel-border: rgba(255, 255, 255, 0.14);
+  --ck-color-dropdown-panel-background: #222327;
+  --ck-color-dropdown-panel-border: rgba(255, 255, 255, 0.14);
+  --ck-color-list-background: #222327;
+  --ck-color-list-button-hover-background: rgba(255, 255, 255, 0.08);
+  --ck-color-list-button-on-background: #00ff39;
+  --ck-color-list-button-on-background-focus: #00e633;
+  --ck-color-list-button-on-text: #101114;
+
+  /* input */
+  --ck-color-input-background: #101114;
+  --ck-color-input-border: rgba(255, 255, 255, 0.16);
+  --ck-color-input-text: #ffffff;
+  --ck-color-input-disabled-background: #26272b;
+  --ck-color-input-disabled-border: rgba(255, 255, 255, 0.08);
+  --ck-color-input-disabled-text: #9a9ca3;
+  --ck-color-input-error-border: #ff6b6b;
+  --ck-color-labeled-field-label-background: #1c1c1c;
+
+  /* tombol */
+  --ck-color-button-default-background: transparent;
+  --ck-color-button-default-hover-background: rgba(255, 255, 255, 0.1);
+  --ck-color-button-default-active-background: rgba(0, 255, 57, 0.2);
+  --ck-color-button-default-disabled-background: transparent;
+
+  --ck-color-button-on-background: rgba(0, 255, 57, 0.16);
+  --ck-color-button-on-hover-background: rgba(0, 255, 57, 0.26);
+  --ck-color-button-on-active-background: rgba(0, 255, 57, 0.36);
+  --ck-color-button-on-color: #ffffff;
+  --ck-color-button-on-disabled-background: rgba(0, 255, 57, 0.1);
+
+  --ck-color-button-action-background: #00ff39;
+  --ck-color-button-action-hover-background: #4dff7b;
+  --ck-color-button-action-active-background: #00cc2e;
+  --ck-color-button-action-disabled-background: #2f6b3f;
+  --ck-color-button-action-text: #101114;
+
+  --ck-color-button-save: #00ff39;
+  --ck-color-button-cancel: rgba(255, 255, 255, 0.1);
+
+  /* dialog & tooltip */
+  --ck-color-dialog-background: #1c1c1c;
+  --ck-color-dialog-form-header-border: rgba(255, 255, 255, 0.14);
+  --ck-color-tooltip-background: #101114;
+  --ck-color-tooltip-text: #ffffff;
+
+  /* konten */
+  --ck-color-highlight-background: rgba(0, 255, 57, 0.32);
+  --ck-color-editable-blur-selection: rgba(255, 255, 255, 0.22);
+  --ck-color-engine-placeholder-text: #9a9ca3;
+  --ck-color-link-default: #00ff39;
+  --ck-color-link-fake-selection: rgba(0, 255, 57, 0.35);
+  --ck-color-link-selected-background: rgba(0, 255, 57, 0.35);
+  --ck-color-image-caption-background: #101114;
+  --ck-color-image-caption-text: #ffffff;
+  --ck-color-image-caption-highlighted-background: rgba(0, 255, 57, 0.35);
+  --ck-color-image-upload-icon: #9a9ca3;
+  --ck-color-image-upload-icon-background: #2b2c31;
+  --ck-color-block-toolbar-button: #ffffff;
+  --ck-color-color-grid-check-icon: #101114;
+  --ck-color-media-embed-placeholder-url-text: #9a9ca3;
+  --ck-color-media-embed-placeholder-url-text-hover: #00ff39;
+  --ck-color-upload-bar-background: #00ff39;
+  --ck-color-upload-placeholder-loader: #00ff39;
+
+  /* widget / gambar / tabel */
+  --ck-color-widget-hover-border: #00ff39;
+  --ck-color-widget-blurred-border: rgba(255, 255, 255, 0.25);
+  --ck-color-widget-editable-focus-background: #101114;
+  --ck-color-widget-drag-handler-icon-color: #101114;
+  --ck-color-widget-type-around-button-icon: #101114;
+  --ck-color-widget-type-around-button-hover: #00ff39;
+  --ck-color-widget-type-around-button-active: #00ff39;
+  --ck-color-widget-type-around-button-blurred-editable: rgba(255, 255, 255, 0.45);
+  --ck-color-widget-type-around-button-radar-start-alpha: rgba(0, 255, 57, 0.15);
+  --ck-color-widget-type-around-button-radar-end-alpha: rgba(0, 255, 57, 0.55);
+  --ck-color-selector-caption-background: #1c1c1c;
+  --ck-color-selector-caption-text: #ffffff;
+  --ck-color-selector-caption-highlighted-background: rgba(0, 255, 57, 0.35);
+  --ck-color-selector-focused-cell-background: rgba(0, 255, 57, 0.2);
+  --ck-color-selector-column-resizer-hover: #00ff39;
+  --ck-color-resizer: #00ff39;
+  --ck-color-resizer-tooltip-background: #101114;
+  --ck-color-resizer-tooltip-text: #ffffff;
+  --ck-color-switch-button-off-background: #4a4b52;
+  --ck-color-switch-button-off-hover-background: #5a5b63;
+  --ck-color-switch-button-on-background: #00ff39;
+  --ck-color-switch-button-on-hover-background: #4dff7b;
+  --ck-color-switch-button-inner-background: #ffffff;
+  --ck-color-switch-button-inner-shadow: rgba(0, 0, 0, 0.35);
+  --ck-color-split-button-hover-background: rgba(255, 255, 255, 0.1);
+  --ck-color-split-button-hover-border: rgba(255, 255, 255, 0.2);
+  --ck-color-light-red: #ff6b6b;
+}
+
+/* Jaring pengaman: pastikan area toolbar & tulis tetap gelap */
+body.admin-body .ck-editor .ck-toolbar {
+  background-color: var(--ck-color-toolbar-background);
+  border-color: var(--ck-color-toolbar-border);
+  color: var(--ck-color-text);
+}
+
+body.admin-body .ck-editor .ck-button,
+body.admin-body .ck-editor .ck-button .ck-button__icon,
+body.admin-body .ck-editor .ck-toolbar .ck-icon {
+  color: var(--ck-color-text);
+}
+
+body.admin-body .ck-editor .ck-editor__editable_inline,
+body.admin-body .ck-editor .ck-editor__editable.ck-editor__editable_inline.ck-focused {
+  background-color: var(--ck-color-base-background);
+  color: var(--ck-color-text);
+  border-color: var(--ck-color-base-border);
+}
+
+body.admin-body .ck-editor .ck-editor__editable_inline.ck-focused {
+  box-shadow: inset 0 0 0 1px rgba(0, 255, 57, 0.35);
+}
+
+body.admin-body .ck-editor .ck-editor__top {
+  background-color: var(--ck-color-toolbar-background);
+}
+
+body.admin-body .ck-editor .ck-editor__main > .ck-editor__editable {
+  background-color: var(--ck-color-base-background);
+}
+
+/* Placeholder & teks bantu */
+body.admin-body .ck-editor .ck-placeholder::before,
+body.admin-body .ck-editor .ck-engine-placeholder {
+  color: var(--ck-color-engine-placeholder-text);
+}
+
+/* Panel dropdown, list, dialog, tooltip */
+body.admin-body .ck-editor .ck-dropdown__panel,
+body.admin-body .ck-editor .ck-list,
+body.admin-body .ck-editor .ck-menu-bar__panel {
+  background-color: var(--ck-color-dropdown-panel-background);
+  border-color: var(--ck-color-dropdown-panel-border);
+}
+
+body.admin-body .ck-editor .ck-tooltip {
+  background-color: var(--ck-color-tooltip-background);
+  color: var(--ck-color-tooltip-text);
+}
