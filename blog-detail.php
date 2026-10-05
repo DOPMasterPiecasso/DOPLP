@@ -23,20 +23,13 @@ if (!$article) {
     exit();
 }
 
-// Artikel terkait (blok "Artikel Lainnya") & artikel terbaru (sidebar)
+// Artikel terkait untuk blok "Artikel Lainnya" di sidebar
 $relatedStmt = $db->prepare('SELECT id, judul, slug, konten, gambar, penulis, created_at
                              FROM blog WHERE id != :id
                              ORDER BY created_at DESC, id DESC
                              LIMIT 3');
 $relatedStmt->execute(['id' => $article['id']]);
 $related = $relatedStmt->fetchAll();
-
-$recentStmt = $db->prepare('SELECT id, judul, slug, created_at
-                            FROM blog WHERE id != :id
-                            ORDER BY created_at DESC, id DESC
-                            LIMIT 4');
-$recentStmt->execute(['id' => $article['id']]);
-$recent = $recentStmt->fetchAll();
 
 $pageTitle = $article['judul'] . ' | dopagency';
 $baseUrl = blogBaseUrl();
@@ -190,9 +183,19 @@ $publishedIso = date('c', strtotime($article['created_at']));
             </article>
             <!-- end post single -->
 
+          </div>
+          <!-- end col-lg-9 -->
+          <aside class="sidebar">
+            <div class="widget">
+              <div class="title">Cari Artikel</div>
+              <form action="/blog" method="GET">
+                <input type="text" name="q" placeholder="Kata kunci..." aria-label="Kata kunci pencarian">
+              </form>
+            </div>
+            <!-- end widget -->
             <?php if (!empty($related)): ?>
-              <div class="post-related">
-                <h4 class="title">Artikel Lainnya</h4>
+              <div class="widget post-related">
+                <div class="title">Artikel Lainnya</div>
                 <ul>
                   <?php foreach ($related as $item): ?>
                     <li>
@@ -209,7 +212,7 @@ $publishedIso = date('c', strtotime($article['created_at']));
                               <?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>
                             </a></h5>
                         </div>
-                        <p><?= htmlspecialchars(blogExcerpt($item['konten'], 120), ENT_QUOTES, 'UTF-8') ?></p>
+                        <p><?= htmlspecialchars(blogExcerpt($item['konten'], 90), ENT_QUOTES, 'UTF-8') ?></p>
                       </div>
                       <!-- end post-content -->
                     </li>
@@ -218,31 +221,6 @@ $publishedIso = date('c', strtotime($article['created_at']));
               </div>
               <!-- end post-related -->
             <?php endif; ?>
-
-          </div>
-          <!-- end col-lg-9 -->
-          <aside class="sidebar">
-            <div class="widget">
-              <div class="title">Cari Artikel</div>
-              <form action="/blog" method="GET">
-                <input type="text" name="q" placeholder="Kata kunci..." aria-label="Kata kunci pencarian">
-              </form>
-            </div>
-            <!-- end widget -->
-            <div class="widget">
-              <div class="title">Artikel Terbaru</div>
-              <ul class="categories">
-                <?php foreach ($recent as $item): ?>
-                  <li>
-                    <a href="<?= htmlspecialchars(blogArticleUrl($item['slug']), ENT_QUOTES, 'UTF-8') ?>">
-                      <?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>
-                    </a>
-                    <span><?= blogTanggal($item['created_at'], 'pendek') ?></span>
-                  </li>
-                <?php endforeach; ?>
-              </ul>
-            </div>
-            <!-- end widget -->
           </aside>
           <!-- end sidebar -->
         </div>
