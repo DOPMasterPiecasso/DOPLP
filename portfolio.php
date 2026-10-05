@@ -88,15 +88,35 @@
       <!-- end inner -->
     </header>
     <!-- end page-header -->
+<?php
+require_once __DIR__ . '/backend/config/database.php';
+$db = getConnection();
+
+// Tombol filter diambil dari tabel kategori (hanya kategori yang dipakai portfolio aktif)
+$filters = [];
+try {
+    $filters = $db->query("SELECT DISTINCT k.id, k.nama FROM kategori k INNER JOIN portfolio p ON p.kategori_id = k.id WHERE p.status = 'aktif' ORDER BY k.id ASC")->fetchAll();
+} catch (Throwable $e) {
+    error_log('portfolio filter gagal load kategori: ' . $e->getMessage());
+}
+// Fallback bila query gagal / belum ada data
+if (!$filters) {
+    $filters = [
+        ['nama' => 'Web Development'],
+        ['nama' => 'Mobile App'],
+        ['nama' => 'E-Commerce'],
+        ['nama' => 'Branding'],
+        ['nama' => 'Enterprise System'],
+        ['nama' => 'Lifestyle'],
+    ];
+}
+?>
     <section class="portfolio-filter">
       <div class="container">
         <button type="button" class="active" data-filter="Semua">Semua</button>
-        <button type="button" data-filter="Web Development">Web Development</button>
-        <button type="button" data-filter="Mobile App">Mobile App</button>
-        <button type="button" data-filter="E-Commerce">E-Commerce</button>
-        <button type="button" data-filter="Branding">Branding</button>
-        <button type="button" data-filter="Enterprise System">Enterprise System</button>
-        <button type="button" data-filter="Lifestyle">Lifestyle</button>
+<?php foreach ($filters as $f): ?>
+        <button type="button" data-filter="<?= htmlspecialchars($f['nama'], ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($f['nama'], ENT_QUOTES, 'UTF-8') ?></button>
+<?php endforeach; ?>
       </div>
       <!-- end container -->
     </section>
@@ -104,8 +124,6 @@
     <section class="works portfolio-works">
       <ul>
 <?php
-require_once __DIR__ . '/backend/config/database.php';
-$db = getConnection();
 $items = $db->query("SELECT p.judul, p.slug, p.deskripsi, p.teknologi, p.gambar, k.nama AS kategori FROM portfolio p LEFT JOIN kategori k ON k.id = p.kategori_id WHERE p.status = 'aktif' ORDER BY p.id ASC")->fetchAll();
 foreach ($items as $item):
 ?>

@@ -467,15 +467,35 @@ if (file_exists($htmlFile)) {
       <!-- end container -->
     </section>
     <!-- end icon-content-block -->
+<?php
+require_once __DIR__ . '/backend/config/database.php';
+$db = getConnection();
+
+// Kategori untuk daftar "work-cats" diambil langsung dari database
+$workCats = [];
+try {
+    $workCats = $db->query("SELECT id, nama, slug FROM kategori ORDER BY id ASC")->fetchAll();
+} catch (Throwable $e) {
+    error_log('work-cats gagal load kategori: ' . $e->getMessage());
+}
+// Fallback bila tabel kosong / query gagal, tampilan tetap ada
+if (!$workCats) {
+    $workCats = [
+        ['nama' => 'Web System'],
+        ['nama' => 'Landing Page'],
+        ['nama' => 'Company Profile'],
+    ];
+}
+?>
     <div class="work-divider-head">
       <div class="container">
         <div class="row">
           <div class="col-12 text-center wow" data-splitting>
             <h3 class="section-title">KATEGORI</h3>
             <ul class="work-cats">
-              <li>Web System</li>
-              <li>Landing Page</li>
-              <li>Company Profile</li>
+<?php foreach ($workCats as $cat): ?>
+              <li><?= htmlspecialchars($cat['nama'], ENT_QUOTES, 'UTF-8') ?></li>
+<?php endforeach; ?>
             </ul>
           </div>
           <!-- end col-12 -->
@@ -488,8 +508,6 @@ if (file_exists($htmlFile)) {
     <section class="works">
       <ul>
 <?php
-require_once __DIR__ . '/backend/config/database.php';
-$db = getConnection();
 $itemsAll = $db->query("SELECT p.judul, p.slug, p.deskripsi, p.teknologi, p.gambar, k.nama AS kategori FROM portfolio p LEFT JOIN kategori k ON k.id = p.kategori_id WHERE p.status = 'aktif' AND p.is_pin = 1 ORDER BY p.id ASC")->fetchAll();
 $items = array_slice($itemsAll, 0, 6);
 foreach ($items as $item):
