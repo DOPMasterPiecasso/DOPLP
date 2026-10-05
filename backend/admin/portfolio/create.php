@@ -53,6 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $deskripsi = $_POST['deskripsi'] ?? '';
     $client = trim($_POST['client'] ?? '');
     $tahun = trim($_POST['tahun'] ?? '');
+    $status = in_array($_POST['status'] ?? '', ['aktif', 'nonaktif'], true) ? $_POST['status'] : 'aktif';
+    $isPin = isset($_POST['is_pin']) ? 1 : 0;
     $gambar = null;
 
     if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
@@ -63,14 +65,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    if ($isPin === 1) {
+        $pinnedCount = (int)$db->query("SELECT COUNT(*) FROM portfolio WHERE is_pin = 1")->fetchColumn();
+        if ($pinnedCount >= 6) {
+            $message = 'Maksimal 6 portofolio yang di-pin.';
+            $messageType = 'error';
+        }
+    }
+
     if ($judul === '') {
         $message = 'Judul tidak boleh kosong.';
         $messageType = 'error';
     } elseif ($messageType === 'error') {
     } else {
         try {
-            $stmt = $db->prepare('INSERT INTO portfolio (judul, slug, kategori_id, deskripsi, gambar, client, tahun) VALUES (?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$judul, adminSlugify($judul), $kategori_id, $deskripsi, $gambar, $client, $tahun]);
+            $stmt = $db->prepare('INSERT INTO portfolio (judul, slug, kategori_id, deskripsi, gambar, client, tahun, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            $stmt->execute([$judul, adminSlugify($judul), $kategori_id, $deskripsi, $gambar, $client, $tahun, $status, $isPin]);
             header('Location: /backend/admin/portfolio/index.php?success=1');
             exit();
         } catch (Exception $e) {
@@ -134,6 +144,21 @@ adminAlert($message, $messageType);
                     <label for="gambar">Gambar</label>
                     <input type="file" id="gambar" name="gambar" accept="image/*">
                     <div class="field__hint">JPG, PNG, WEBP, atau GIF. Maksimal 2MB. Disarankan rasio 4:3.</div>
+                </div>
+
+                <div class="field">
+                    <label for="is_pin">Pin ke Index</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-weight:400;">
+                        <input type="checkbox" id="is_pin" name="is_pin" value="1" <?= isset($_POST['is_pin']) ? 'checked' : '' ?>> Tampilkan di halaman utama (maks. 6)
+                    </label>
+                </div>
+
+                <div class="field">
+                    <label for="status">Status</label>
+                    <select id="status" name="status">
+                        <option value="aktif" <?= ($_POST['status'] ?? 'aktif') === 'aktif' ? 'selected' : '' ?>>Aktif (tampil di index)</option>
+                        <option value="nonaktif" <?= ($_POST['status'] ?? '') === 'nonaktif' ? 'selected' : '' ?>>Nonaktif</option>
+                    </select>
                 </div>
 
                 <div class="field field--full">

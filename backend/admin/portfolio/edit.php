@@ -57,6 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $deskripsi = $_POST['deskripsi'] ?? '';
     $client = trim($_POST['client'] ?? '');
     $tahun = trim($_POST['tahun'] ?? '');
+    $status = in_array($_POST['status'] ?? '', ['aktif', 'nonaktif'], true) ? $_POST['status'] : 'aktif';
+    $isPin = isset($_POST['is_pin']) ? 1 : 0;
     $gambar = $portfolio['gambar'];
 
     $newUpload = null;
@@ -70,14 +72,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    if ($isPin === 1 && (int)$portfolio['is_pin'] !== 1) {
+        $pinnedCount = (int)$db->query("SELECT COUNT(*) FROM portfolio WHERE is_pin = 1")->fetchColumn();
+        if ($pinnedCount >= 6) {
+            $message = 'Maksimal 6 portofolio yang di-pin.';
+            $messageType = 'error';
+        }
+    }
+
     if ($judul === '') {
         $message = 'Judul tidak boleh kosong.';
         $messageType = 'error';
     } elseif ($messageType === 'error') {
     } else {
         try {
-            $update = $db->prepare('UPDATE portfolio SET judul = ?, slug = ?, kategori_id = ?, deskripsi = ?, gambar = ?, client = ?, tahun = ? WHERE id = ?');
-            $update->execute([$judul, adminSlugify($judul), $kategori_id, $deskripsi, $gambar, $client, $tahun, $id]);
+            $update = $db->prepare('UPDATE portfolio SET judul = ?, slug = ?, kategori_id = ?, deskripsi = ?, gambar = ?, client = ?, tahun = ?, status = ?, is_pin = ? WHERE id = ?');
+            $update->execute([$judul, adminSlugify($judul), $kategori_id, $deskripsi, $gambar, $client, $tahun, $status, $isPin, $id]);
 
             if ($newUpload !== null && !empty($portfolio['gambar'])) {
                 $old = $uploadDir . $portfolio['gambar'];
@@ -147,10 +157,25 @@ adminAlert($message, $messageType);
                 <div class="field field--full">
                     <label for="gambar">Gambar</label>
                     <?php if (!empty($portfolio['gambar'])): ?>
-                        <img class="image-preview" src="/uploads/portfolio/<?= htmlspecialchars($portfolio['gambar'], ENT_QUOTES, 'UTF-8') ?>" alt="">
+                        <img class="image-preview" src="<?= (strpos($portfolio['gambar'], '/') !== false ? '/' : '/uploads/portfolio/') . htmlspecialchars($portfolio['gambar'], ENT_QUOTES, 'UTF-8') ?>" alt="">
                     <?php endif; ?>
                     <input type="file" id="gambar" name="gambar" accept="image/*">
                     <div class="field__hint">Biarkan kosong jika tidak ingin mengganti gambar. Maksimal 2MB.</div>
+                </div>
+
+                <div class="field">
+                    <label for="is_pin">Pin ke Index</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-weight:400;">
+                        <input type="checkbox" id="is_pin" name="is_pin" value="1" <?= (int)($portfolio['is_pin'] ?? 0) === 1 ? 'checked' : '' ?>> Tampilkan di halaman utama (maks. 6)
+                    </label>
+                </div>
+
+                <div class="field">
+                    <label for="status">Status</label>
+                    <select id="status" name="status">
+                        <option value="aktif" <?= ($portfolio['status'] ?? 'aktif') === 'aktif' ? 'selected' : '' ?>>Aktif (tampil di index)</option>
+                        <option value="nonaktif" <?= ($portfolio['status'] ?? '') === 'nonaktif' ? 'selected' : '' ?>>Nonaktif</option>
+                    </select>
                 </div>
 
                 <div class="field field--full">

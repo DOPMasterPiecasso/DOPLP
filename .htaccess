@@ -1,4 +1,5 @@
 RewriteEngine On
+DirectoryIndex index.php index.html
 
 # /login -> /backend/admin/login.php (harus sebelum aturan .html)
 RewriteRule ^login/?$ backend/admin/login.php [L]
@@ -12,6 +13,9 @@ RewriteRule ^sitemap\.xml$ sitemap.php [L]
 # /blog -> /blog.php  dan  /blog/<slug> -> /blog-detail.php
 RewriteRule ^blog/?$ blog.php [L]
 RewriteRule ^blog/([A-Za-z0-9\-_]+)/?$ blog-detail.php?slug=$1 [L]
+
+# /portfolio -> /portfolio.php
+RewriteRule ^portfolio/?$ portfolio.php [L]
 
 # /about -> /about.html
 RewriteCond %{REQUEST_FILENAME} !-d
