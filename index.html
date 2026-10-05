@@ -414,8 +414,7 @@
     <section class="works">
       <ul>
         <li>
-          <figure class="reveal-effect masker wow"> <a href="asset/projek/ERPConstruction.png"
-              data-fancybox="works"><img src="asset/projek/ERPConstruction.png" alt="ERP Construction"></a> </figure>
+          <figure class="reveal-effect masker wow"> <a hx-boost="false" href="asset/projek/ERPConstruction.png"><img src="asset/projek/ERPConstruction.png" alt="ERP Construction"></a> </figure>
           <div class="caption wow" data-splitting>
             <h3>ERP Construction</h3>
             <small>Web Development | PHP, Laravel, MySQL</small>
@@ -423,7 +422,7 @@
           <!-- end caption -->
         </li>
         <li>
-          <figure class="reveal-effect masker wow"> <a href="asset/projek/barbershop.jpg" data-fancybox="works"><img
+          <figure class="reveal-effect masker wow"> <a hx-boost="false" href="asset/projek/barbershop.jpg"><img
                 src="asset/projek/barbershop.jpg" alt="Barbershop App"></a> </figure>
           <div class="caption wow" data-splitting>
             <h3>Barbershop App</h3>
@@ -432,7 +431,7 @@
           <!-- end caption -->
         </li>
         <li>
-          <figure class="reveal-effect masker wow"> <a href="asset/projek/cielocura.jpg" data-fancybox="works"><img
+          <figure class="reveal-effect masker wow"> <a hx-boost="false" href="asset/projek/cielocura.jpg"><img
                 src="asset/projek/cielocura.jpg" alt="Cielo Cura"></a> </figure>
           <div class="caption wow" data-splitting>
             <h3>Cielo Cura</h3>
@@ -441,7 +440,7 @@
           <!-- end caption -->
         </li>
         <li>
-          <figure class="reveal-effect masker wow"> <a href="asset/projek/dandanoma.jpg" data-fancybox="works"><img
+          <figure class="reveal-effect masker wow"> <a hx-boost="false" href="asset/projek/dandanoma.jpg"><img
                 src="asset/projek/dandanoma.jpg" alt="Dandanoma"></a> </figure>
           <div class="caption wow" data-splitting>
             <h3>Dandanoma</h3>
@@ -450,7 +449,7 @@
           <!-- end caption -->
         </li>
         <li>
-          <figure class="reveal-effect masker wow"> <a href="asset/projek/inviguard.jpg" data-fancybox="works"><img
+          <figure class="reveal-effect masker wow"> <a hx-boost="false" href="asset/projek/inviguard.jpg"><img
                 src="asset/projek/inviguard.jpg" alt="InviGuard"></a> </figure>
           <div class="caption wow" data-splitting>
             <h3>InviGuard</h3>
@@ -459,7 +458,7 @@
           <!-- end caption -->
         </li>
         <li>
-          <figure class="reveal-effect masker wow"> <a href="asset/projek/jamsembilan.jpg" data-fancybox="works"><img
+          <figure class="reveal-effect masker wow"> <a hx-boost="false" href="asset/projek/jamsembilan.jpg"><img
                 src="asset/projek/jamsembilan.jpg" alt="Jam Sembilan"></a> </figure>
           <div class="caption wow" data-splitting>
             <h3>Jam Sembilan</h3>
@@ -513,6 +512,53 @@
   <div hx-get="components/footer.html" hx-trigger="load" hx-swap="outerHTML"></div>
 
   <!-- JS FILES -->
+  
+    <!-- portfolio detail modal -->
+  <div class="modal fade" id="portfolioModal" tabindex="-1" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-fullscreen" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="portfolioModalTitle"></h5>
+          <button type="button" class="portfolio-modal-close" data-dismiss="modal" aria-label="Tutup"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="portfolio-modal-media">
+            <img src="" id="portfolioModalImg" alt="">
+          </div>
+          <div class="portfolio-modal-meta">
+            <span class="cat-badge" id="portfolioModalKategori"></span>
+            <small id="portfolioModalTeknologi"></small>
+            <p id="portfolioModalDeskripsi"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/portfolio-data.js"></script>
+  <script>
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('.works li figure a, .portfolio-works li figure a');
+      if (!a) return;
+      e.preventDefault();
+      var byImg = {};
+      Object.keys(window.PORTFOLIO_DATA).forEach(function (k) {
+        byImg[window.PORTFOLIO_DATA[k].gambar.split('/').pop()] = window.PORTFOLIO_DATA[k];
+      });
+      var img = a.querySelector('img');
+      var src = img ? img.getAttribute('src') : a.getAttribute('href');
+      var item = byImg[src.split('/').pop()];
+      if (!item) return;
+      document.getElementById('portfolioModalTitle').textContent = item.judul;
+      document.getElementById('portfolioModalKategori').textContent = item.kategori;
+      document.getElementById('portfolioModalTeknologi').textContent = item.teknologi;
+      document.getElementById('portfolioModalDeskripsi').textContent = item.deskripsi;
+      var mImg = document.getElementById('portfolioModalImg');
+      mImg.src = item.gambar;
+      mImg.alt = item.judul;
+      $('#portfolioModal').modal('show');
+    });
+  </script>
+
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/swiper.min.js"></script>
