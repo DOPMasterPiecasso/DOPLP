@@ -6,10 +6,10 @@ header('Content-Type: application/xml; charset=UTF-8');
 $baseUrl = rtrim((string)(getenv('SITE_URL') ?: 'https://dopagency.my.id'), '/');
 
 $pages = [
-    ['loc' => '/', 'file' => 'index.html', 'priority' => '1.0', 'changefreq' => 'weekly'],
+    ['loc' => '/', 'file' => 'index.php', 'priority' => '1.0', 'changefreq' => 'weekly'],
     ['loc' => '/about', 'file' => 'about.html', 'priority' => '0.9', 'changefreq' => 'monthly'],
     ['loc' => '/services', 'file' => 'services.html', 'priority' => '0.9', 'changefreq' => 'monthly'],
-    ['loc' => '/portfolio', 'file' => 'portfolio.html', 'priority' => '0.9', 'changefreq' => 'weekly'],
+    ['loc' => '/portfolio', 'file' => 'portfolio.php', 'priority' => '0.9', 'changefreq' => 'weekly'],
     ['loc' => '/produk', 'file' => 'produk.html', 'priority' => '0.8', 'changefreq' => 'monthly'],
     ['loc' => '/showcases', 'file' => 'showcases.html', 'priority' => '0.7', 'changefreq' => 'monthly'],
     ['loc' => '/studio', 'file' => 'studio.html', 'priority' => '0.6', 'changefreq' => 'monthly'],

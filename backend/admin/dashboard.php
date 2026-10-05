@@ -88,7 +88,7 @@ adminLayoutHeader(
                             <tr>
                                 <td>
                                     <?php if ($p['gambar']): ?>
-                                        <img class="table-thumb" src="/uploads/portfolio/<?= htmlspecialchars($p['gambar'], ENT_QUOTES, 'UTF-8') ?>" alt="">
+                                        <img class="table-thumb" src="<?= (strpos($p['gambar'], '/') !== false ? '/' : '/uploads/portfolio/') . htmlspecialchars($p['gambar'], ENT_QUOTES, 'UTF-8') ?>" alt="">
                                     <?php endif; ?>
                                     <strong><?= htmlspecialchars($p['judul'], ENT_QUOTES, 'UTF-8') ?></strong>
                                 </td>

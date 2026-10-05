@@ -135,6 +135,8 @@ adminAlert($message, $messageType);
                             <th>Kategori</th>
                             <th>Client</th>
                             <th>Tahun</th>
+                            <th>Status</th>
+                            <th>Pin</th>
                             <th style="width:190px;">Aksi</th>
                         </tr>
                     </thead>
@@ -143,7 +145,7 @@ adminAlert($message, $messageType);
                             <tr>
                                 <td>
                                     <?php if ($p['gambar']): ?>
-                                        <img class="table-thumb" src="/uploads/portfolio/<?= htmlspecialchars($p['gambar'], ENT_QUOTES, 'UTF-8') ?>" alt="">
+                                        <img class="table-thumb" src="<?= (strpos($p['gambar'], '/') !== false ? '/' : '/uploads/portfolio/') . htmlspecialchars($p['gambar'], ENT_QUOTES, 'UTF-8') ?>" alt="">
                                     <?php else: ?>
                                         <span class="badge badge--muted">-</span>
                                     <?php endif; ?>
@@ -158,6 +160,8 @@ adminAlert($message, $messageType);
                                 </td>
                                 <td><?= htmlspecialchars($p['client'] ?: '-', ENT_QUOTES, 'UTF-8') ?></td>
                                 <td class="is-num"><?= htmlspecialchars($p['tahun'] ?: '-', ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= $p['status'] === 'aktif' ? '<span class="badge">Aktif</span>' : '<span class="badge badge--muted">Nonaktif</span>' ?></td>
+                                <td><?= (int)$p['is_pin'] === 1 ? '<span class="badge">Pin</span>' : '<span class="badge badge--muted">-</span>' ?></td>
                                 <td>
                                     <div class="table-actions">
                                         <a class="admin-btn admin-btn--ghost admin-btn--sm" href="/backend/admin/portfolio/edit.php?id=<?= (int)$p['id'] ?>">
