@@ -3423,3 +3423,14 @@ html[dir=rtl] .footer .footer-bar .creation {
     font-size: 14px;
   }
 }
+
+/* Mobile: jeda antar blok layanan */
+@media (max-width: 991px) {
+  .icon-content-block [class*="col-"] {
+    margin-bottom: 20px;
+  }
+  .icon-content-block .content-block {
+    padding: 35px 20px;
+    border-radius: 12px;
+  }
+}
