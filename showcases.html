@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#00ff39" />
+  <!-- htmx component: google-site-verification -->
+  <div hx-get="components/google-site-verification.html" hx-trigger="load" hx-target="head" hx-swap="beforeend"></div>
   <title>Portfolio Kami | dopagency</title>
   <meta name="author" content="dopagency">
   <meta name="description"
