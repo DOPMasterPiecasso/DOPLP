@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../includes/auth.php';
 requireAuth();
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../includes/admin-layout.php';
+require_once __DIR__ . '/../../includes/text.php';
 
 $db = getConnection();
 $id = (int)($_GET['id'] ?? 0);
@@ -54,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $judul = trim($_POST['judul'] ?? '');
     $kategori_id = (int)($_POST['kategori_id'] ?? 0) ?: null;
-    $deskripsi = $_POST['deskripsi'] ?? '';
+    $deskripsi = plainText($_POST['deskripsi'] ?? '');
     $client = trim($_POST['client'] ?? '');
     $tahun = trim($_POST['tahun'] ?? '');
     $teknologi = trim($_POST['teknologi'] ?? '');

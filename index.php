@@ -523,6 +523,7 @@ if (file_exists($htmlFile)) {
     <!-- end icon-content-block -->
 <?php
 require_once __DIR__ . '/backend/config/database.php';
+require_once __DIR__ . '/backend/includes/text.php';
 $db = getConnection();
 
 // Kategori untuk daftar "work-cats" diambil langsung dari database
@@ -563,6 +564,9 @@ if (!$workCats) {
       <ul>
 <?php
 $itemsAll = $db->query("SELECT p.judul, p.slug, p.deskripsi, p.teknologi, p.gambar, k.nama AS kategori FROM portfolio p LEFT JOIN kategori k ON k.id = p.kategori_id WHERE p.status = 'aktif' AND p.is_pin = 1 ORDER BY p.id ASC")->fetchAll();
+// CKEditor menyimpan deskripsi dengan tag <p>, bersihkan jadi teks biasa
+foreach ($itemsAll as &$_it) { $_it['deskripsi'] = plainText($_it['deskripsi']); }
+unset($_it);
 $items = array_slice($itemsAll, 0, 6);
 foreach ($items as $item):
 ?>
@@ -570,7 +574,7 @@ foreach ($items as $item):
           <figure class="reveal-effect masker wow"> <a hx-boost="false" href="<?= htmlspecialchars($item['gambar'], ENT_QUOTES, 'UTF-8') ?>"><img src="<?= htmlspecialchars($item['gambar'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>"></a> </figure>
           <div class="caption wow" data-splitting>
             <h3><?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?></h3>
-            <small><?= htmlspecialchars($item['kategori'] ?? '', ENT_QUOTES, 'UTF-8') ?> | <?= htmlspecialchars($item['teknologi'] ?? '', ENT_QUOTES, 'UTF-8') ?></small>
+            <small><?= !empty($item['kategori']) ? htmlspecialchars($item['kategori'], ENT_QUOTES, 'UTF-8') . ' | ' : '' ?><?= htmlspecialchars($item['teknologi'] ?? '', ENT_QUOTES, 'UTF-8') ?></small>
           </div>
           <!-- end caption -->
         </li>
@@ -646,6 +650,14 @@ foreach ($items as $item):
   </div>
   <script>window.PORTFOLIO_DATA = <?php $__m = []; foreach ($itemsAll as $it) { $__m[$it["slug"]] = ["kategori" => $it["kategori"], "judul" => $it["judul"], "teknologi" => $it["teknologi"], "deskripsi" => $it["deskripsi"], "gambar" => $it["gambar"]]; } echo json_encode($__m, JSON_UNESCAPED_UNICODE); ?>;</script>
   <script>
+    // Buang tag HTML & decode entity: deskripsi/kategori datang dari CKEditor
+    function portfolioToText(value) {
+      if (value === null || value === undefined) return '';
+      var text = String(value).replace(/<[^>]*>/g, ' ');
+      var ta = document.createElement('textarea');
+      ta.innerHTML = text;
+      return ta.value.replace(/\s+/g, ' ').trim();
+    }
     document.addEventListener('click', function (e) {
       var a = e.target.closest('.works li figure a, .portfolio-works li figure a');
       if (!a) return;
@@ -658,10 +670,12 @@ foreach ($items as $item):
       var src = img ? img.getAttribute('src') : a.getAttribute('href');
       var item = byImg[src.split('/').pop()];
       if (!item) return;
-      document.getElementById('portfolioModalTitle').textContent = item.judul;
-      document.getElementById('portfolioModalKategori').textContent = item.kategori;
-      document.getElementById('portfolioModalTeknologi').textContent = item.teknologi;
-      document.getElementById('portfolioModalDeskripsi').textContent = item.deskripsi;
+      document.getElementById('portfolioModalTitle').textContent = portfolioToText(item.judul);
+      var kategoriEl = document.getElementById('portfolioModalKategori');
+      kategoriEl.textContent = portfolioToText(item.kategori);
+      kategoriEl.style.display = kategoriEl.textContent === '' ? 'none' : '';
+      document.getElementById('portfolioModalTeknologi').textContent = portfolioToText(item.teknologi);
+      document.getElementById('portfolioModalDeskripsi').textContent = portfolioToText(item.deskripsi);
       var mImg = document.getElementById('portfolioModalImg');
       mImg.src = item.gambar;
       mImg.alt = item.judul;

@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../includes/auth.php';
 requireAuth();
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../includes/admin-layout.php';
+require_once __DIR__ . '/../../includes/text.php';
 
 $db = getConnection();
 $message = '';
@@ -50,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $judul = trim($_POST['judul'] ?? '');
     $kategori_id = (int)($_POST['kategori_id'] ?? 0) ?: null;
-    $deskripsi = $_POST['deskripsi'] ?? '';
+    $deskripsi = plainText($_POST['deskripsi'] ?? '');
     $client = trim($_POST['client'] ?? '');
     $tahun = trim($_POST['tahun'] ?? '');
     $teknologi = trim($_POST['teknologi'] ?? '');
@@ -170,7 +171,7 @@ adminAlert($message, $messageType);
 
                 <div class="field field--full">
                     <label for="editor">Deskripsi</label>
-                    <textarea id="editor" name="deskripsi" rows="10"><?= htmlspecialchars($_POST['deskripsi'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                    <textarea id="editor" name="deskripsi" rows="10"><?= htmlspecialchars($deskripsi, ENT_QUOTES, 'UTF-8') ?></textarea>
                 </div>
             </div>
 
