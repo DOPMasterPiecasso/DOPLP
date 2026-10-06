@@ -30,6 +30,8 @@ if (!headers_sent()) {
 </head>
 
 <body hx-boost="true">
+  <!-- htmx component: floating-buttons -->
+  <div hx-get="components/floating-buttons.html" hx-trigger="load" hx-swap="outerHTML"></div>
   <div class="page-transition">
     <div class="layer"></div>
   </div>

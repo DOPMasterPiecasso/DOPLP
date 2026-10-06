@@ -95,6 +95,8 @@ $description = 'Baca artikel, insight, dan pembaruan terbaru dari dopagency tent
   <div hx-get="components/social-media.html" hx-trigger="load" hx-swap="outerHTML"></div>
   <!-- htmx component: all-cases -->
   <div hx-get="components/all-cases.html" hx-trigger="load" hx-swap="outerHTML"></div>
+  <!-- htmx component: floating-buttons -->
+  <div hx-get="components/floating-buttons.html" hx-trigger="load" hx-swap="outerHTML"></div>
   <main>
     <!-- htmx component: sidebar -->
     <div hx-get="components/sidebar.html" hx-trigger="load" hx-swap="outerHTML"></div>
