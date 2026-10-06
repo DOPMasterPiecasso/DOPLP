@@ -79,6 +79,8 @@ $routes = [
     'sitemap' => '/sitemap.php',
     'blog' => '/blog.php',
     'portfolio' => '/portfolio.php',
+    'affiliate' => '/affiliate.html',
+    'referral' => '/affiliate.html',
 ];
 
 if (isset($routes[$path])) {
