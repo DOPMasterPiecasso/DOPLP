@@ -85,6 +85,7 @@ $routes = [
     'affiliate/logout' => '/affiliate/logout.php',
     'affiliate/panel' => '/affiliate/panel.php',
     'register/affiliate' => '/affiliate/register.php',
+    'referral' => '/affiliate.html',
 ];
 
 if (isset($routes[$path])) {
