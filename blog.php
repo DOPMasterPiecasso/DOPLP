@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/backend/config/database.php';
+require_once __DIR__ . '/backend/includes/blog-helpers.php';
 
 $perPage = 6;
 $page = max(1, (int)($_GET['page'] ?? 1));
@@ -32,25 +33,6 @@ $recentStmt = $db->prepare('SELECT id, judul, slug, created_at FROM blog ORDER B
 $recentStmt->execute();
 $recent = $recentStmt->fetchAll();
 
-function blogExcerpt($html, $limit = 190) {
-    $text = trim(preg_replace('/\s+/', ' ', strip_tags($html)));
-    if (function_exists('mb_strimwidth')) {
-        return mb_strimwidth($text, 0, $limit, '...');
-    }
-    return strlen($text) > $limit ? substr($text, 0, $limit) . '...' : $text;
-}
-
-function blogPageUrl($page, $keyword) {
-    $query = [];
-    if ($page > 1) {
-        $query['page'] = $page;
-    }
-    if ($keyword !== '') {
-        $query['q'] = $keyword;
-    }
-    return $query ? '/blog?' . http_build_query($query) : '/blog';
-}
-
 $pageTitle = 'Blog & Insights | dopagency';
 $description = 'Baca artikel, insight, dan pembaruan terbaru dari dopagency tentang digital marketing, web development, dan solusi digital.';
 ?>
@@ -62,7 +44,9 @@ $description = 'Baca artikel, insight, dan pembaruan terbaru dari dopagency tent
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="format-detection" content="telephone=no">
-  <meta name="theme-color" content="#75dab4" />
+  <meta name="theme-color" content="#00ff39" />
+  <!-- htmx component: google-site-verification -->
+  <div hx-get="components/google-site-verification.html" hx-trigger="load" hx-target="head" hx-swap="beforeend"></div>
   <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
   <meta name="author" content="dopagency">
   <meta name="description" content="<?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?>">
@@ -152,24 +136,24 @@ $description = 'Baca artikel, insight, dan pembaruan terbaru dari dopagency tent
                 <div class="post">
                   <div class="post-image">
                     <?php if ($article['gambar']): ?>
-                      <a href="/blog/<?= htmlspecialchars($article['slug'], ENT_QUOTES, 'UTF-8') ?>">
-                        <img src="/uploads/blog/<?= htmlspecialchars($article['gambar'], ENT_QUOTES, 'UTF-8') ?>"
+                      <a href="<?= htmlspecialchars(blogArticleUrl($article['slug']), ENT_QUOTES, 'UTF-8') ?>">
+                        <img src="<?= htmlspecialchars(blogImageUrl($article['gambar']), ENT_QUOTES, 'UTF-8') ?>"
                           alt="<?= htmlspecialchars($article['judul'], ENT_QUOTES, 'UTF-8') ?>" loading="lazy">
                       </a>
                     <?php endif; ?>
                   </div>
                   <div class="post-content">
-                    <div class="post-date"><?= date('d F Y', strtotime($article['created_at'])) ?></div>
+                    <div class="post-date"><?= blogTanggal($article['created_at']) ?></div>
                     <div class="post-title">
-                      <h5><a href="/blog/<?= htmlspecialchars($article['slug'], ENT_QUOTES, 'UTF-8') ?>">
+                      <h5><a href="<?= htmlspecialchars(blogArticleUrl($article['slug']), ENT_QUOTES, 'UTF-8') ?>">
                           <?= htmlspecialchars($article['judul'], ENT_QUOTES, 'UTF-8') ?>
                         </a></h5>
                     </div>
                     <div class="post-author">
-                      <span>Oleh <a href="#"><?= htmlspecialchars($article['penulis'] ?: 'dopagency', ENT_QUOTES, 'UTF-8') ?></a></span>
+                      <span>Oleh <a href="/blog"><?= htmlspecialchars($article['penulis'] ?: 'dopagency', ENT_QUOTES, 'UTF-8') ?></a></span>
                     </div>
                     <p><?= htmlspecialchars(blogExcerpt($article['konten']), ENT_QUOTES, 'UTF-8') ?></p>
-                    <a href="/blog/<?= htmlspecialchars($article['slug'], ENT_QUOTES, 'UTF-8') ?>" class="link">Baca Selengkapnya</a>
+                    <a href="<?= htmlspecialchars(blogArticleUrl($article['slug']), ENT_QUOTES, 'UTF-8') ?>" class="link">Baca Selengkapnya</a>
                   </div>
                 </div>
                 <!-- end post -->
@@ -193,7 +177,7 @@ $description = 'Baca artikel, insight, dan pembaruan terbaru dari dopagency tent
               <div class="title">Cari Artikel</div>
               <form action="/blog" method="GET">
                 <input type="text" name="q" value="<?= htmlspecialchars($keyword, ENT_QUOTES, 'UTF-8') ?>"
-                  placeholder="Kata kunci...">
+                  placeholder="Kata kunci..." aria-label="Kata kunci pencarian">
               </form>
             </div>
             <!-- end widget -->
@@ -202,10 +186,10 @@ $description = 'Baca artikel, insight, dan pembaruan terbaru dari dopagency tent
               <ul class="categories">
                 <?php foreach ($recent as $item): ?>
                   <li>
-                    <a href="/blog/<?= htmlspecialchars($item['slug'], ENT_QUOTES, 'UTF-8') ?>">
+                    <a href="<?= htmlspecialchars(blogArticleUrl($item['slug']), ENT_QUOTES, 'UTF-8') ?>">
                       <?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>
                     </a>
-                    <span><?= date('d M Y', strtotime($item['created_at'])) ?></span>
+                    <span><?= blogTanggal($item['created_at'], 'pendek') ?></span>
                   </li>
                 <?php endforeach; ?>
               </ul>

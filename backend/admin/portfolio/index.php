@@ -53,7 +53,8 @@ $sql = 'SELECT p.*, k.nama as kategori_nama
 $params = [];
 
 if ($keyword !== '') {
-    $sql .= ' AND (p.judul LIKE ? OR p.client LIKE ?)';
+    $sql .= ' AND (p.judul LIKE ? OR p.client LIKE ? OR p.teknologi LIKE ?)';
+    $params[] = '%' . $keyword . '%';
     $params[] = '%' . $keyword . '%';
     $params[] = '%' . $keyword . '%';
 }
@@ -134,6 +135,7 @@ adminAlert($message, $messageType);
                             <th>Judul</th>
                             <th>Kategori</th>
                             <th>Client</th>
+                            <th>Teknologi</th>
                             <th>Tahun</th>
                             <th>Status</th>
                             <th>Pin</th>
@@ -159,6 +161,7 @@ adminAlert($message, $messageType);
                                     <?php endif; ?>
                                 </td>
                                 <td><?= htmlspecialchars($p['client'] ?: '-', ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= htmlspecialchars($p['teknologi'] ?: '-', ENT_QUOTES, 'UTF-8') ?></td>
                                 <td class="is-num"><?= htmlspecialchars($p['tahun'] ?: '-', ENT_QUOTES, 'UTF-8') ?></td>
                                 <td><?= $p['status'] === 'aktif' ? '<span class="badge">Aktif</span>' : '<span class="badge badge--muted">Nonaktif</span>' ?></td>
                                 <td><?= (int)$p['is_pin'] === 1 ? '<span class="badge">Pin</span>' : '<span class="badge badge--muted">-</span>' ?></td>

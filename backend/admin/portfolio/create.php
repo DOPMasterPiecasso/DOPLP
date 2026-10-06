@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../includes/auth.php';
 requireAuth();
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../includes/admin-layout.php';
+require_once __DIR__ . '/../../includes/text.php';
 
 $db = getConnection();
 $message = '';
@@ -50,9 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $judul = trim($_POST['judul'] ?? '');
     $kategori_id = (int)($_POST['kategori_id'] ?? 0) ?: null;
-    $deskripsi = $_POST['deskripsi'] ?? '';
+    $deskripsi = plainText($_POST['deskripsi'] ?? '');
     $client = trim($_POST['client'] ?? '');
     $tahun = trim($_POST['tahun'] ?? '');
+    $teknologi = trim($_POST['teknologi'] ?? '');
     $status = in_array($_POST['status'] ?? '', ['aktif', 'nonaktif'], true) ? $_POST['status'] : 'aktif';
     $isPin = isset($_POST['is_pin']) ? 1 : 0;
     $gambar = null;
@@ -79,8 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($messageType === 'error') {
     } else {
         try {
-            $stmt = $db->prepare('INSERT INTO portfolio (judul, slug, kategori_id, deskripsi, gambar, client, tahun, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$judul, adminSlugify($judul), $kategori_id, $deskripsi, $gambar, $client, $tahun, $status, $isPin]);
+            $stmt = $db->prepare('INSERT INTO portfolio (judul, slug, kategori_id, deskripsi, teknologi, gambar, client, tahun, status, is_pin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            $stmt->execute([$judul, adminSlugify($judul), $kategori_id, $deskripsi, $teknologi, $gambar, $client, $tahun, $status, $isPin]);
             header('Location: /backend/admin/portfolio/index.php?success=1');
             exit();
         } catch (Exception $e) {
@@ -141,6 +143,12 @@ adminAlert($message, $messageType);
                 </div>
 
                 <div class="field field--full">
+                    <label for="teknologi">Teknologi</label>
+                    <input type="text" id="teknologi" name="teknologi" value="<?= htmlspecialchars($_POST['teknologi'] ?? '', ENT_QUOTES, 'UTF-8') ?>" placeholder="Contoh: Laravel, Vue.js, MySQL">
+                    <div class="field__hint">Pisahkan dengan koma. Ditampilkan di halaman portofolio &amp; detail modal.</div>
+                </div>
+
+                <div class="field field--full">
                     <label for="gambar">Gambar</label>
                     <input type="file" id="gambar" name="gambar" accept="image/*">
                     <div class="field__hint">JPG, PNG, WEBP, atau GIF. Maksimal 2MB. Disarankan rasio 4:3.</div>
@@ -163,7 +171,7 @@ adminAlert($message, $messageType);
 
                 <div class="field field--full">
                     <label for="editor">Deskripsi</label>
-                    <textarea id="editor" name="deskripsi" rows="10"><?= htmlspecialchars($_POST['deskripsi'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                    <textarea id="editor" name="deskripsi" rows="10"><?= htmlspecialchars($deskripsi, ENT_QUOTES, 'UTF-8') ?></textarea>
                 </div>
             </div>
 

@@ -38,7 +38,7 @@ $locked = authThrottleState();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="theme-color" content="#75dab4">
+    <meta name="theme-color" content="#00ff39">
     <meta name="robots" content="noindex, nofollow">
     <title>Login Admin | dopagency</title>
     <link href="/ico/favicon.png" rel="shortcut icon">

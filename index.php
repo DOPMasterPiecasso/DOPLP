@@ -1,4 +1,58 @@
 <?php
+// ---------------------------------------------------------------------------
+// SECURITY GUARD - blokir akses publik ke file/direktori sensitif
+// Berlaku untuk PHP built-in server (router ini) dan melengkapi .htaccess.
+// ---------------------------------------------------------------------------
+if (!function_exists('dop_deny')) {
+    function dop_deny()
+    {
+        http_response_code(403);
+        header('Content-Type: text/plain; charset=UTF-8');
+        exit("403 Forbidden\n");
+    }
+}
+
+if (PHP_SAPI !== 'cli') {
+    // Security headers
+    if (!headers_sent()) {
+        header('X-Content-Type-Options: nosniff');
+        header('X-Frame-Options: SAMEORIGIN');
+        header('Referrer-Policy: strict-origin-when-cross-origin');
+    }
+
+    // Jangan tampilkan error (path/kredensial) ke pengunjung
+    @ini_set('display_errors', '0');
+
+    $reqPath = (string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH);
+    $reqPath = rawurldecode($reqPath);
+    $reqPath = (string) preg_replace('#/{2,}#', '/', '/' . ltrim($reqPath, '/'));
+
+    // Cegah path traversal: /../../.env, %2e%2e%2f.env, dst.
+    if ($reqPath === '' || strpos($reqPath, '..') !== false) {
+        dop_deny();
+    }
+
+    // .env dan semua variannya (.env.local, .env.production, .env.example, ...)
+    if (preg_match('#(?:^|/)\.env(?:\.[^/]*)?$#i', $reqPath)) {
+        dop_deny();
+    }
+
+    // File tersembunyi lain: /.git/*, /.htpasswd, /.user.ini, /.gitignore, dst.
+    if (preg_match('#(?:^|/)\.(?!well-known(?:/|$))[^/]+$#i', $reqPath)) {
+        dop_deny();
+    }
+
+    // File backup/konfigurasi/dokumen: .ini .log .bak .sql .yml .md .sh, dst.
+    if (preg_match('#\.(ini|log|bak|old|orig|save|swp|sql|ya?ml|sh|md|lock|dist|patch|diff)$#i', $reqPath)) {
+        dop_deny();
+    }
+
+    // Direktori internal: /backend/config, /backend/includes, /backend/scripts, /docker, /app
+    if (preg_match('#^/(?:backend/(?:config|includes|scripts)|docker|app)(?:/|$)#i', $reqPath)) {
+        dop_deny();
+    }
+}
+
 // Simple router for clean URLs
 error_log('Router called for: ' . ($_SERVER['REQUEST_URI'] ?? 'NONE'));
 
@@ -80,7 +134,9 @@ if (file_exists($htmlFile)) {
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="format-detection" content="telephone=no">
-  <meta name="theme-color" content="#75dab4" />
+  <meta name="theme-color" content="#00ff39" />
+  <!-- htmx component: google-site-verification -->
+  <div hx-get="components/google-site-verification.html" hx-trigger="load" hx-target="head" hx-swap="beforeend"></div>
   <title>dopagency | Solusi Digital Terpercaya untuk Bisnis Anda</title>
   <meta name="author" content="dopagency">
   <meta name="description"
@@ -94,7 +150,7 @@ if (file_exists($htmlFile)) {
   <meta property="og:site_name" content="dopagency">
   <meta property="og:title" content="dopagency | Solusi Digital Terpercaya untuk Bisnis Anda">
   <meta property="og:type" content="website">
-
+<meta name="google-site-verification" content="6_Lkooo6wxh5gLv082LvfbkP7xVN8ZqywlcwZGurxcU" />
   <!-- FAVICON FILES -->
   <link href="ico/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon" sizes="144x144">
   <link href="ico/apple-touch-icon-114-precomposed.png" rel="apple-touch-icon" sizes="114x114">
@@ -226,7 +282,7 @@ if (file_exists($htmlFile)) {
       display: none;
       margin-top: 15px;
       font-size: 13px;
-      color: #75dab4;
+      color: #00ff39;
       letter-spacing: 2px;
       font-family: "Fjalla One", sans-serif;
       padding-bottom: 5px;
@@ -239,7 +295,7 @@ if (file_exists($htmlFile)) {
       content: "";
       width: 20px;
       height: 2px;
-      background: #75dab4;
+      background: #00ff39;
       position: absolute;
       left: 0;
       bottom: 0;
@@ -299,8 +355,8 @@ if (file_exists($htmlFile)) {
     .intro-badge {
       display: inline-block;
       padding: 12px 26px;
-      border: 1px solid #75dab4;
-      color: #75dab4;
+      border: 1px solid #00ff39;
+      color: #00ff39;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 2px;
@@ -318,8 +374,8 @@ if (file_exists($htmlFile)) {
     .works-more a {
       display: inline-block;
       padding: 16px 44px;
-      background: #75dab4;
-      border: 1px solid #75dab4;
+      background: #00ff39;
+      border: 1px solid #00ff39;
       color: #222327;
       font-family: "Fjalla One", sans-serif;
       font-size: 14px;
@@ -467,15 +523,36 @@ if (file_exists($htmlFile)) {
       <!-- end container -->
     </section>
     <!-- end icon-content-block -->
+<?php
+require_once __DIR__ . '/backend/config/database.php';
+require_once __DIR__ . '/backend/includes/text.php';
+$db = getConnection();
+
+// Kategori untuk daftar "work-cats" diambil langsung dari database
+$workCats = [];
+try {
+    $workCats = $db->query("SELECT id, nama, slug FROM kategori ORDER BY id ASC")->fetchAll();
+} catch (Throwable $e) {
+    error_log('work-cats gagal load kategori: ' . $e->getMessage());
+}
+// Fallback bila tabel kosong / query gagal, tampilan tetap ada
+if (!$workCats) {
+    $workCats = [
+        ['nama' => 'Web System'],
+        ['nama' => 'Landing Page'],
+        ['nama' => 'Company Profile'],
+    ];
+}
+?>
     <div class="work-divider-head">
       <div class="container">
         <div class="row">
           <div class="col-12 text-center wow" data-splitting>
             <h3 class="section-title">KATEGORI</h3>
             <ul class="work-cats">
-              <li>Web System</li>
-              <li>Landing Page</li>
-              <li>Company Profile</li>
+<?php foreach ($workCats as $cat): ?>
+              <li><?= htmlspecialchars($cat['nama'], ENT_QUOTES, 'UTF-8') ?></li>
+<?php endforeach; ?>
             </ul>
           </div>
           <!-- end col-12 -->
@@ -488,9 +565,10 @@ if (file_exists($htmlFile)) {
     <section class="works">
       <ul>
 <?php
-require_once __DIR__ . '/backend/config/database.php';
-$db = getConnection();
 $itemsAll = $db->query("SELECT p.judul, p.slug, p.deskripsi, p.teknologi, p.gambar, k.nama AS kategori FROM portfolio p LEFT JOIN kategori k ON k.id = p.kategori_id WHERE p.status = 'aktif' AND p.is_pin = 1 ORDER BY p.id ASC")->fetchAll();
+// CKEditor menyimpan deskripsi dengan tag <p>, bersihkan jadi teks biasa
+foreach ($itemsAll as &$_it) { $_it['deskripsi'] = plainText($_it['deskripsi']); }
+unset($_it);
 $items = array_slice($itemsAll, 0, 6);
 foreach ($items as $item):
 ?>
@@ -498,7 +576,7 @@ foreach ($items as $item):
           <figure class="reveal-effect masker wow"> <a hx-boost="false" href="<?= htmlspecialchars($item['gambar'], ENT_QUOTES, 'UTF-8') ?>"><img src="<?= htmlspecialchars($item['gambar'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>"></a> </figure>
           <div class="caption wow" data-splitting>
             <h3><?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?></h3>
-            <small><?= htmlspecialchars($item['kategori'] ?? '', ENT_QUOTES, 'UTF-8') ?> | <?= htmlspecialchars($item['teknologi'] ?? '', ENT_QUOTES, 'UTF-8') ?></small>
+            <small><?= !empty($item['kategori']) ? htmlspecialchars($item['kategori'], ENT_QUOTES, 'UTF-8') . ' | ' : '' ?><?= htmlspecialchars($item['teknologi'] ?? '', ENT_QUOTES, 'UTF-8') ?></small>
           </div>
           <!-- end caption -->
         </li>
@@ -534,6 +612,7 @@ foreach ($items as $item):
               <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/react.svg" alt="React" loading="lazy"> </figure> <span class="tech-name">React</span> </li>
               <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/php.svg" alt="PHP" loading="lazy"> </figure> <span class="tech-name">PHP</span> </li>
               <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/python.svg" alt="Python" loading="lazy"> </figure> <span class="tech-name">Python</span> </li>
+              <li class="reveal-effect masker wow"> <figure class="tech-logo"> <img src="asset/tech/golang.svg" alt="Golang" loading="lazy"> </figure> <span class="tech-name">Golang</span> </li>
             </ul>
           </div>
           <!-- end col-7 -->
@@ -573,6 +652,14 @@ foreach ($items as $item):
   </div>
   <script>window.PORTFOLIO_DATA = <?php $__m = []; foreach ($itemsAll as $it) { $__m[$it["slug"]] = ["kategori" => $it["kategori"], "judul" => $it["judul"], "teknologi" => $it["teknologi"], "deskripsi" => $it["deskripsi"], "gambar" => $it["gambar"]]; } echo json_encode($__m, JSON_UNESCAPED_UNICODE); ?>;</script>
   <script>
+    // Buang tag HTML & decode entity: deskripsi/kategori datang dari CKEditor
+    function portfolioToText(value) {
+      if (value === null || value === undefined) return '';
+      var text = String(value).replace(/<[^>]*>/g, ' ');
+      var ta = document.createElement('textarea');
+      ta.innerHTML = text;
+      return ta.value.replace(/\s+/g, ' ').trim();
+    }
     document.addEventListener('click', function (e) {
       var a = e.target.closest('.works li figure a, .portfolio-works li figure a');
       if (!a) return;
@@ -585,10 +672,12 @@ foreach ($items as $item):
       var src = img ? img.getAttribute('src') : a.getAttribute('href');
       var item = byImg[src.split('/').pop()];
       if (!item) return;
-      document.getElementById('portfolioModalTitle').textContent = item.judul;
-      document.getElementById('portfolioModalKategori').textContent = item.kategori;
-      document.getElementById('portfolioModalTeknologi').textContent = item.teknologi;
-      document.getElementById('portfolioModalDeskripsi').textContent = item.deskripsi;
+      document.getElementById('portfolioModalTitle').textContent = portfolioToText(item.judul);
+      var kategoriEl = document.getElementById('portfolioModalKategori');
+      kategoriEl.textContent = portfolioToText(item.kategori);
+      kategoriEl.style.display = kategoriEl.textContent === '' ? 'none' : '';
+      document.getElementById('portfolioModalTeknologi').textContent = portfolioToText(item.teknologi);
+      document.getElementById('portfolioModalDeskripsi').textContent = portfolioToText(item.deskripsi);
       var mImg = document.getElementById('portfolioModalImg');
       mImg.src = item.gambar;
       mImg.alt = item.judul;

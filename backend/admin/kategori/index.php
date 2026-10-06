@@ -45,6 +45,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
+
+    if ($action === 'bulk_delete') {
+        $ids = array_map('intval', (array)($_POST['ids'] ?? []));
+        $ids = array_values(array_unique(array_filter($ids, function ($id) { return $id > 0; })));
+
+        if (empty($ids)) {
+            $message = 'Pilih minimal satu kategori untuk dihapus.';
+            $messageType = 'info';
+        } else {
+            $deleted = 0;
+            $failed = 0;
+            $stmt = $db->prepare('DELETE FROM kategori WHERE id = ?');
+            foreach ($ids as $id) {
+                try {
+                    $stmt->execute([$id]);
+                    $deleted += $stmt->rowCount();
+                } catch (Exception $e) {
+                    $failed++;
+                }
+            }
+
+            if ($deleted > 0 && $failed === 0) {
+                $message = $deleted . ' kategori berhasil dihapus.';
+            } elseif ($deleted > 0) {
+                $message = $deleted . ' kategori berhasil dihapus, ' . $failed . ' gagal dihapus.';
+                $messageType = 'error';
+            } elseif ($failed > 0) {
+                $message = 'Gagal menghapus kategori yang dipilih. ' . $failed . ' kategori gagal.';
+                $messageType = 'error';
+            } else {
+                $message = 'Kategori tidak ditemukan.';
+                $messageType = 'info';
+            }
+        }
+    }
 }
 
 $kategoris = $db->query('SELECT k.*, (SELECT COUNT(*) FROM portfolio p WHERE p.kategori_id = k.id) as jumlah_portfolio FROM kategori k ORDER BY k.id DESC')->fetchAll();
@@ -90,10 +125,21 @@ adminAlert($message, $messageType);
                 <p>Belum ada kategori. Tambahkan kategori pertama di atas.</p>
             </div>
         <?php else: ?>
+            <form method="POST" id="bulkForm" class="bulk-bar">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
+                <input type="hidden" name="action" value="bulk_delete">
+                <span class="bulk-count" id="bulkCount">0 kategori dipilih</span>
+                <button type="submit" class="admin-btn admin-btn--danger" id="bulkDeleteBtn" disabled>
+                    <i class="fa fa-trash-o"></i> Hapus Terpilih
+                </button>
+            </form>
             <div class="table-wrap">
                 <table class="admin-table">
                     <thead>
                         <tr>
+                            <th style="width:52px;">
+                                <input type="checkbox" id="bulkSelectAll" aria-label="Pilih semua kategori">
+                            </th>
                             <th style="width:70px;">ID</th>
                             <th>Nama</th>
                             <th>Slug</th>
@@ -104,6 +150,9 @@ adminAlert($message, $messageType);
                     <tbody>
                         <?php foreach ($kategoris as $k): ?>
                             <tr>
+                                <td>
+                                    <input type="checkbox" class="bulk-check" name="ids[]" value="<?= (int)$k['id'] ?>" form="bulkForm" aria-label="Pilih kategori <?= htmlspecialchars($k['nama'], ENT_QUOTES, 'UTF-8') ?>">
+                                </td>
                                 <td class="is-num"><?= (int)$k['id'] ?></td>
                                 <td><strong><?= htmlspecialchars($k['nama'], ENT_QUOTES, 'UTF-8') ?></strong></td>
                                 <td><span class="badge badge--muted"><code><?= htmlspecialchars($k['slug'], ENT_QUOTES, 'UTF-8') ?></code></span></td>
@@ -137,5 +186,53 @@ adminAlert($message, $messageType);
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+    (function () {
+        var form = document.getElementById('bulkForm');
+        if (!form) return;
+
+        var selectAll = document.getElementById('bulkSelectAll');
+        var countEl = document.getElementById('bulkCount');
+        var btn = document.getElementById('bulkDeleteBtn');
+        var checks = Array.prototype.slice.call(document.querySelectorAll('.bulk-check'));
+
+        function checkedCount() {
+            return checks.filter(function (c) { return c.checked; }).length;
+        }
+
+        function sync() {
+            var n = checkedCount();
+            countEl.textContent = n + ' kategori dipilih';
+            btn.disabled = n === 0;
+            selectAll.checked = n > 0 && n === checks.length;
+            selectAll.indeterminate = n > 0 && n < checks.length;
+        }
+
+        selectAll.addEventListener('change', function () {
+            checks.forEach(function (c) { c.checked = selectAll.checked; });
+            sync();
+        });
+
+        checks.forEach(function (c) {
+            c.addEventListener('change', sync);
+        });
+
+        form.addEventListener('submit', function (e) {
+            var n = checkedCount();
+            if (n === 0) {
+                e.preventDefault();
+                return;
+            }
+            var ok = confirm(
+                'Hapus ' + n + ' kategori terpilih?\n\n' +
+                'Portfolio di dalamnya TIDAK ikut terhapus, hanya kategorinya dikosongkan.'
+            );
+            if (!ok) e.preventDefault();
+        });
+
+        sync();
+    })();
+</script>
 
 <?php adminLayoutFooter(); ?>

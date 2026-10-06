@@ -1,5 +1,47 @@
+# ============================================================
+# SECURITY - blokir akses publik ke file & direktori sensitif
+# ============================================================
+
+# 1) .env dan semua variannya (.env.local, .env.production, .env.example, ...)
+<FilesMatch "^\.env">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 2) file backup/konfigurasi/dokumen yang tidak boleh diunduh publik
+<FilesMatch "\.(ini|log|bak|old|orig|save|swp|sql|ya?ml|sh|md|lock|dist|patch|diff|gitignore|gitattributes|htaccess|htpasswd)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 3) security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-Permitted-Cross-Domain-Policies "none"
+</IfModule>
+# ============================================================
+
 RewriteEngine On
 DirectoryIndex index.php index.html
+
+# --- SECURITY (rewrite): file tersembunyi .env/.git/.htpasswd/.user.ini, dst ---
+# kecuali /.well-known (verification Let's Encrypt)
+RewriteRule (^|/)\.(?!well-known(?:/|$)) - [F,L]
+
+# --- SECURITY (rewrite): direktori internal yang tidak boleh diakses langsung ---
+RewriteRule ^(backend/(config|includes|scripts)|docker|app)/ - [F,L]
 
 # /login -> /backend/admin/login.php (harus sebelum aturan .html)
 RewriteRule ^login/?$ backend/admin/login.php [L]
