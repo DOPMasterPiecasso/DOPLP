@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-affiliateLayoutHead('Daftar Jadi Mitra Affiliate | dopagency', 'Daftar jadi mitra affiliate dopagency. Isi data usaha, akun login, dan rekening untuk pencairan komisi.');
+affiliateLayoutHead('Daftar Jadi Mitra Affiliate | dopagency', 'Daftar jadi mitra affiliate dopagency. Isi data usaha dan akun login untuk mendaftar jadi mitra.');
 ?>
 
 <main class="af-main">
@@ -132,10 +132,16 @@ affiliateLayoutHead('Daftar Jadi Mitra Affiliate | dopagency', 'Daftar jadi mitr
           <div class="af-field af-field--full">
             <label for="af-photo_usaha"><i class="mi">photo_camera</i> Photo Usaha <span class="req">*</span></label>
             <div class="af-file">
-              <input type="file" id="af-photo_usaha" name="photo_usaha" accept="image/*">
-              <img class="af-file__preview" id="afPhotoPreview" alt="Pratinjau foto usaha">
+              <input type="file" id="af-photo_usaha" name="photo_usaha" accept="image/*" class="af-file__input">
+              <label class="af-file__box" for="af-photo_usaha" id="afPhotoBox">
+                <img class="af-file__preview" id="afPhotoPreview" alt="Pratinjau foto usaha">
+                <span class="af-file__placeholder">
+                  <i class="mi">add_photo_alternate</i>
+                  <b>Pilih Gambar</b>
+                </span>
+              </label>
             </div>
-            <span class="af-field__hint">Foto depan toko / tempat usaha. Format JPG, PNG, WEBP, atau GIF. Maksimal 2MB.</span>
+            <span class="af-field__hint">Klik kotak untuk memilih foto depan toko / tempat usaha. Format JPG, PNG, WEBP, atau GIF. Maksimal 2MB.</span>
           </div>
         </div>
       </div>
@@ -167,46 +173,26 @@ affiliateLayoutHead('Daftar Jadi Mitra Affiliate | dopagency', 'Daftar jadi mitr
       </div>
     </section>
 
-    <section class="af-card">
-      <div class="af-card__head is-green">
-        <i class="mi">account_balance</i>
-        <div>
-          <h2>3. Data Rekening</h2>
-          <small>Untuk pencairan komisi (Rembursmen)</small>
-        </div>
-      </div>
-      <div class="af-card__body">
-        <div class="af-grid">
-          <div class="af-field af-field--full">
-            <div class="af-status">
-              <i class="mi">account_balance</i>
-              <div>
-                <b>Data Rekening diisi setelah akun di-approve</b>
-                <span>No Rekening dan Atas Nama untuk pencairan komisi (Rembursmen) diisi lewat Panel Mitra setelah admin menyetujui akun Bapak/Ibu. Formulir pendaftaran ini tidak memerlukan data rekening.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="af-actions">
-          <button type="submit" class="af-btn"><i class="mi">how_to_reg</i> Daftar Sekarang</button>
-          <span class="af-field__hint">Sudah punya akun? <a href="/affiliate/login">Masuk di sini</a></span>
-        </div>
-      </div>
-    </section>
+    <div class="af-actions">
+      <button type="submit" class="af-btn"><i class="mi">how_to_reg</i> Daftar Sekarang</button>
+      <span class="af-field__hint">Sudah punya akun? <a href="/affiliate/login">Masuk di sini</a></span>
+    </div>
   </form>
 </main>
 
 <script>
   (function () {
     var input = document.getElementById('af-photo_usaha');
+    var box = document.getElementById('afPhotoBox');
     var preview = document.getElementById('afPhotoPreview');
-    if (!input || !preview) return;
+    if (!input || !box || !preview) return;
     input.addEventListener('change', function () {
       if (input.files && input.files[0]) {
         preview.src = URL.createObjectURL(input.files[0]);
-        preview.style.display = 'block';
+        box.classList.add('is-selected');
       } else {
-        preview.style.display = 'none';
+        preview.removeAttribute('src');
+        box.classList.remove('is-selected');
       }
     });
   })();
