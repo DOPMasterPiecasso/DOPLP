@@ -79,7 +79,12 @@ $routes = [
     'sitemap' => '/sitemap.php',
     'blog' => '/blog.php',
     'portfolio' => '/portfolio.php',
-    'affiliate' => '/affiliate.html',
+    'affiliate' => '/affiliate/login.php',
+    'affiliate/login' => '/affiliate/login.php',
+    'affiliate/register' => '/affiliate/register.php',
+    'affiliate/logout' => '/affiliate/logout.php',
+    'affiliate/panel' => '/affiliate/panel.php',
+    'register/affiliate' => '/affiliate/register.php',
     'referral' => '/affiliate.html',
 ];
 

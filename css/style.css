@@ -3839,3 +3839,19 @@ html[dir=rtl] .footer .footer-bar .creation {
 .footer .link {
   font-family: inherit;
 }
+
+/* DOPAGENCY ADJUSTMENT: SECTION "MENGAPA MEMILIH KAMI" HALAMAN LAYANAN */
+.text-content-block.why-choose-us .col-lg-4,
+.text-content-block.why-choose-us .col-md-6 {
+  margin: 0;
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+
+/* DOPAGENCY ADJUSTMENT: SECTION "PROSES KERJA KAMI" HALAMAN LAYANAN */
+.icon-content-block.work-process .col-lg-4,
+.icon-content-block.work-process .col-md-6 {
+  margin: 0;
+  padding-top: 35px;
+  padding-bottom: 35px;
+}

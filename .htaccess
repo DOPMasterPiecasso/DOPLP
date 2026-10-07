@@ -33,6 +33,19 @@
 </IfModule>
 # ============================================================
 
+# ============================================================
+# CACHE - aset css/js dan halaman html harus divalidasi ulang (ETag)
+# supaya perubahan style/konten langsung terlihat setelah refresh,
+# bukan dari cache lama
+# ============================================================
+<FilesMatch "\.(css|js|html)$">
+    <IfModule mod_headers.c>
+        Header unset Expires
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+    </IfModule>
+</FilesMatch>
+# ============================================================
+
 RewriteEngine On
 DirectoryIndex index.php index.html
 
@@ -42,6 +55,10 @@ RewriteRule (^|/)\.(?!well-known(?:/|$)) - [F,L]
 
 # --- SECURITY (rewrite): direktori internal yang tidak boleh diakses langsung ---
 RewriteRule ^(backend/(config|includes|scripts)|docker|app)/ - [F,L]
+
+# --- SECURITY (rewrite): file partial/pembantu tidak boleh dipanggil langsung ---
+RewriteRule ^backend/admin/.*/_(form|partial)\.php$ - [F,L]
+RewriteRule ^affiliate/(includes|layout)\.php$ - [F,L]
 
 # /login -> /backend/admin/login.php (harus sebelum aturan .html)
 RewriteRule ^login/?$ backend/admin/login.php [L]
@@ -58,6 +75,16 @@ RewriteRule ^blog/([A-Za-z0-9\-_]+)/?$ blog-detail.php?slug=$1 [L]
 
 # /portfolio -> /portfolio.php
 RewriteRule ^portfolio/?$ portfolio.php [L]
+
+# /affiliate -> halaman mitra (register, login, panel)
+RewriteRule ^affiliate/?$ affiliate/login.php [L]
+RewriteRule ^affiliate/register/?$ affiliate/register.php [L]
+RewriteRule ^affiliate/login/?$ affiliate/login.php [L]
+RewriteRule ^affiliate/logout/?$ affiliate/logout.php [L]
+RewriteRule ^affiliate/panel/?$ affiliate/panel.php [L]
+
+# /register/affiliate -> halaman pendaftaran mitra (URL pendek untuk link publik)
+RewriteRule ^register/affiliate/?$ affiliate/register.php [L]
 
 # /about -> /about.html
 RewriteCond %{REQUEST_FILENAME} !-d
