@@ -203,4 +203,4 @@ affiliateLayoutHead('Daftar Jadi Mitra Affiliate | dopagency', 'Daftar jadi mitr
   })();
 </script>
 
-<?php affiliateLayoutFoot(); ?>
+<?php affiliateLayoutFoot(false); ?>

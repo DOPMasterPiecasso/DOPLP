@@ -24,22 +24,18 @@ function affiliateLayoutHead($title, $description) {
 function affiliateAuthVisual() {
     ?>
     <div class="af-auth-visual">
-      <div class="af-auth-visual__content">
-        <div class="af-auth-visual__icon">
-          <i class="mi">handshake</i>
-        </div>
-        <h1 class="af-auth-visual__title">Program Mitra Affiliate dopagency</h1>
-        <p class="af-auth-visual__desc">Ubah kenalan pemilik fotokopi & percetakan jadi komisi Rp100.000 – Rp250.000 per klien.</p>
-      </div>
+      <img src="/affiliate/screen.png" alt="Kios fotokopi, digital printing, dan ATK" class="af-auth-visual__bg">
     </div>
     <?php
 }
 
-function affiliateLayoutFoot() {
+function affiliateLayoutFoot($showFooter = true) {
     ?>
+    <?php if ($showFooter): ?>
   <footer class="af-footer">
     &copy; <?= date('Y') ?> dopagency &middot; Program Mitra Affiliate
   </footer>
+    <?php endif; ?>
 </body>
 
 </html>

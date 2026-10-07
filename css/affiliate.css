@@ -737,40 +737,29 @@ form > .af-actions {
   }
 }
 
-/* ---------- AUTH SPLIT (gambar di kiri, form di kanan) ----------
-   Hanya untuk layar lebar: di desktop kiri foto kios, kanan hero + form.
-   Di bawah 960px susunan jadi satu kolom dan foto dipotong jadi banner
-   setinggi 200px supaya formulir tetap cepat terlihat di HP. */
-.af-main--split {
-  max-width: 1280px;
-  padding: 40px 24px 60px;
-}
-
-.af-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: stretch;
-}
-
-.af-split__visual {
+/* ---------- AUTH SPLIT FULL SCREEN (50/50 ala image.png) ---------- */
+/* ---------- AUTH SPLIT FULL SCREEN (50/50 ala image.png) ---------- */
+html, body {
   height: 100%;
-  min-height: 580px;
+}
+
+.af-auth-split {
   display: flex;
-}
-
-.af-visual-hero {
-  position: relative;
   width: 100%;
-  height: 100%;
-  min-height: 580px;
-  border-radius: 16px;
+  height: 100vh;
   overflow: hidden;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
-  border: 1px solid var(--af-line);
 }
 
-.af-visual-hero img {
+.af-auth-visual {
+  flex: 1 1 50%;
+  width: 50%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background: #ffffff;
+}
+
+.af-auth-visual__bg {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -778,92 +767,78 @@ form > .af-actions {
   display: block;
 }
 
-.af-visual-hero__overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(11, 28, 48, 0.94) 0%, rgba(11, 28, 48, 0.45) 55%, rgba(0, 0, 0, 0.1) 100%);
+.af-auth-form-wrap {
+  flex: 1 1 50%;
+  width: 50%;
+  height: 100vh;
+  overflow-y: auto;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 40px 32px;
-  color: #ffffff;
-}
-
-.af-visual-hero__tag {
-  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  align-self: flex-start;
-  background: var(--af-green);
-  color: #ffffff;
-  padding: 8px 18px;
-  border-radius: 30px;
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 14px rgba(0, 166, 90, 0.4);
+  justify-content: flex-start;
+  padding: 60px 40px;
+  box-sizing: border-box;
 }
 
-.af-visual-hero__tag .mi {
-  font-size: 20px;
-}
-
-.af-visual-hero__overlay h2 {
-  margin: 0 0 10px;
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 1.25;
-  color: #ffffff;
-}
-
-.af-visual-hero__overlay p {
-  margin: 0;
-  font-size: 17px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.af-split__body {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.af-split__body .af-auth {
-  max-width: 100%;
+.af-auth-form-container {
   width: 100%;
-}
-
-.af-split__body .af-hero {
-  padding-top: 0;
-  margin-bottom: 12px;
+  max-width: 480px;
+  margin: auto 0;
 }
 
 @media (max-width: 960px) {
-  .af-split {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
+  html, body {
+    height: auto;
   }
 
-  .af-split__visual {
-    min-height: 260px;
-    height: 260px;
+  .af-auth-split {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
   }
 
-  .af-visual-hero {
-    min-height: 260px;
+  .af-auth-visual {
+    width: 100%;
+    flex: 0 0 auto;
+    height: 320px;
+    min-height: auto;
+    padding: 30px 24px;
   }
 
-  .af-visual-hero__overlay {
-    padding: 24px 20px;
+  .af-auth-visual__overlay {
+    padding: 30px 24px;
   }
 
-  .af-visual-hero__overlay h2 {
-    font-size: 22px;
+  .af-auth-form-wrap {
+    width: 100%;
+    flex: 1 1 auto;
+    height: auto;
+    overflow-y: visible;
+    padding: 40px 24px;
   }
 
-  .af-visual-hero__overlay p {
-    font-size: 14px;
+  .af-auth-form-container {
+    margin: 0 auto;
+  }
+
+  .af-auth-visual__icon {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 16px;
+    border-radius: 20px;
+  }
+
+  .af-auth-visual__icon .mi {
+    font-size: 36px;
+  }
+
+  .af-auth-visual__title {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .af-auth-visual__desc {
+    font-size: 15px;
   }
 }

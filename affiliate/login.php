@@ -94,4 +94,4 @@ affiliateLayoutHead('Masuk Akun Mitra Affiliate | dopagency', 'Masuk ke akun mit
   </div>
 </div>
 
-<?php affiliateLayoutFoot(); ?>
+<?php affiliateLayoutFoot(false); ?>
