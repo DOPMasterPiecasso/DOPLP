@@ -29,7 +29,12 @@ $listStmt = $db->prepare("SELECT id, judul, slug, gambar, penulis, created_at, k
 $listStmt->execute($params);
 $articles = $listStmt->fetchAll();
 
-$recentStmt = $db->prepare('SELECT id, judul, slug, created_at FROM blog ORDER BY created_at DESC, id DESC LIMIT 4');
+// Artikel terkait untuk blok "Artikel Lainnya" di sidebar.
+// OFFSET 1 dipakai supaya artikel terbaru tidak ikut ditampilkan.
+$recentStmt = $db->prepare('SELECT id, judul, slug, konten, gambar, penulis, created_at
+                            FROM blog
+                            ORDER BY created_at DESC, id DESC
+                            LIMIT 3 OFFSET 1');
 $recentStmt->execute();
 $recent = $recentStmt->fetchAll();
 
@@ -181,20 +186,35 @@ $description = 'Baca artikel, insight, dan pembaruan terbaru dari dopagency tent
               </form>
             </div>
             <!-- end widget -->
-            <div class="widget">
-              <div class="title">Artikel Terbaru</div>
-              <ul class="categories">
-                <?php foreach ($recent as $item): ?>
-                  <li>
-                    <a href="<?= htmlspecialchars(blogArticleUrl($item['slug']), ENT_QUOTES, 'UTF-8') ?>">
-                      <?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>
-                    </a>
-                    <span><?= blogTanggal($item['created_at'], 'pendek') ?></span>
-                  </li>
-                <?php endforeach; ?>
-              </ul>
-            </div>
-            <!-- end widget -->
+            <?php if (!empty($recent)): ?>
+              <div class="widget post-related">
+                <div class="title">Artikel Lainnya</div>
+                <ul>
+                  <?php foreach ($recent as $item): ?>
+                    <li>
+                      <?php if ($item['gambar']): ?>
+                        <a class="post-image"
+                          href="<?= htmlspecialchars(blogArticleUrl($item['slug']), ENT_QUOTES, 'UTF-8') ?>">
+                          <img src="<?= htmlspecialchars(blogImageUrl($item['gambar']), ENT_QUOTES, 'UTF-8') ?>"
+                            alt="<?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>" loading="lazy">
+                        </a>
+                      <?php endif; ?>
+                      <div class="post-content<?= $item['gambar'] ? '' : ' full' ?>">
+                        <div class="post-date"><?= blogTanggal($item['created_at'], 'pendek') ?></div>
+                        <div class="post-title">
+                          <h5><a href="<?= htmlspecialchars(blogArticleUrl($item['slug']), ENT_QUOTES, 'UTF-8') ?>">
+                              <?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>
+                            </a></h5>
+                        </div>
+                        <p><?= htmlspecialchars(blogExcerpt($item['konten'], 90), ENT_QUOTES, 'UTF-8') ?></p>
+                      </div>
+                      <!-- end post-content -->
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              </div>
+              <!-- end post-related -->
+            <?php endif; ?>
           </div>
           <!-- end sidebar -->
         </div>
