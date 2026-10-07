@@ -21,6 +21,20 @@ function affiliateLayoutHead($title, $description) {
     <?php
 }
 
+function affiliateAuthVisual() {
+    ?>
+    <div class="af-auth-visual">
+      <div class="af-auth-visual__content">
+        <div class="af-auth-visual__icon">
+          <i class="mi">handshake</i>
+        </div>
+        <h1 class="af-auth-visual__title">Program Mitra Affiliate dopagency</h1>
+        <p class="af-auth-visual__desc">Ubah kenalan pemilik fotokopi & percetakan jadi komisi Rp100.000 – Rp250.000 per klien.</p>
+      </div>
+    </div>
+    <?php
+}
+
 function affiliateLayoutFoot() {
     ?>
   <footer class="af-footer">

@@ -102,83 +102,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 affiliateLayoutHead('Daftar Jadi Mitra Affiliate | dopagency', 'Daftar jadi mitra affiliate dopagency. Isi data usaha dan akun login untuk mendaftar jadi mitra.');
 ?>
 
-<main class="af-main">
-  <div class="af-hero">
-    <span class="af-hero__icon"><i class="mi">handshake</i></span>
-    <h1>Daftar Jadi Mitra Affiliate</h1>
-    <p>Isi data di bawah ini dengan lengkap. Setelah itu tim kami akan memeriksa datanya, dan Bapak/Ibu bisa masuk ke akun mitra.</p>
-  </div>
-
-  <?= affiliateNotice($error, 'error') ?>
-
-  <form method="POST" action="/register/affiliate" enctype="multipart/form-data">
-    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
-
-    <section class="af-card">
-      <div class="af-card__head is-teal">
-        <i class="mi">storefront</i>
-        <div>
-          <h2>1. Data Tempat Usaha</h2>
-          <small>Cantumkan data usaha Bapak/Ibu sebenarnya</small>
-        </div>
+<div class="af-auth-split">
+  <?php affiliateAuthVisual(); ?>
+  <div class="af-auth-form-wrap">
+    <div class="af-auth-form-container" style="max-width: 580px;">
+      <div class="af-hero" style="padding-top:0; margin-bottom: 24px;">
+        <span class="af-hero__icon" style="width:76px; height:76px; margin-bottom:16px;"><i class="mi" style="font-size:40px;">handshake</i></span>
+        <h1 style="font-size:26px;">Daftar Jadi Mitra Affiliate</h1>
+        <p style="font-size:15px;">Isi data di bawah ini dengan lengkap. Setelah itu tim kami akan memeriksa datanya, dan Bapak/Ibu bisa masuk ke akun mitra.</p>
       </div>
-      <div class="af-card__body">
-        <div class="af-grid">
-          <?= affiliateField('pic_pemilik', 'PIC Nama Pemilik', 'badge', $old['pic_pemilik'], ['required' => true, 'placeholder' => 'Contoh: Budi Santoso', 'autocomplete' => 'name']) ?>
-          <?= affiliateField('nama_usaha', 'Nama Tempat Usaha', 'storefront', $old['nama_usaha'], ['required' => true, 'placeholder' => 'Contoh: Toko Maju Jaya']) ?>
-          <?= affiliateField('no_telepon', 'No Telepon (WhatsApp)', 'phone', $old['no_telepon'], ['required' => true, 'placeholder' => '0812xxxxxxx', 'autocomplete' => 'tel']) ?>
-          <?= affiliateField('kota', 'Kota', 'location_city', $old['kota'], ['required' => true, 'placeholder' => 'Contoh: Tangerang Selatan']) ?>
-          <?= affiliateField('alamat', 'Alamat Lengkap', 'map', $old['alamat'], ['type' => 'textarea', 'full' => true, 'required' => true, 'placeholder' => 'Nama jalan, nomor, kelurahan, kecamatan']) ?>
-          <div class="af-field af-field--full">
-            <label for="af-photo_usaha"><i class="mi">photo_camera</i> Photo Usaha <span class="req">*</span></label>
-            <div class="af-file">
-              <input type="file" id="af-photo_usaha" name="photo_usaha" accept="image/*" class="af-file__input">
-              <label class="af-file__box" for="af-photo_usaha" id="afPhotoBox">
-                <img class="af-file__preview" id="afPhotoPreview" alt="Pratinjau foto usaha">
-                <span class="af-file__placeholder">
-                  <i class="mi">add_photo_alternate</i>
-                  <b>Pilih Gambar</b>
-                </span>
-              </label>
+
+      <?= affiliateNotice($error, 'error') ?>
+
+      <form method="POST" action="/register/affiliate" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
+
+        <section class="af-card">
+          <div class="af-card__head is-teal">
+            <i class="mi">storefront</i>
+            <div>
+              <h2>1. Data Tempat Usaha</h2>
+              <small>Cantumkan data usaha Bapak/Ibu sebenarnya</small>
             </div>
-            <span class="af-field__hint">Klik kotak untuk memilih foto depan toko / tempat usaha. Format JPG, PNG, WEBP, atau GIF. Maksimal 2MB.</span>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="af-card">
-      <div class="af-card__head is-blue">
-        <i class="mi">lock</i>
-        <div>
-          <h2>2. Akun Login</h2>
-          <small>Dipakai untuk masuk ke halaman mitra</small>
-        </div>
-      </div>
-      <div class="af-card__body">
-        <div class="af-grid">
-          <?= affiliateField('username', 'Username', 'alternate_email', $old['username'], ['required' => true, 'placeholder' => 'Contoh: budi.maju', 'autocomplete' => 'username', 'hint' => 'Minimal 4 karakter. Huruf, angka, titik, strip, atau garis bawah.']) ?>
-          <?= affiliateField('password', 'Password', 'lock', '', ['type' => 'password', 'required' => true, 'placeholder' => 'Minimal 6 karakter', 'autocomplete' => 'new-password']) ?>
-          <?= affiliateField('password_confirm', 'Ulangi Password', 'lock_reset', '', ['type' => 'password', 'required' => true, 'placeholder' => 'Ketik ulang password', 'autocomplete' => 'new-password']) ?>
-          <div class="af-field af-field--full">
-            <div class="af-status">
-              <i class="mi">hourglass_top</i>
-              <div>
-                <b>Status Akun: Belum Approve</b>
-                <span>Menunggu pemeriksaan dari admin dopagency. Bapak/Ibu akan diberi tahu lewat WhatsApp setelah disetujui.</span>
+          <div class="af-card__body">
+            <div class="af-grid">
+              <?= affiliateField('pic_pemilik', 'PIC Nama Pemilik', 'badge', $old['pic_pemilik'], ['required' => true, 'placeholder' => 'Contoh: Budi Santoso', 'autocomplete' => 'name']) ?>
+              <?= affiliateField('nama_usaha', 'Nama Tempat Usaha', 'storefront', $old['nama_usaha'], ['required' => true, 'placeholder' => 'Contoh: Toko Maju Jaya']) ?>
+              <?= affiliateField('no_telepon', 'No Telepon (WhatsApp)', 'phone', $old['no_telepon'], ['required' => true, 'placeholder' => '0812xxxxxxx', 'autocomplete' => 'tel']) ?>
+              <?= affiliateField('kota', 'Kota', 'location_city', $old['kota'], ['required' => true, 'placeholder' => 'Contoh: Tangerang Selatan']) ?>
+              <?= affiliateField('alamat', 'Alamat Lengkap', 'map', $old['alamat'], ['type' => 'textarea', 'full' => true, 'required' => true, 'placeholder' => 'Nama jalan, nomor, kelurahan, kecamatan']) ?>
+              <div class="af-field af-field--full">
+                <label for="af-photo_usaha"><i class="mi">photo_camera</i> Photo Usaha <span class="req">*</span></label>
+                <div class="af-file">
+                  <input type="file" id="af-photo_usaha" name="photo_usaha" accept="image/*" class="af-file__input">
+                  <label class="af-file__box" for="af-photo_usaha" id="afPhotoBox">
+                    <img class="af-file__preview" id="afPhotoPreview" alt="Pratinjau foto usaha">
+                    <span class="af-file__placeholder">
+                      <i class="mi">add_photo_alternate</i>
+                      <b>Pilih Gambar</b>
+                    </span>
+                  </label>
+                </div>
+                <span class="af-field__hint">Klik kotak untuk memilih foto depan toko / tempat usaha. Format JPG, PNG, WEBP, atau GIF. Maksimal 2MB.</span>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <div class="af-actions">
-      <button type="submit" class="af-btn"><i class="mi">how_to_reg</i> Daftar Sekarang</button>
-      <span class="af-field__hint">Sudah punya akun? <a href="/affiliate/login">Masuk di sini</a></span>
+        <section class="af-card">
+          <div class="af-card__head is-blue">
+            <i class="mi">lock</i>
+            <div>
+              <h2>2. Akun Login</h2>
+              <small>Dipakai untuk masuk ke halaman mitra</small>
+            </div>
+          </div>
+          <div class="af-card__body">
+            <div class="af-grid">
+              <?= affiliateField('username', 'Username', 'alternate_email', $old['username'], ['required' => true, 'placeholder' => 'Contoh: budi.maju', 'autocomplete' => 'username', 'hint' => 'Minimal 4 karakter. Huruf, angka, titik, strip, atau garis bawah.']) ?>
+              <?= affiliateField('password', 'Password', 'lock', '', ['type' => 'password', 'required' => true, 'placeholder' => 'Minimal 6 karakter', 'autocomplete' => 'new-password']) ?>
+              <?= affiliateField('password_confirm', 'Ulangi Password', 'lock_reset', '', ['type' => 'password', 'required' => true, 'placeholder' => 'Ketik ulang password', 'autocomplete' => 'new-password']) ?>
+              <div class="af-field af-field--full">
+                <div class="af-status">
+                  <i class="mi">hourglass_top</i>
+                  <div>
+                    <b>Status Akun: Belum Approve</b>
+                    <span>Menunggu pemeriksaan dari admin dopagency. Bapak/Ibu akan diberi tahu lewat WhatsApp setelah disetujui.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="af-actions">
+          <button type="submit" class="af-btn"><i class="mi">how_to_reg</i> Daftar Sekarang</button>
+          <span class="af-field__hint">Sudah punya akun? <a href="/affiliate/login">Masuk di sini</a></span>
+        </div>
+      </form>
     </div>
-  </form>
-</main>
+  </div>
+</div>
 
 <script>
   (function () {
