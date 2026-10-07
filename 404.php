@@ -11,6 +11,8 @@ if (!headers_sent()) {
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="theme-color" content="#00ff39" />
+  <!-- htmx component: google-site-verification -->
+  <div hx-get="components/google-site-verification.html" hx-trigger="load" hx-target="head" hx-swap="beforeend"></div>
   <meta name="robots" content="noindex, follow">
   <title>Halaman Tidak Ditemukan | dopagency</title>
   <meta name="description" content="Halaman yang Anda cari tidak ditemukan. Kembali ke halaman utama dopagency.">
@@ -20,9 +22,16 @@ if (!headers_sent()) {
   <link rel="stylesheet" href="css/hamburger.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/htmx.min.js"></script>
+  <script>
+    if (window.htmx) { htmx.config.allowScriptTags = false; }
+  </script>
 </head>
 
 <body hx-boost="true">
+  <!-- htmx component: floating-buttons -->
+  <div hx-get="components/floating-buttons.html" hx-trigger="load" hx-swap="outerHTML"></div>
   <div class="page-transition">
     <div class="layer"></div>
   </div>

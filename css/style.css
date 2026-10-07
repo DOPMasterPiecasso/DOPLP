@@ -3525,3 +3525,333 @@ html[dir=rtl] .footer .footer-bar .creation {
   border: none;
   border-radius: 0;
 }
+
+/* DOPAGENCY ADJUSTMENT: HALAMAN DETAIL ARTIKEL BLOG */
+.link {
+  display: inline-block;
+  font-family: "Fjalla One", sans-serif;
+  font-size: 17px;
+  border-bottom: 2px solid #222327;
+  padding-bottom: 5px;
+}
+.link:hover {
+  color: #00ff39;
+  border-color: #00ff39;
+  text-decoration: none;
+}
+
+/* Judul artikel pada hero header dibatasi supaya tetap proporsional */
+.page-header .inner p.page-header-title {
+  font-size: clamp(17px, 1.6vw, 26px);
+  font-weight: 400;
+  max-width: 920px;
+  padding-right: 10%;
+}
+
+/* Artikel tunggal: judul, meta, dan gambar selaras penuh dengan lebar kolom */
+.blog .post.single .post-content {
+  padding: 0;
+}
+.blog .post.single .post-content .post-title {
+  font-size: clamp(26px, 3.2vw, 44px);
+  line-height: 1.35;
+}
+.blog .post.single .post-content .post-date {
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+.blog .post .post-content .post-author .post-meta {
+  position: relative;
+  margin-left: 16px;
+  padding-left: 22px;
+}
+.blog .post .post-content .post-author .post-meta:before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -2px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .6;
+}
+.blog .post.single .post-content .social-share {
+  text-align: left;
+  margin-bottom: 35px;
+}
+.blog .post .post-content .social-share li.whatsapp a {
+  background: #25d366;
+}
+.blog .post .post-content .social-share li a:hover {
+  background: #00ff39;
+  color: #222327;
+}
+.blog .post.single .post-content .post-back {
+  margin-bottom: 10px;
+}
+
+/* Isi artikel (hasil editor): heading, list, tabel, kutipan, dan media */
+.blog .post.single .post-content .post-body {
+  font-size: 17px;
+  line-height: 1.9;
+  color: #4a4a52;
+}
+.blog .post.single .post-content .post-body > *:first-child {
+  margin-top: 0;
+}
+.blog .post.single .post-content .post-body p {
+  margin-bottom: 22px;
+}
+.blog .post.single .post-content .post-body h2,
+.blog .post.single .post-content .post-body h3,
+.blog .post.single .post-content .post-body h4 {
+  color: #161619;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 40px 0 18px;
+}
+.blog .post.single .post-content .post-body h2 {
+  font-size: clamp(23px, 2vw, 29px);
+}
+.blog .post.single .post-content .post-body h3 {
+  font-size: clamp(20px, 1.7vw, 24px);
+}
+.blog .post.single .post-content .post-body h4 {
+  font-size: 19px;
+}
+.blog .post.single .post-content .post-body ul,
+.blog .post.single .post-content .post-body ol {
+  margin-bottom: 25px;
+  padding-left: 24px;
+}
+.blog .post.single .post-content .post-body li {
+  margin-bottom: 8px;
+}
+.blog .post.single .post-content .post-body a {
+  color: #161619;
+  border-bottom: 1px solid #00ff39;
+}
+.blog .post.single .post-content .post-body a:hover {
+  color: #00ff39;
+  text-decoration: none;
+}
+.blog .post.single .post-content .post-body img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px 0 30px;
+  box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.08);
+}
+.blog .post.single .post-content .post-body figure {
+  margin: 10px 0 30px;
+}
+.blog .post.single .post-content .post-body blockquote {
+  margin: 0 0 30px;
+  padding: 22px 26px;
+  color: #3b3b41;
+  font-style: italic;
+  background: #f7f7f9;
+  border-left: 3px solid #00ff39;
+}
+.blog .post.single .post-content .post-body table {
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+  margin-bottom: 30px;
+  font-size: 15px;
+  border-collapse: collapse;
+}
+.blog .post.single .post-content .post-body table th,
+.blog .post.single .post-content .post-body table td {
+  border: 1px solid #e6e6ea;
+  padding: 10px 12px;
+  text-align: left;
+}
+.blog .post.single .post-content .post-body table th {
+  background: #f4f4f6;
+  font-weight: 600;
+  color: #161619;
+}
+.blog .post.single .post-content .post-body pre {
+  margin-bottom: 30px;
+  padding: 20px;
+  overflow-x: auto;
+  background: #161619;
+  color: #fff;
+  font-size: 14px;
+}
+.blog .post.single .post-content .post-body iframe {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 30px;
+  border: 0;
+}
+.blog .post.single .post-content .post-body hr {
+  margin: 40px 0;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+/* Daftar "Artikel Lainnya": thumbnail di kiri, ringkasan di kanan
+   (blok ini berada di sidebar blog detail, di bawah widget "Cari Artikel") */
+.blog .post-related {
+  margin-top: 30px;
+}
+.blog .post-related .title {
+  margin-bottom: 15px;
+}
+.blog .post-related ul {
+  width: 100%;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+.blog .post-related ul li {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 18px;
+  margin: 0 0 22px;
+  padding: 0 0 22px;
+  border-bottom: 1px solid #eee;
+  list-style: none;
+}
+.blog .post-related ul li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.blog .post-related .post-image {
+  width: 110px;
+  height: 80px;
+  flex: 0 0 110px;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  background: #f4f4f6;
+  box-shadow: none;
+}
+.blog .post-related .post-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.35s ease-in-out;
+}
+.blog .post-related li:hover .post-image img {
+  transform: scale(1.08);
+}
+.blog .post-related .post-content {
+  width: calc(100% - 128px);
+  padding: 0;
+}
+.blog .post-related .post-content.full {
+  width: 100%;
+}
+.blog .post-related .post-content .post-date {
+  margin-bottom: 8px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.blog .post-related .post-content .post-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.blog .post-related .post-content .post-title h5 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+}
+.blog .post-related .post-content .post-title a {
+  color: #161619;
+}
+.blog .post-related .post-content .post-title a:hover {
+  color: #00ff39;
+  text-decoration: none;
+}
+.blog .post-related .post-content p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #6b6b73;
+}
+
+@media only screen and (max-width: 575px), only screen and (max-device-width: 575px) {
+  .blog .post.single .post-content .post-body {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .blog .post-related .post-image {
+    width: 100px;
+    height: 74px;
+    flex: 0 0 100px;
+  }
+
+  .blog .post-related .post-content {
+    width: calc(100% - 118px);
+  }
+
+  .blog .post-related .post-content .post-title h5 {
+    font-size: 16px;
+  }
+
+  .blog .post-related .post-content p {
+    display: none;
+  }
+}
+
+/* Widget "Artikel Terbaru": tanggal ditampilkan sebagai teks kecil di kanan,
+   bukan kotak badge 20x20 bawaan tema. */
+.blog .sidebar .widget .categories li {
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+}
+.blog .sidebar .widget .categories li a {
+  flex: 1 1 auto;
+}
+.blog .sidebar .widget .categories li span {
+  width: auto;
+  height: auto;
+  line-height: 1.6;
+  flex: 0 0 auto;
+  margin: 0;
+  background: none;
+  color: #a7a7a7;
+  text-align: right;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* .blog .post memakai float:left dari tema, jadi artikel utama harus
+   dilepas dari float agar tidak tertimpa gambar artikel. */
+.blog .post.single {
+  float: none;
+}
+
+/* Link di footer tetap memakai font bawaan tema. */
+.footer .link {
+  font-family: inherit;
+}
+
+/* DOPAGENCY ADJUSTMENT: SECTION "MENGAPA MEMILIH KAMI" HALAMAN LAYANAN */
+.text-content-block.why-choose-us .col-lg-4,
+.text-content-block.why-choose-us .col-md-6 {
+  margin: 0;
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+
+/* DOPAGENCY ADJUSTMENT: SECTION "PROSES KERJA KAMI" HALAMAN LAYANAN */
+.icon-content-block.work-process .col-lg-4,
+.icon-content-block.work-process .col-md-6 {
+  margin: 0;
+  padding-top: 35px;
+  padding-bottom: 35px;
+}

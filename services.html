@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#00ff39" />
+  <!-- htmx component: google-site-verification -->
+  <div hx-get="components/google-site-verification.html" hx-trigger="load" hx-target="head" hx-swap="beforeend"></div>
   <title>Layanan Kami | dopagency</title>
   <meta name="author" content="dopagency">
   <meta name="description"
@@ -35,7 +37,7 @@
   <link rel="stylesheet" href="css/odometer.min.css">
   <link rel="stylesheet" href="css/swiper.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20261006">
 
   <!-- htmx: SPA page navigation (hx-boost) -->
   <script src="js/htmx.min.js"></script>
@@ -118,6 +120,8 @@
   <div hx-get="components/social-media.html" hx-trigger="load" hx-swap="outerHTML"></div>
   <!-- htmx component: all-cases -->
   <div hx-get="components/all-cases.html" hx-trigger="load" hx-swap="outerHTML"></div>
+  <!-- htmx component: floating-buttons -->
+  <div hx-get="components/floating-buttons.html" hx-trigger="load" hx-swap="outerHTML"></div>
   <main>
     <!-- htmx component: sidebar -->
     <div hx-get="components/sidebar.html" hx-trigger="load" hx-swap="outerHTML"></div>
@@ -239,27 +243,31 @@
       <!-- end container -->
     </section>
     <!-- end icon-content-block -->
-    <section class="text-content-block">
+    <section class="text-content-block why-choose-us">
       <div class="container">
         <div class="row">
           <div class="col-12 wow" data-splitting>
             <h3 class="section-title">MENGAPA MEMILIH KAMI</h3>
           </div>
-          <div class="col-lg-3 col-md-6 wow" data-splitting>
+          <div class="col-lg-4 col-md-6 wow" data-splitting>
             <small>01</small>
             <h6>Tim berpengalaman dan profesional</h6>
           </div>
-          <div class="col-lg-3 col-md-6 wow" data-splitting>
+          <div class="col-lg-4 col-md-6 wow" data-splitting>
             <small>02</small>
             <h6>Teknologi terkini dan terbaik</h6>
           </div>
-          <div class="col-lg-3 col-md-6 wow" data-splitting>
+          <div class="col-lg-4 col-md-6 wow" data-splitting>
             <small>03</small>
             <h6>Harga kompetitif dan transparan</h6>
           </div>
-          <div class="col-lg-3 col-md-6 wow" data-splitting>
+          <div class="col-lg-4 col-md-6 wow" data-splitting>
             <small>04</small>
             <h6>Support dan maintenance berkelanjutan</h6>
+          </div>
+          <div class="col-lg-4 col-md-6 wow" data-splitting>
+            <small>05</small>
+            <h6>Garansi hasil dan revise tanpa batas</h6>
           </div>
         </div>
         <!-- end row -->
@@ -267,7 +275,7 @@
       <!-- end container -->
     </section>
     <!-- end text-content-block -->
-    <section class="icon-content-block">
+    <section class="icon-content-block work-process">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12 wow" data-splitting>

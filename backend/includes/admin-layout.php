@@ -5,13 +5,14 @@ function adminNavItems() {
         ['key' => 'portfolio', 'label' => 'Portfolio', 'icon' => 'fa-briefcase', 'url' => '/backend/admin/portfolio/index.php'],
         ['key' => 'kategori', 'label' => 'Kategori', 'icon' => 'fa-folder-open-o', 'url' => '/backend/admin/kategori/index.php'],
         ['key' => 'blog', 'label' => 'Blog', 'icon' => 'fa-newspaper-o', 'url' => '/backend/admin/blog/index.php'],
+        ['key' => 'affiliate', 'label' => 'Affiliate', 'icon' => 'handshake', 'material' => true, 'url' => '/backend/admin/affiliate/index.php'],
     ];
 }
 
 function adminNavCounts() {
     try {
         $pdo = getConnection();
-        return [
+        $counts = [
             'portfolio' => (int)$pdo->query('SELECT COUNT(*) FROM portfolio')->fetchColumn(),
             'kategori' => (int)$pdo->query('SELECT COUNT(*) FROM kategori')->fetchColumn(),
             'blog' => (int)$pdo->query('SELECT COUNT(*) FROM blog')->fetchColumn(),
@@ -19,6 +20,13 @@ function adminNavCounts() {
     } catch (Throwable $e) {
         return [];
     }
+
+    try {
+        $counts['affiliate'] = (int)$pdo->query('SELECT COUNT(*) FROM affiliate')->fetchColumn();
+    } catch (Throwable $e) {
+    }
+
+    return $counts;
 }
 
 function adminInitial($name) {
@@ -33,9 +41,11 @@ function adminInitial($name) {
     return strtoupper(mb_substr($name, 0, 1));
 }
 
-function adminLayoutHeader($title, $active = '', $subtitle = '', array $actions = []) {
+function adminLayoutHeader($title, $active = '', $subtitle = '', array $actions = [], array $options = []) {
     $user = currentUser();
     $counts = adminNavCounts();
+    $extraCss = $options['css'] ?? [];
+    $bright = !empty($options['bright']);
     ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -46,10 +56,14 @@ function adminLayoutHeader($title, $active = '', $subtitle = '', array $actions 
     <meta name="robots" content="noindex, nofollow">
     <title><?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?> | Admin dopagency</title>
     <link href="/ico/favicon.png" rel="shortcut icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/fontawesome.min.css">
     <link rel="stylesheet" href="/css/admin.css">
+    <?php foreach ($extraCss as $css): ?>
+    <link rel="stylesheet" href="<?= htmlspecialchars($css, ENT_QUOTES, 'UTF-8') ?>">
+    <?php endforeach; ?>
 </head>
-<body class="admin-body">
+<body class="admin-body<?= $bright ? ' admin-body--bright' : '' ?>">
 
 <div class="admin-backdrop" id="adminBackdrop"></div>
 
@@ -67,7 +81,11 @@ function adminLayoutHeader($title, $active = '', $subtitle = '', array $actions 
         <?php foreach (adminNavItems() as $item): ?>
             <?php $count = $counts[$item['key']] ?? null; ?>
             <a class="admin-nav__item <?= $active === $item['key'] ? 'is-active' : '' ?>" href="<?= $item['url'] ?>">
-                <i class="fa <?= $item['icon'] ?>"></i>
+                <?php if (!empty($item['material'])): ?>
+                    <i class="material-icons"><?= htmlspecialchars($item['icon'], ENT_QUOTES, 'UTF-8') ?></i>
+                <?php else: ?>
+                    <i class="fa <?= $item['icon'] ?>"></i>
+                <?php endif; ?>
                 <span><?= htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8') ?></span>
                 <?php if ($count !== null): ?>
                     <em class="admin-nav__count"><?= $count ?></em>
@@ -111,7 +129,11 @@ function adminLayoutHeader($title, $active = '', $subtitle = '', array $actions 
             <div class="admin-topbar__actions">
                 <?php foreach ($actions as $action): ?>
                     <a class="admin-btn <?= htmlspecialchars($action['class'] ?? '', ENT_QUOTES, 'UTF-8') ?>" href="<?= htmlspecialchars($action['url'], ENT_QUOTES, 'UTF-8') ?>">
-                        <?php if (!empty($action['icon'])): ?><i class="fa <?= htmlspecialchars($action['icon'], ENT_QUOTES, 'UTF-8') ?>"></i><?php endif; ?>
+                        <?php if (!empty($action['material'])): ?>
+                            <i class="material-icons"><?= htmlspecialchars($action['icon'], ENT_QUOTES, 'UTF-8') ?></i>
+                        <?php elseif (!empty($action['icon'])): ?>
+                            <i class="fa <?= htmlspecialchars($action['icon'], ENT_QUOTES, 'UTF-8') ?>"></i>
+                        <?php endif; ?>
                         <?= htmlspecialchars($action['label'], ENT_QUOTES, 'UTF-8') ?>
                     </a>
                 <?php endforeach; ?>

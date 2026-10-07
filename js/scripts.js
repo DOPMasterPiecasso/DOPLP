@@ -22,6 +22,40 @@
     }
   }
 
+  // --- FLOATING ACTION BUTTONS ---
+  function initFloatingButtons() {
+    var fabToggle = document.getElementById('fabToggle');
+    var fabContainer = document.querySelector('.fab-container');
+    
+    if (!fabToggle || !fabContainer) {
+      return;
+    }
+    
+    // Remove existing listeners to prevent duplicates
+    var newFabToggle = fabToggle.cloneNode(true);
+    fabToggle.parentNode.replaceChild(newFabToggle, fabToggle);
+    fabToggle = newFabToggle;
+    fabContainer = document.querySelector('.fab-container');
+    
+    // Toggle FAB menu
+    fabToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      fabContainer.classList.toggle('active');
+      fabToggle.classList.toggle('active');
+    });
+    
+    // Close FAB when clicking outside
+    document.addEventListener('click', function(event) {
+      if (fabContainer && !fabContainer.contains(event.target)) {
+        fabContainer.classList.remove('active');
+        var toggle = document.getElementById('fabToggle');
+        if (toggle) {
+          toggle.classList.remove('active');
+        }
+      }
+    });
+  }
+
   // --- MENU OVERLAY CONTROLLERS ---
   function closeSiteNavigation() {
     $("body").removeClass("overflow");
@@ -422,6 +456,9 @@
 
     // Portfolio filter sticky
     initPortfolioFilterSticky();
+
+    // Floating Action Buttons
+    initFloatingButtons();
   }
 
   // --- AUTOPLAY HELPER FOR BACKGROUND VIDEOS ---
@@ -562,6 +599,7 @@
       initSplitting();
       initEqualizer();
       updateFooterHeight();
+      initFloatingButtons();
     }, 60);
   });
 

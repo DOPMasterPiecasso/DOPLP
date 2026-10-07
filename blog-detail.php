@@ -1,9 +1,11 @@
 <?php
 require_once __DIR__ . '/backend/config/database.php';
+require_once __DIR__ . '/backend/includes/blog-helpers.php';
 
 $slug = trim((string)($_GET['slug'] ?? ''));
 
-if ($slug === '' || !preg_match('/^[a-z0-9\-]+$/', $slug)) {
+// Slug harus mengikuti pola RewriteRule di .htaccess: ^blog/([A-Za-z0-9\-_]+)/?$
+if ($slug === '' || !preg_match('/^[A-Za-z0-9\-_]+$/', $slug)) {
     http_response_code(404);
     require __DIR__ . '/404.php';
     exit();
@@ -21,17 +23,20 @@ if (!$article) {
     exit();
 }
 
-$relatedStmt = $db->prepare('SELECT judul, slug, created_at FROM blog WHERE id != :id ORDER BY created_at DESC, id DESC LIMIT 3');
+// Artikel terkait untuk blok "Artikel Lainnya" di sidebar
+$relatedStmt = $db->prepare('SELECT id, judul, slug, konten, gambar, penulis, created_at
+                             FROM blog WHERE id != :id
+                             ORDER BY created_at DESC, id DESC
+                             LIMIT 3');
 $relatedStmt->execute(['id' => $article['id']]);
 $related = $relatedStmt->fetchAll();
 
 $pageTitle = $article['judul'] . ' | dopagency';
-$baseUrl = rtrim((string)(getenv('SITE_URL') ?: 'https://dopagency.my.id'), '/');
-$articleUrl = $baseUrl . '/blog/' . $article['slug'];
-$description = trim(preg_replace('/\s+/', ' ', strip_tags($article['konten'])));
-$description = function_exists('mb_strimwidth')
-    ? mb_strimwidth($description, 0, 155, '...')
-    : substr($description, 0, 155);
+$baseUrl = blogBaseUrl();
+$articleUrl = $baseUrl . blogArticleUrl($article['slug']);
+$description = blogExcerpt($article['konten'], 155);
+$coverImage = $article['gambar'] ? $baseUrl . blogImageUrl($article['gambar']) : '';
+$publishedIso = date('c', strtotime($article['created_at']));
 ?>
 <!doctype html>
 <html lang="id">
@@ -42,19 +47,25 @@ $description = function_exists('mb_strimwidth')
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#00ff39" />
+  <!-- htmx component: google-site-verification -->
+  <div hx-get="components/google-site-verification.html" hx-trigger="load" hx-target="head" hx-swap="beforeend"></div>
   <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
   <meta name="author" content="dopagency">
   <meta name="description" content="<?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?>">
-  <link rel="canonical" href="/blog/<?= htmlspecialchars($article['slug'], ENT_QUOTES, 'UTF-8') ?>">
+  <link rel="canonical" href="<?= htmlspecialchars(blogArticleUrl($article['slug']), ENT_QUOTES, 'UTF-8') ?>">
 
   <meta property="og:description" content="<?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?>">
   <meta property="og:site_name" content="dopagency">
   <meta property="og:title" content="<?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?>">
   <meta property="og:type" content="article">
   <meta property="og:url" content="<?= htmlspecialchars($articleUrl, ENT_QUOTES, 'UTF-8') ?>">
-  <meta property="article:published_time" content="<?= date('c', strtotime($article['created_at'])) ?>">
-  <?php if ($article['gambar']): ?>
-    <meta property="og:image" content="<?= htmlspecialchars($baseUrl . '/uploads/blog/' . $article['gambar'], ENT_QUOTES, 'UTF-8') ?>">
+  <meta property="article:published_time" content="<?= $publishedIso ?>">
+  <?php if ($coverImage): ?>
+    <meta property="og:image" content="<?= htmlspecialchars($coverImage, ENT_QUOTES, 'UTF-8') ?>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="<?= htmlspecialchars($coverImage, ENT_QUOTES, 'UTF-8') ?>">
+  <?php else: ?>
+    <meta name="twitter:card" content="summary">
   <?php endif; ?>
 
   <link href="ico/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon" sizes="144x144">
@@ -84,44 +95,68 @@ $description = function_exists('mb_strimwidth')
       <figure> <img src="images/preloader.gif" alt="dopagency"> </figure>
       <span>dopagency | Digital Agency</span>
     </div>
+    <!-- end inner -->
   </div>
+  <!-- end preloader -->
   <div class="page-transition">
     <div class="layer"></div>
   </div>
+  <!-- end page-transition -->
   <!-- htmx component: site-navigation -->
   <div hx-get="components/site-navigation.html" hx-trigger="load" hx-swap="outerHTML"></div>
   <!-- htmx component: social-media -->
   <div hx-get="components/social-media.html" hx-trigger="load" hx-swap="outerHTML"></div>
   <!-- htmx component: all-cases -->
   <div hx-get="components/all-cases.html" hx-trigger="load" hx-swap="outerHTML"></div>
+  <!-- htmx component: floating-buttons -->
+  <div hx-get="components/floating-buttons.html" hx-trigger="load" hx-swap="outerHTML"></div>
   <main>
     <!-- htmx component: sidebar -->
     <div hx-get="components/sidebar.html" hx-trigger="load" hx-swap="outerHTML"></div>
+    <header class="page-header">
+      <div class="video-bg">
+        <video src="asset/video/video.mp4" muted loop autoplay></video>
+      </div>
+      <!-- end video-bg -->
+      <div class="inner">
+        <div class="container">
+          <h1>BLOG &amp; INSIGHTS</h1>
+          <p class="page-header-title"><?= htmlspecialchars($article['judul'], ENT_QUOTES, 'UTF-8') ?></p>
+        </div>
+        <!-- end container -->
+      </div>
+      <!-- end inner -->
+    </header>
+    <!-- end page-header -->
     <section class="blog">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12">
-            <div class="post single">
+          <div class="col-lg-9">
+            <article class="post single">
               <?php if ($article['gambar']): ?>
-                <div class="post-image">
-                  <img src="/uploads/blog/<?= htmlspecialchars($article['gambar'], ENT_QUOTES, 'UTF-8') ?>"
+                <figure class="post-image">
+                  <img src="<?= htmlspecialchars(blogImageUrl($article['gambar']), ENT_QUOTES, 'UTF-8') ?>"
                     alt="<?= htmlspecialchars($article['judul'], ENT_QUOTES, 'UTF-8') ?>">
-                </div>
+                </figure>
               <?php endif; ?>
 
               <div class="post-content">
-                <div class="post-date"><?= date('d F Y', strtotime($article['created_at'])) ?></div>
+                <div class="post-date"><?= blogTanggal($article['created_at']) ?></div>
 
                 <div class="post-title">
                   <h2><?= htmlspecialchars($article['judul'], ENT_QUOTES, 'UTF-8') ?></h2>
                 </div>
 
                 <div class="post-author">
-                  <span>Oleh <a href="#"><?= htmlspecialchars($article['penulis'] ?: 'dopagency', ENT_QUOTES, 'UTF-8') ?></a></span>
+                  <span>Oleh <a href="/blog"><?= htmlspecialchars($article['penulis'] ?: 'dopagency', ENT_QUOTES, 'UTF-8') ?></a></span>
+                  <span class="post-meta"><?= htmlspecialchars(blogWaktuBaca($article['konten']), ENT_QUOTES, 'UTF-8') ?></span>
                 </div>
 
                 <?php if (trim($article['konten']) !== ''): ?>
-                  <?= $article['konten'] ?>
+                  <div class="post-body">
+                    <?= $article['konten'] ?>
+                  </div>
+                  <!-- end post-body -->
                 <?php endif; ?>
 
                 <ul class="social-share">
@@ -144,33 +179,52 @@ $description = function_exists('mb_strimwidth')
                 </ul>
                 <!-- end social-share -->
 
-                <a href="/blog" class="link">&larr; Kembali ke Blog</a>
+                <a href="/blog" class="link post-back">&larr; Kembali ke Blog</a>
               </div>
               <!-- end post-content -->
-            </div>
+            </article>
             <!-- end post single -->
 
-            <?php if (!empty($related)): ?>
-              <div class="post">
-                <div class="post-content">
-                  <div class="post-title">
-                    <h5>Artikel Lainnya</h5>
-                  </div>
-                  <ul class="post-categories">
-                    <?php foreach ($related as $item): ?>
-                      <li>
-                        <a href="/blog/<?= htmlspecialchars($item['slug'], ENT_QUOTES, 'UTF-8') ?>">
-                          <?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>
-                        </a>
-                      </li>
-                    <?php endforeach; ?>
-                  </ul>
-                </div>
-              </div>
-            <?php endif; ?>
-
           </div>
-          <!-- end col-lg-12 -->
+          <!-- end col-lg-9 -->
+          <aside class="sidebar">
+            <div class="widget">
+              <div class="title">Cari Artikel</div>
+              <form action="/blog" method="GET">
+                <input type="text" name="q" placeholder="Kata kunci..." aria-label="Kata kunci pencarian">
+              </form>
+            </div>
+            <!-- end widget -->
+            <?php if (!empty($related)): ?>
+              <div class="widget post-related">
+                <div class="title">Artikel Lainnya</div>
+                <ul>
+                  <?php foreach ($related as $item): ?>
+                    <li>
+                      <?php if ($item['gambar']): ?>
+                        <a class="post-image" href="<?= htmlspecialchars(blogArticleUrl($item['slug']), ENT_QUOTES, 'UTF-8') ?>">
+                          <img src="<?= htmlspecialchars(blogImageUrl($item['gambar']), ENT_QUOTES, 'UTF-8') ?>"
+                            alt="<?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>" loading="lazy">
+                        </a>
+                      <?php endif; ?>
+                      <div class="post-content<?= $item['gambar'] ? '' : ' full' ?>">
+                        <div class="post-date"><?= blogTanggal($item['created_at'], 'pendek') ?></div>
+                        <div class="post-title">
+                          <h5><a href="<?= htmlspecialchars(blogArticleUrl($item['slug']), ENT_QUOTES, 'UTF-8') ?>">
+                              <?= htmlspecialchars($item['judul'], ENT_QUOTES, 'UTF-8') ?>
+                            </a></h5>
+                        </div>
+                        <p><?= htmlspecialchars(blogExcerpt($item['konten'], 90), ENT_QUOTES, 'UTF-8') ?></p>
+                      </div>
+                      <!-- end post-content -->
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              </div>
+              <!-- end post-related -->
+            <?php endif; ?>
+          </aside>
+          <!-- end sidebar -->
         </div>
         <!-- end row -->
       </div>

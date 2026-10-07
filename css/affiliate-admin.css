@@ -1,0 +1,396 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+/* ============================================================
+   HALAMAN AFFILIATE DI ADMIN - tampilan cerah ala AdminLTE
+   dengan ikon Material yang besar. Hanya aktif di halaman yang
+   memakai body.admin-body--bright.
+   ============================================================ */
+.admin-body.admin-body--bright {
+  --bg: #f4f6f9;
+  --bg-deep: #ffffff;
+  --bg-soft: #ffffff;
+  --accent: #00a65a;
+  --accent-soft: rgba(0, 166, 90, 0.12);
+  --text: #1f2430;
+  --muted: #5b6670;
+  --border: #dfe6ee;
+  --border-strong: #c3ced9;
+}
+
+.admin-body.admin-body--bright {
+  background: #f4f6f9;
+  font-size: 15px;
+}
+
+.admin-body.admin-body--bright .admin-topbar {
+  background: #ffffff;
+  color: var(--text);
+  border-bottom: 4px solid #00c0ef;
+}
+
+.admin-body.admin-body--bright .admin-topbar__title small {
+  color: var(--muted);
+}
+
+.admin-body.admin-body--bright .admin-burger {
+  background: #f1f4f8;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.admin-body.admin-body--bright .admin-table th {
+  background: #f0f4f8;
+  color: #4a5561;
+}
+
+.admin-body.admin-body--bright .admin-table tbody tr:hover {
+  background: #f6fafd;
+}
+
+.admin-body.admin-body--bright .bulk-bar {
+  background: #f0f4f8;
+}
+
+.admin-body.admin-body--bright .field select option {
+  background: #ffffff;
+  color: var(--text);
+}
+
+.admin-body.admin-body--bright .field input,
+.admin-body.admin-body--bright .field select,
+.admin-body.admin-body--bright .field textarea {
+  background: #ffffff;
+  color: var(--text);
+  font-size: 16px;
+  min-height: 50px;
+}
+
+.admin-body.admin-body--bright .field > label {
+  font-size: 12px;
+  color: #4a5561;
+}
+
+.admin-body.admin-body--bright .field input::placeholder,
+.admin-body.admin-body--bright .field textarea::placeholder {
+  color: #9aa7b4;
+}
+
+.admin-body.admin-body--bright .field input[type="file"]::file-selector-button {
+  color: #ffffff;
+  background: var(--accent);
+}
+
+.admin-body.admin-body--bright .admin-table {
+  font-size: 15px;
+}
+
+.admin-body.admin-body--bright .admin-btn {
+  font-size: 12px;
+}
+
+.admin-body.admin-body--bright .admin-foot {
+  background: #ffffff;
+  color: var(--muted);
+}
+
+/* ---------- KOTAK STATISTIK ALA ADMINLTE ---------- */
+.al-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.al-box {
+  position: relative;
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 20px 22px;
+  min-height: 118px;
+  color: #fff !important;
+  text-decoration: none !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+}
+
+.al-box h3 {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.al-box span {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  opacity: 0.95;
+  margin-top: 6px;
+}
+
+.al-box p {
+  margin: 10px 0 0;
+  font-size: 14px;
+  opacity: 0.92;
+}
+
+.al-box .material-icons {
+  position: absolute;
+  right: 12px;
+  bottom: 2px;
+  font-size: 78px;
+  opacity: 0.26;
+}
+
+.al-box.is-blue {
+  background: #3c8dbc;
+}
+
+.al-box.is-teal {
+  background: #00c0ef;
+}
+
+.al-box.is-green {
+  background: #00a65a;
+}
+
+.al-box.is-yellow {
+  background: #f39c12;
+}
+
+.al-box.is-red {
+  background: #dd4b39;
+}
+
+.al-box.is-purple {
+  background: #605ca8;
+}
+
+.al-box:hover {
+  filter: brightness(1.06);
+  text-decoration: none !important;
+}
+
+/* ---------- IKON MATERIAL BESAR ---------- */
+.mi-xl {
+  font-size: 44px !important;
+}
+
+.mi-lg {
+  font-size: 34px !important;
+}
+
+.panel__head h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel__head h3 .material-icons {
+  font-size: 30px;
+  color: #00c0ef;
+}
+
+.panel__head .table-form {
+  margin-left: auto;
+}
+
+.field > label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 13px;
+}
+
+.field > label .material-icons {
+  font-size: 20px;
+  color: #3c8dbc;
+}
+
+/* ---------- TABEL AFFILIATE ---------- */
+.al-owner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.al-owner__thumb {
+  width: 64px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #eef2f6;
+  flex: 0 0 auto;
+  display: block;
+}
+
+.al-owner__thumb.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9aa7b4;
+}
+
+.al-owner b {
+  display: block;
+  font-size: 16px;
+}
+
+.al-owner__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.al-owner__link:hover {
+  color: #3c8dbc;
+  text-decoration: underline;
+}
+
+.al-owner small {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.al-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 15px;
+  border-radius: 17px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.al-pill .material-icons {
+  font-size: 18px;
+}
+
+.al-pill.is-approve {
+  background: #e2f7ec;
+  color: #00733f;
+}
+
+.al-pill.is-wait {
+  background: #fdeee0;
+  color: #a4690a;
+}
+
+.al-meta {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.al-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.al-actions .admin-btn {
+  height: 40px;
+  padding: 0 15px;
+  font-size: 11px;
+  gap: 6px;
+}
+
+.al-actions .material-icons {
+  font-size: 18px;
+}
+
+.admin-body.admin-body--bright .admin-btn--primary {
+  background: #3c8dbc;
+  border-color: #3c8dbc;
+  color: #ffffff;
+}
+
+.admin-body.admin-body--bright .admin-btn--primary:hover {
+  background: #357a9f;
+  border-color: #357a9f;
+  color: #ffffff;
+}
+
+.admin-body.admin-body--bright .admin-btn--success {
+  background: #00a65a;
+  border-color: #00a65a;
+  color: #ffffff;
+}
+
+.admin-body.admin-body--bright .admin-btn--success:hover {
+  background: #008c4b;
+  border-color: #008c4b;
+  color: #ffffff;
+}
+
+/* ---------- DETAIL DATA ---------- */
+.al-detail {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.al-detail th,
+.al-detail td {
+  padding: 16px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.al-detail th {
+  width: 240px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.al-detail tr:last-child th,
+.al-detail tr:last-child td {
+  border-bottom: 0;
+}
+
+.al-detail .material-icons {
+  font-size: 22px;
+  color: #3c8dbc;
+  margin-right: 8px;
+}
+
+.al-photo {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  display: block;
+  margin-bottom: 18px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 767px) {
+  .al-detail th,
+  .al-detail td {
+    display: block;
+    width: auto;
+    padding: 8px 6px;
+    border-bottom: 0;
+  }
+
+  .al-detail th {
+    padding-top: 16px;
+    border-bottom: 0;
+  }
+
+  .al-detail tr {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .al-boxes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

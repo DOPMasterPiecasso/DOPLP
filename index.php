@@ -79,6 +79,13 @@ $routes = [
     'sitemap' => '/sitemap.php',
     'blog' => '/blog.php',
     'portfolio' => '/portfolio.php',
+    'affiliate' => '/affiliate/login.php',
+    'affiliate/login' => '/affiliate/login.php',
+    'affiliate/register' => '/affiliate/register.php',
+    'affiliate/logout' => '/affiliate/logout.php',
+    'affiliate/panel' => '/affiliate/panel.php',
+    'register/affiliate' => '/affiliate/register.php',
+    'referral' => '/affiliate.html',
 ];
 
 if (isset($routes[$path])) {
@@ -135,6 +142,8 @@ if (file_exists($htmlFile)) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#00ff39" />
+  <!-- htmx component: google-site-verification -->
+  <div hx-get="components/google-site-verification.html" hx-trigger="load" hx-target="head" hx-swap="beforeend"></div>
   <title>dopagency | Solusi Digital Terpercaya untuk Bisnis Anda</title>
   <meta name="author" content="dopagency">
   <meta name="description"
@@ -148,7 +157,7 @@ if (file_exists($htmlFile)) {
   <meta property="og:site_name" content="dopagency">
   <meta property="og:title" content="dopagency | Solusi Digital Terpercaya untuk Bisnis Anda">
   <meta property="og:type" content="website">
-
+<meta name="google-site-verification" content="6_Lkooo6wxh5gLv082LvfbkP7xVN8ZqywlcwZGurxcU" />
   <!-- FAVICON FILES -->
   <link href="ico/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon" sizes="144x144">
   <link href="ico/apple-touch-icon-114-precomposed.png" rel="apple-touch-icon" sizes="114x114">
@@ -422,6 +431,9 @@ if (file_exists($htmlFile)) {
 
   <!-- htmx component: all-cases -->
   <div hx-get="components/all-cases.html" hx-trigger="load" hx-swap="outerHTML"></div>
+
+  <!-- htmx component: floating-buttons -->
+  <div hx-get="components/floating-buttons.html" hx-trigger="load" hx-swap="outerHTML"></div>
 
   <main>
     <!-- htmx component: sidebar -->
