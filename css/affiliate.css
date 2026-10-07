@@ -62,97 +62,6 @@ body.af-body {
   font-feature-settings: "liga";
 }
 
-/* ---------- TOPBAR ---------- */
-.af-topbar {
-  background: #fff;
-  border-bottom: 4px solid var(--af-teal);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
-  position: relative;
-  z-index: 5;
-}
-
-.af-topbar__inner {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.af-brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  color: inherit;
-  text-decoration: none !important;
-}
-
-.af-brand__mark {
-  width: 54px;
-  height: 54px;
-  border-radius: 10px;
-  background: var(--af-teal);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.af-brand__mark .mi {
-  font-size: 32px;
-}
-
-.af-brand__text {
-  font-family: "Poppins", sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--af-blue);
-  line-height: 1.15;
-}
-
-.af-brand__text small {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--af-muted);
-}
-
-.af-topbar__actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.af-topbar__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  min-height: 52px;
-  padding: 0 22px;
-  border-radius: 6px;
-  background: var(--af-blue);
-  color: #fff !important;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none !important;
-}
-
-.af-topbar__link.is-plain {
-  background: transparent;
-  color: var(--af-blue) !important;
-  border: 2px solid var(--af-line);
-}
-
-.af-topbar__link .mi {
-  font-size: 24px;
-}
-
 /* ---------- HERO ---------- */
 .af-hero {
   text-align: center;
@@ -821,14 +730,5 @@ form > .af-actions {
 
   .af-detail tr {
     border-bottom: 1px dashed var(--af-line);
-  }
-
-  .af-topbar__actions {
-    width: 100%;
-  }
-
-  .af-topbar__link {
-    flex: 1;
-    justify-content: center;
   }
 }

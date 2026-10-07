@@ -1,6 +1,5 @@
 <?php
 function affiliateLayoutHead($title, $description) {
-    global $affiliatePage;
     $title = (string)$title;
     $description = (string)$description;
     ?>
@@ -19,26 +18,6 @@ function affiliateLayoutHead($title, $description) {
 </head>
 
 <body class="af-body">
-  <header class="af-topbar">
-    <div class="af-topbar__inner">
-      <a class="af-brand" href="/">
-        <span class="af-brand__mark"><i class="mi">handshake</i></span>
-        <span class="af-brand__text">dopagency<small>Program Mitra Affiliate</small></span>
-      </a>
-      <div class="af-topbar__actions">
-        <?php $current = $affiliatePage ?? ''; ?>
-        <?php if ($current === 'login'): ?>
-          <a class="af-topbar__link" href="/register/affiliate"><i class="mi">person_add</i> Daftar Jadi Mitra</a>
-        <?php elseif ($current === 'panel'): ?>
-          <a class="af-topbar__link is-plain" href="/"><i class="mi">home</i> Website</a>
-          <a class="af-topbar__link" href="/affiliate/logout"><i class="mi">logout</i> Keluar</a>
-        <?php else: ?>
-          <a class="af-topbar__link is-plain" href="/"><i class="mi">home</i> Website</a>
-          <a class="af-topbar__link" href="/affiliate/login"><i class="mi">login</i> Masuk Mitra</a>
-        <?php endif; ?>
-      </div>
-    </div>
-  </header>
     <?php
 }
 
