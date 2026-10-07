@@ -69,6 +69,15 @@ if (preg_match('/\.(css|js|jpg|jpeg|png|gif|svg|webp|ico|woff|woff2|ttf|mp4|webm
     return false; // Let PHP built-in server handle it
 }
 
+// Halaman program affiliate memakai landing terbaru (code.html)
+// /affiliate (tanpa sub), /afiliasi (URL baru), /affiliate.html dan /referral (URL lama)
+// Login mitra tetap di /affiliate/login
+if (in_array($path, ['affiliate', 'afiliasi', 'affiliate.html', 'referral'], true)) {
+    error_log('Route match: ' . $path . ' -> /code.html');
+    readfile(__DIR__ . '/code.html');
+    exit;
+}
+
 // Friendly aliases for backend pages
 $routes = [
     'login' => '/backend/admin/login.php',
@@ -79,13 +88,11 @@ $routes = [
     'sitemap' => '/sitemap.php',
     'blog' => '/blog.php',
     'portfolio' => '/portfolio.php',
-    'affiliate' => '/affiliate/login.php',
     'affiliate/login' => '/affiliate/login.php',
     'affiliate/register' => '/affiliate/register.php',
     'affiliate/logout' => '/affiliate/logout.php',
     'affiliate/panel' => '/affiliate/panel.php',
     'register/affiliate' => '/affiliate/register.php',
-    'referral' => '/affiliate.html',
 ];
 
 if (isset($routes[$path])) {

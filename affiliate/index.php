@@ -6,6 +6,12 @@
  * router) selalu menjalankan affiliate/index.php untuk semua URL di bawah
  * /affiliate. Di Apache, .htaccess yang menangani rewrite dan file ini tidak
  * dipakai.
+ *
+ * Catatan route:
+ * - /affiliate (tanpa sub) -> landing program affiliate (code.html)
+ * - /affiliate/login|register|panel|logout -> halaman mitra terkait
+ * - /affiliate.html juga jatuh ke sini di server dev, jadi tidak boleh
+ *   diarahkan ke halaman login (dulu bentrok: $sub kosong -> 'login').
  */
 $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/affiliate', PHP_URL_PATH);
 $uri = trim((string)$uri, '/');
@@ -19,7 +25,10 @@ if (strpos($uri, 'affiliate/') === 0) {
 $sub = trim($sub, '/');
 
 if ($sub === '') {
-    $sub = 'login';
+    // /affiliate (tanpa sub, termasuk /affiliate.html) -> landing program
+    // affiliate terbaru. Login mitra tetap di /affiliate/login.
+    readfile(__DIR__ . '/landing.html');
+    exit();
 }
 
 if (!preg_match('/^[a-z]+$/', $sub)) {

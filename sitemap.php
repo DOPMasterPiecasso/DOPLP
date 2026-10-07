@@ -14,7 +14,8 @@ $pages = [
     ['loc' => '/showcases', 'file' => 'showcases.html', 'priority' => '0.7', 'changefreq' => 'monthly'],
     ['loc' => '/studio', 'file' => 'studio.html', 'priority' => '0.6', 'changefreq' => 'monthly'],
     ['loc' => '/contact', 'file' => 'contact.html', 'priority' => '0.8', 'changefreq' => 'yearly'],
-    ['loc' => '/affiliate', 'file' => 'affiliate.html', 'priority' => '0.8', 'changefreq' => 'monthly'],
+    ['loc' => '/affiliate', 'file' => 'code.html', 'priority' => '0.8', 'changefreq' => 'monthly'],
+    ['loc' => '/afiliasi', 'file' => 'code.html', 'priority' => '0.8', 'changefreq' => 'monthly'],
 ];
 
 $urls = [];

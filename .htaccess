@@ -76,8 +76,9 @@ RewriteRule ^blog/([A-Za-z0-9\-_]+)/?$ blog-detail.php?slug=$1 [L]
 # /portfolio -> /portfolio.php
 RewriteRule ^portfolio/?$ portfolio.php [L]
 
-# /affiliate -> halaman mitra (register, login, panel)
-RewriteRule ^affiliate/?$ affiliate/login.php [L]
+# /affiliate (tanpa sub) -> landing program affiliate terbaru (code.html)
+# sub-halaman mitra tetap: /affiliate/login, /register, /panel, /logout
+RewriteRule ^affiliate/?$ code.html [L]
 RewriteRule ^affiliate/register/?$ affiliate/register.php [L]
 RewriteRule ^affiliate/login/?$ affiliate/login.php [L]
 RewriteRule ^affiliate/logout/?$ affiliate/logout.php [L]
@@ -85,6 +86,10 @@ RewriteRule ^affiliate/panel/?$ affiliate/panel.php [L]
 
 # /register/affiliate -> halaman pendaftaran mitra (URL pendek untuk link publik)
 RewriteRule ^register/affiliate/?$ affiliate/register.php [L]
+
+# /afiliasi dan halaman affiliate lama -> landing program terbaru (code.html)
+RewriteRule ^afiliasi/?$ code.html [L]
+RewriteRule ^affiliate\.html$ code.html [L]
 
 # /about -> /about.html
 RewriteCond %{REQUEST_FILENAME} !-d

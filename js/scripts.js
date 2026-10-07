@@ -576,6 +576,88 @@
     destroyAllSwipers();
   });
 
+  // --- GUARD: halaman dengan stack CSS/JS sendiri tidak boleh di-boost ---
+  // hx-boost hanya menukar <body> dan membuang <head> respons, sehingga
+  // halaman macam landing affiliate (Tailwind CDN) atau portal affiliate
+  // (/css/affiliate.css) tampil tanpa stylesheet miliknya. Kalau respons
+  // membawa stylesheet/script yang belum ada di dokumen ini, batalkan
+  // swap-nya dan lakukan full page load supaya CSS/JS halaman itu ikut.
+  function assetKey(u) {
+    if (!u) return '';
+    u = String(u).trim();
+    if (/^[a-z][a-z0-9+.-]*:/i.test(u) || u.indexOf('//') === 0) {
+      try {
+        var abs = new URL(u.indexOf('//') === 0 ? 'http:' + u : u, window.location.href);
+        if (abs.origin === window.location.origin) {
+          return abs.pathname; // aset same-origin: ?v=... hanya cache buster
+        }
+        return abs.origin + abs.pathname + abs.search; // aset eksternal: query = konten beda
+      } catch (err) {
+        return u;
+      }
+    }
+    // path relatif selalu dihitung dari root (semua halaman pakai <base href="/">),
+    // query/hash dibuang karena dipakai untuk versioning
+    return '/' + u.replace(/^\.?\//, '').replace(/[?#].*$/, '');
+  }
+
+  function headHasAsset(selector, key) {
+    var nodes = document.head.querySelectorAll(selector);
+    for (var i = 0; i < nodes.length; i++) {
+      var attr = nodes[i].getAttribute('href') || nodes[i].getAttribute('src');
+      if (assetKey(attr) === key) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  document.addEventListener('htmx:beforeSwap', function (e) {
+    var detail = e.detail || {};
+    if (!isBodySwap(detail) || typeof detail.serverResponse !== 'string') {
+      return;
+    }
+    if (detail.serverResponse.indexOf('<head') === -1) {
+      return; // fragment komponen biasa (nav, footer, ...)
+    }
+
+    var doc;
+    try {
+      doc = new DOMParser().parseFromString(detail.serverResponse, 'text/html');
+    } catch (err) {
+      return;
+    }
+    if (!doc || !doc.head) {
+      return;
+    }
+
+    var missing = [];
+    var i, key, nodes;
+
+    nodes = doc.head.querySelectorAll('link[rel="stylesheet"]');
+    for (i = 0; i < nodes.length; i++) {
+      key = assetKey(nodes[i].getAttribute('href'));
+      if (key && !headHasAsset('link[rel="stylesheet"]', key)) {
+        missing.push(key);
+      }
+    }
+    nodes = doc.head.querySelectorAll('script[src]');
+    for (i = 0; i < nodes.length; i++) {
+      key = assetKey(nodes[i].getAttribute('src'));
+      if (key && !headHasAsset('script[src]', key)) {
+        missing.push(key);
+      }
+    }
+
+    if (!missing.length) {
+      return; // satu stack yang sama, boost tetap dipakai
+    }
+
+    e.preventDefault(); // hentikan swap: CSS/JS halaman tujuan tidak ikut terbawa
+    var url = (detail.xhr && detail.xhr.responseURL) || (detail.elt && detail.elt.href) || window.location.href;
+    window.location.href = url;
+  });
+
   // htmx: re-initialize everything once the new page fragment has settled
   // (also fires on history back/forward restores)
   document.addEventListener('htmx:afterSettle', function (e) {
